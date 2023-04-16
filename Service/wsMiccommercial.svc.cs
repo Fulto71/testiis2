@@ -27,7 +27,8 @@ namespace ZenithWebServeur.WCF
         private clsDonnee _clsDonnee = new clsDonnee();
         private clsMessagesWSBLL clsMessagesWSBLL = new clsMessagesWSBLL();
         private clsMiccommercialWSBLL clsMiccommercialWSBLL = new clsMiccommercialWSBLL();
-
+        private clsJourneetravailWSBLL clsJourneetravailWSBLL = new clsJourneetravailWSBLL();
+        
         public clsDonnee clsDonnee
         {
             get { return _clsDonnee; }
@@ -82,58 +83,86 @@ namespace ZenithWebServeur.WCF
                 //clsDonnee.pvgConnectionBase();
                 clsDonnee.pvgDemarrerTransaction();
                 clsObjetEnvoi.OE_PARAM = new string[] { };
+                if (Objet.clsObjetEnvoi != null)
+                {
+                    clsObjetEnvoi.OE_J = DateTime.Parse(Objet.clsObjetEnvoi.OE_J);
+                    clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
+                    if (Objet.clsObjetEnvoi.OE_J != "")
+                        clsObjetEnvoi.OE_J = DateTime.Parse(Objet.clsObjetEnvoi.OE_J);
+                    clsObjetEnvoi.OE_Y = clsObjetEnvoi.OE_Y;
+                    clsObjetEnvoi.OE_U = clsObjetEnvoi.OE_U;
+                    if (Objet.clsObjetEnvoi.OE_G != "")
+                        clsObjetEnvoi.OE_G = DateTime.Parse(Objet.clsObjetEnvoi.OE_G);
+                    clsObjetEnvoi.OE_F = Objet.clsObjetEnvoi.OE_F;
+                    clsObjetEnvoi.OE_T = Objet.clsObjetEnvoi.OE_T;
+                }
 
-                //foreach (ZenithWebServeur.DTO.clsMiccommercial clsMiccommercialDTO in Objet)
-                //{
-
-                clsMiccommercial.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
-                clsMiccommercial.CM_CODECOMMERCIAL = Objet.CM_CODECOMMERCIAL.ToString();
-                clsMiccommercial.CT_CODETYPECOMMERCIAL = Objet.CT_CODETYPECOMMERCIAL.ToString();
-                clsMiccommercial.SM_CODESITUATIONMATRIMONIALE = Objet.SM_CODESITUATIONMATRIMONIALE.ToString();
-                clsMiccommercial.CO_CODECOMMUNE = Objet.CO_CODECOMMUNE.ToString();
-                clsMiccommercial.PI_CODEPIECE = Objet.PI_CODEPIECE.ToString();
-                clsMiccommercial.CM_NOMCOMMERCIAL = Objet.CM_NOMCOMMERCIAL.ToString();
-                clsMiccommercial.CM_PRENOMCOMMERCIAL = Objet.CM_PRENOMCOMMERCIAL.ToString();
-                clsMiccommercial.CM_DATENAISSANCE = DateTime.Parse(Objet.CM_DATENAISSANCE.ToString());
-                clsMiccommercial.CM_NUMPIECE = Objet.CM_NUMPIECE.ToString();
-                clsMiccommercial.CM_DATEEXPIRATIONPIECE = DateTime.Parse(Objet.CM_DATEEXPIRATIONPIECE.ToString());
-                clsMiccommercial.CM_BOITEPOSTALE = Objet.CM_BOITEPOSTALE.ToString();
-                clsMiccommercial.CM_ADRESSEGEOGRAPHIQUE = Objet.CM_ADRESSEGEOGRAPHIQUE.ToString();
-                clsMiccommercial.CM_TELEPHONE = Objet.CM_TELEPHONE.ToString();
-                clsMiccommercial.CM_FAX = Objet.CM_FAX.ToString();
-                clsMiccommercial.CM_EMAIL = Objet.CM_EMAIL.ToString();
-                clsMiccommercial.CM_DATECREATION = DateTime.Parse(Objet.CM_DATECREATION.ToString());
-                clsMiccommercial.CM_DATEDEPART = DateTime.Parse(Objet.CM_DATEDEPART.ToString());
-                clsMiccommercial.CM_TAUXREMUNERATIONCOMMERCIAL = float.Parse(Objet.CM_TAUXREMUNERATIONCOMMERCIAL.ToString());
-                clsMiccommercial.CM_MONTANTREMUNERATIONCOMMERCIAL = Double.Parse(Objet.CM_MONTANTREMUNERATIONCOMMERCIAL.ToString());
-                clsMiccommercial.CM_NOMPRENOMPERSONNEAFFILIEE = Objet.CM_NOMPRENOMPERSONNEAFFILIEE.ToString();
-                clsMiccommercial.CM_TELEPHONEPERSONNEAFFILIEE = Objet.CM_TELEPHONEPERSONNEAFFILIEE.ToString();
-                clsMiccommercial.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
-                Byte[] CM_PHOTO = null;
-                Byte[] CM_SIGNATURE = null;
-                if (Objet.CM_PHOTO != "")
-                    CM_PHOTO = System.Convert.FromBase64String(Objet.CM_PHOTO);
-                if (Objet.CM_SIGNATURE != "")
-                    CM_SIGNATURE = System.Convert.FromBase64String(Objet.CM_SIGNATURE);
-
-                clsMiccommercial.CM_PHOTO = CM_PHOTO;
-                clsMiccommercial.CM_SIGNATURE = CM_SIGNATURE;
-
-                clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
-                clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
-
-                clsObjetRetour.SetValue(true, clsMiccommercialWSBLL.pvgAjouter(clsDonnee, clsMiccommercial, clsObjetEnvoi));
-                if (clsObjetRetour.OR_BOOLEEN)
+                if (clsJourneetravailWSBLL.pvgValeurScalaireRequeteCount2(clsDonnee, clsObjetEnvoi) == "0")
                 {
                     DataSet = new DataSet();
                     DataRow dr = dt.NewRow();
-                    dr["SL_CODEMESSAGE"] = "00";
-                    dr["SL_RESULTAT"] = "TRUE";
-                    dr["SL_MESSAGE"] = "L'opération s'est réalisée avec succès";
+                    dr["SL_CODEMESSAGE"] = "99";
+                    dr["SL_RESULTAT"] = "FALSE";
+                    dr["SL_MESSAGE"] = "Cette journée a été déjà fermée ou non encore ouverte !!!";
                     dt.Rows.Add(dr);
                     DataSet.Tables.Add(dt);
                     json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
                 }
+                else
+                {
+                    //foreach (ZenithWebServeur.DTO.clsMiccommercial clsMiccommercialDTO in Objet)
+                    //{
+
+                    clsMiccommercial.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
+                    clsMiccommercial.CM_CODECOMMERCIAL = Objet.CM_CODECOMMERCIAL.ToString();
+                    clsMiccommercial.CT_CODETYPECOMMERCIAL = Objet.CT_CODETYPECOMMERCIAL.ToString();
+                    clsMiccommercial.SM_CODESITUATIONMATRIMONIALE = Objet.SM_CODESITUATIONMATRIMONIALE.ToString();
+                    clsMiccommercial.CO_CODECOMMUNE = Objet.CO_CODECOMMUNE.ToString();
+                    clsMiccommercial.PI_CODEPIECE = Objet.PI_CODEPIECE.ToString();
+                    clsMiccommercial.CM_NOMCOMMERCIAL = Objet.CM_NOMCOMMERCIAL.ToString();
+                    clsMiccommercial.CM_PRENOMCOMMERCIAL = Objet.CM_PRENOMCOMMERCIAL.ToString();
+                    clsMiccommercial.CM_DATENAISSANCE = DateTime.Parse(Objet.CM_DATENAISSANCE.ToString());
+                    clsMiccommercial.CM_NUMPIECE = Objet.CM_NUMPIECE.ToString();
+                    clsMiccommercial.CM_DATEEXPIRATIONPIECE = DateTime.Parse(Objet.CM_DATEEXPIRATIONPIECE.ToString());
+                    clsMiccommercial.CM_BOITEPOSTALE = Objet.CM_BOITEPOSTALE.ToString();
+                    clsMiccommercial.CM_ADRESSEGEOGRAPHIQUE = Objet.CM_ADRESSEGEOGRAPHIQUE.ToString();
+                    clsMiccommercial.CM_TELEPHONE = Objet.CM_TELEPHONE.ToString();
+                    clsMiccommercial.CM_FAX = Objet.CM_FAX.ToString();
+                    clsMiccommercial.CM_EMAIL = Objet.CM_EMAIL.ToString();
+                    clsMiccommercial.CM_DATECREATION = DateTime.Parse(Objet.CM_DATECREATION.ToString());
+                    clsMiccommercial.CM_DATEDEPART = DateTime.Parse(Objet.CM_DATEDEPART.ToString());
+                    clsMiccommercial.CM_TAUXREMUNERATIONCOMMERCIAL = float.Parse(Objet.CM_TAUXREMUNERATIONCOMMERCIAL.ToString());
+                    clsMiccommercial.CM_MONTANTREMUNERATIONCOMMERCIAL = Double.Parse(Objet.CM_MONTANTREMUNERATIONCOMMERCIAL.ToString());
+                    clsMiccommercial.CM_NOMPRENOMPERSONNEAFFILIEE = Objet.CM_NOMPRENOMPERSONNEAFFILIEE.ToString();
+                    clsMiccommercial.CM_TELEPHONEPERSONNEAFFILIEE = Objet.CM_TELEPHONEPERSONNEAFFILIEE.ToString();
+                    clsMiccommercial.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
+                    Byte[] CM_PHOTO = null;
+                    Byte[] CM_SIGNATURE = null;
+                    if (Objet.CM_PHOTO != "")
+                        CM_PHOTO = System.Convert.FromBase64String(Objet.CM_PHOTO);
+                    if (Objet.CM_SIGNATURE != "")
+                        CM_SIGNATURE = System.Convert.FromBase64String(Objet.CM_SIGNATURE);
+
+                    clsMiccommercial.CM_PHOTO = CM_PHOTO;
+                    clsMiccommercial.CM_SIGNATURE = CM_SIGNATURE;
+
+                    clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
+                    clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
+
+                    clsObjetRetour.SetValue(true, clsMiccommercialWSBLL.pvgAjouter(clsDonnee, clsMiccommercial, clsObjetEnvoi));
+                    if (clsObjetRetour.OR_BOOLEEN)
+                    {
+                        DataSet = new DataSet();
+                        DataRow dr = dt.NewRow();
+                        dr["SL_CODEMESSAGE"] = "00";
+                        dr["SL_RESULTAT"] = "TRUE";
+                        dr["SL_MESSAGE"] = "L'opération s'est réalisée avec succès";
+                        dt.Rows.Add(dr);
+                        DataSet.Tables.Add(dt);
+                        json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                    }
+                }
+               
                 //}
             }
             catch (SqlException SQLEx)
@@ -558,58 +587,86 @@ namespace ZenithWebServeur.WCF
                 //clsDonnee.pvgConnectionBase();
                 clsDonnee.pvgDemarrerTransaction();
                 clsObjetEnvoi.OE_PARAM = new string[] { Objet.CM_IDCOMMERCIAL };
+                if (Objet.clsObjetEnvoi != null)
+                {
+                    clsObjetEnvoi.OE_J = DateTime.Parse(Objet.clsObjetEnvoi.OE_J);
+                    clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
+                    if (Objet.clsObjetEnvoi.OE_J != "")
+                        clsObjetEnvoi.OE_J = DateTime.Parse(Objet.clsObjetEnvoi.OE_J);
+                    clsObjetEnvoi.OE_Y = clsObjetEnvoi.OE_Y;
+                    clsObjetEnvoi.OE_U = clsObjetEnvoi.OE_U;
+                    if (Objet.clsObjetEnvoi.OE_G != "")
+                        clsObjetEnvoi.OE_G = DateTime.Parse(Objet.clsObjetEnvoi.OE_G);
+                    clsObjetEnvoi.OE_F = Objet.clsObjetEnvoi.OE_F;
+                    clsObjetEnvoi.OE_T = Objet.clsObjetEnvoi.OE_T;
+                }
 
-                //foreach (ZenithWebServeur.DTO.clsMiccommercial clsMiccommercialDTO in Objet)
-                //{
-
-                clsMiccommercial.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
-                clsMiccommercial.CM_IDCOMMERCIAL = Objet.CM_IDCOMMERCIAL.ToString();
-                clsMiccommercial.CM_CODECOMMERCIAL = Objet.CM_CODECOMMERCIAL.ToString();
-                clsMiccommercial.CT_CODETYPECOMMERCIAL = Objet.CT_CODETYPECOMMERCIAL.ToString();
-                clsMiccommercial.SM_CODESITUATIONMATRIMONIALE = Objet.SM_CODESITUATIONMATRIMONIALE.ToString();
-                clsMiccommercial.CO_CODECOMMUNE = Objet.CO_CODECOMMUNE.ToString();
-                clsMiccommercial.PI_CODEPIECE = Objet.PI_CODEPIECE.ToString();
-                clsMiccommercial.CM_NOMCOMMERCIAL = Objet.CM_NOMCOMMERCIAL.ToString();
-                clsMiccommercial.CM_PRENOMCOMMERCIAL = Objet.CM_PRENOMCOMMERCIAL.ToString();
-                clsMiccommercial.CM_DATENAISSANCE = DateTime.Parse(Objet.CM_DATENAISSANCE.ToString());
-                clsMiccommercial.CM_NUMPIECE = Objet.CM_NUMPIECE.ToString();
-                clsMiccommercial.CM_DATEEXPIRATIONPIECE = DateTime.Parse(Objet.CM_DATEEXPIRATIONPIECE.ToString());
-                clsMiccommercial.CM_BOITEPOSTALE = Objet.CM_BOITEPOSTALE.ToString();
-                clsMiccommercial.CM_ADRESSEGEOGRAPHIQUE = Objet.CM_ADRESSEGEOGRAPHIQUE.ToString();
-                clsMiccommercial.CM_TELEPHONE = Objet.CM_TELEPHONE.ToString();
-                clsMiccommercial.CM_FAX = Objet.CM_FAX.ToString();
-                clsMiccommercial.CM_EMAIL = Objet.CM_EMAIL.ToString();
-                clsMiccommercial.CM_DATECREATION = DateTime.Parse(Objet.CM_DATECREATION.ToString());
-                clsMiccommercial.CM_DATEDEPART = DateTime.Parse(Objet.CM_DATEDEPART.ToString());
-                clsMiccommercial.CM_TAUXREMUNERATIONCOMMERCIAL = float.Parse(Objet.CM_TAUXREMUNERATIONCOMMERCIAL.ToString());
-                clsMiccommercial.CM_MONTANTREMUNERATIONCOMMERCIAL = Double.Parse(Objet.CM_MONTANTREMUNERATIONCOMMERCIAL.ToString());
-                clsMiccommercial.CM_NOMPRENOMPERSONNEAFFILIEE = Objet.CM_NOMPRENOMPERSONNEAFFILIEE.ToString();
-                clsMiccommercial.CM_TELEPHONEPERSONNEAFFILIEE = Objet.CM_TELEPHONEPERSONNEAFFILIEE.ToString();
-                clsMiccommercial.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
-                Byte[] CM_PHOTO = null;
-                Byte[] CM_SIGNATURE = null;
-                if (Objet.CM_PHOTO != "")
-                    CM_PHOTO = System.Convert.FromBase64String(Objet.CM_PHOTO);
-                if (Objet.CM_SIGNATURE != "")
-                    CM_SIGNATURE = System.Convert.FromBase64String(Objet.CM_SIGNATURE);
-
-                clsMiccommercial.CM_PHOTO = CM_PHOTO;
-                clsMiccommercial.CM_SIGNATURE = CM_SIGNATURE;
-
-                clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
-                clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
-
-                clsObjetRetour.SetValue(true, clsMiccommercialWSBLL.pvgModifier(clsDonnee, clsMiccommercial, clsObjetEnvoi));
-                if (clsObjetRetour.OR_BOOLEEN)
+                if (clsJourneetravailWSBLL.pvgValeurScalaireRequeteCount2(clsDonnee, clsObjetEnvoi) == "0")
                 {
                     DataSet = new DataSet();
                     DataRow dr = dt.NewRow();
-                    dr["SL_CODEMESSAGE"] = "00";
-                    dr["SL_RESULTAT"] = "TRUE";
-                    dr["SL_MESSAGE"] = "L'opération s'est réalisée avec succès";
+                    dr["SL_CODEMESSAGE"] = "99";
+                    dr["SL_RESULTAT"] = "FALSE";
+                    dr["SL_MESSAGE"] = "Cette journée a été déjà fermée ou non encore ouverte !!!";
                     dt.Rows.Add(dr);
                     DataSet.Tables.Add(dt);
                     json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                }
+                else
+                {
+
+                    //foreach (ZenithWebServeur.DTO.clsMiccommercial clsMiccommercialDTO in Objet)
+                    //{
+
+                    clsMiccommercial.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
+                    clsMiccommercial.CM_IDCOMMERCIAL = Objet.CM_IDCOMMERCIAL.ToString();
+                    clsMiccommercial.CM_CODECOMMERCIAL = Objet.CM_CODECOMMERCIAL.ToString();
+                    clsMiccommercial.CT_CODETYPECOMMERCIAL = Objet.CT_CODETYPECOMMERCIAL.ToString();
+                    clsMiccommercial.SM_CODESITUATIONMATRIMONIALE = Objet.SM_CODESITUATIONMATRIMONIALE.ToString();
+                    clsMiccommercial.CO_CODECOMMUNE = Objet.CO_CODECOMMUNE.ToString();
+                    clsMiccommercial.PI_CODEPIECE = Objet.PI_CODEPIECE.ToString();
+                    clsMiccommercial.CM_NOMCOMMERCIAL = Objet.CM_NOMCOMMERCIAL.ToString();
+                    clsMiccommercial.CM_PRENOMCOMMERCIAL = Objet.CM_PRENOMCOMMERCIAL.ToString();
+                    clsMiccommercial.CM_DATENAISSANCE = DateTime.Parse(Objet.CM_DATENAISSANCE.ToString());
+                    clsMiccommercial.CM_NUMPIECE = Objet.CM_NUMPIECE.ToString();
+                    clsMiccommercial.CM_DATEEXPIRATIONPIECE = DateTime.Parse(Objet.CM_DATEEXPIRATIONPIECE.ToString());
+                    clsMiccommercial.CM_BOITEPOSTALE = Objet.CM_BOITEPOSTALE.ToString();
+                    clsMiccommercial.CM_ADRESSEGEOGRAPHIQUE = Objet.CM_ADRESSEGEOGRAPHIQUE.ToString();
+                    clsMiccommercial.CM_TELEPHONE = Objet.CM_TELEPHONE.ToString();
+                    clsMiccommercial.CM_FAX = Objet.CM_FAX.ToString();
+                    clsMiccommercial.CM_EMAIL = Objet.CM_EMAIL.ToString();
+                    clsMiccommercial.CM_DATECREATION = DateTime.Parse(Objet.CM_DATECREATION.ToString());
+                    clsMiccommercial.CM_DATEDEPART = DateTime.Parse(Objet.CM_DATEDEPART.ToString());
+                    clsMiccommercial.CM_TAUXREMUNERATIONCOMMERCIAL = float.Parse(Objet.CM_TAUXREMUNERATIONCOMMERCIAL.ToString());
+                    clsMiccommercial.CM_MONTANTREMUNERATIONCOMMERCIAL = Double.Parse(Objet.CM_MONTANTREMUNERATIONCOMMERCIAL.ToString());
+                    clsMiccommercial.CM_NOMPRENOMPERSONNEAFFILIEE = Objet.CM_NOMPRENOMPERSONNEAFFILIEE.ToString();
+                    clsMiccommercial.CM_TELEPHONEPERSONNEAFFILIEE = Objet.CM_TELEPHONEPERSONNEAFFILIEE.ToString();
+                    clsMiccommercial.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
+                    Byte[] CM_PHOTO = null;
+                    Byte[] CM_SIGNATURE = null;
+                    if (Objet.CM_PHOTO != "")
+                        CM_PHOTO = System.Convert.FromBase64String(Objet.CM_PHOTO);
+                    if (Objet.CM_SIGNATURE != "")
+                        CM_SIGNATURE = System.Convert.FromBase64String(Objet.CM_SIGNATURE);
+
+                    clsMiccommercial.CM_PHOTO = CM_PHOTO;
+                    clsMiccommercial.CM_SIGNATURE = CM_SIGNATURE;
+
+                    clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
+                    clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
+
+                    clsObjetRetour.SetValue(true, clsMiccommercialWSBLL.pvgModifier(clsDonnee, clsMiccommercial, clsObjetEnvoi));
+                    if (clsObjetRetour.OR_BOOLEEN)
+                    {
+                        DataSet = new DataSet();
+                        DataRow dr = dt.NewRow();
+                        dr["SL_CODEMESSAGE"] = "00";
+                        dr["SL_RESULTAT"] = "TRUE";
+                        dr["SL_MESSAGE"] = "L'opération s'est réalisée avec succès";
+                        dt.Rows.Add(dr);
+                        DataSet.Tables.Add(dt);
+                        json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                    }
                 }
                 //}
             }
@@ -693,25 +750,53 @@ namespace ZenithWebServeur.WCF
                 //clsDonnee.pvgConnectionBase();
                 clsDonnee.pvgDemarrerTransaction();
                 clsObjetEnvoi.OE_PARAM = new string[] { Objet.AG_CODEAGENCE, Objet.CM_IDCOMMERCIAL };
+                if (Objet.clsObjetEnvoi != null)
+                {
+                    clsObjetEnvoi.OE_J = DateTime.Parse(Objet.clsObjetEnvoi.OE_J);
+                    clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
+                    if (Objet.clsObjetEnvoi.OE_J != "")
+                        clsObjetEnvoi.OE_J = DateTime.Parse(Objet.clsObjetEnvoi.OE_J);
+                    clsObjetEnvoi.OE_Y = clsObjetEnvoi.OE_Y;
+                    clsObjetEnvoi.OE_U = clsObjetEnvoi.OE_U;
+                    if (Objet.clsObjetEnvoi.OE_G != "")
+                        clsObjetEnvoi.OE_G = DateTime.Parse(Objet.clsObjetEnvoi.OE_G);
+                    clsObjetEnvoi.OE_F = Objet.clsObjetEnvoi.OE_F;
+                    clsObjetEnvoi.OE_T = Objet.clsObjetEnvoi.OE_T;
+                }
 
-                //foreach (ZenithWebServeur.DTO.clsMiccommercial clsMiccommercialDTO in Objet)
-                //{
-
-                clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
-                clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
-
-                clsObjetRetour.SetValue(true, clsMiccommercialWSBLL.pvgSupprimer(clsDonnee, clsObjetEnvoi));
-                if (clsObjetRetour.OR_BOOLEEN)
+                if (clsJourneetravailWSBLL.pvgValeurScalaireRequeteCount2(clsDonnee, clsObjetEnvoi) == "0")
                 {
                     DataSet = new DataSet();
                     DataRow dr = dt.NewRow();
-                    dr["SL_CODEMESSAGE"] = "00";
-                    dr["SL_RESULTAT"] = "TRUE";
-                    dr["SL_MESSAGE"] = "L'opération s'est réalisée avec succès";
+                    dr["SL_CODEMESSAGE"] = "99";
+                    dr["SL_RESULTAT"] = "FALSE";
+                    dr["SL_MESSAGE"] = "Cette journée a été déjà fermée ou non encore ouverte !!!";
                     dt.Rows.Add(dr);
                     DataSet.Tables.Add(dt);
                     json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
                 }
+                else
+                {
+                    //foreach (ZenithWebServeur.DTO.clsMiccommercial clsMiccommercialDTO in Objet)
+                    //{
+
+                    clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
+                    clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
+
+                    clsObjetRetour.SetValue(true, clsMiccommercialWSBLL.pvgSupprimer(clsDonnee, clsObjetEnvoi));
+                    if (clsObjetRetour.OR_BOOLEEN)
+                    {
+                        DataSet = new DataSet();
+                        DataRow dr = dt.NewRow();
+                        dr["SL_CODEMESSAGE"] = "00";
+                        dr["SL_RESULTAT"] = "TRUE";
+                        dr["SL_MESSAGE"] = "L'opération s'est réalisée avec succès";
+                        dt.Rows.Add(dr);
+                        DataSet.Tables.Add(dt);
+                        json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                    }
+                }
+                 
                 //}
             }
             catch (SqlException SQLEx)

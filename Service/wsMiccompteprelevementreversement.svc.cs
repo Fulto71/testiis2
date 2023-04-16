@@ -196,7 +196,7 @@ namespace ZenithWebServeur.WCF
 
                 foreach (ZenithWebServeur.DTO.clsMiccompteprelevementreversement clsMiccompteprelevementreversementDTO in Objet)
                 {
-                    clsObjetEnvoi.OE_PARAM = new string[] {  };
+                    clsObjetEnvoi.OE_PARAM = new string[] { clsMiccompteprelevementreversementDTO.AG_CODEAGENCE, clsMiccompteprelevementreversementDTO.CO_CODECOMPTE, clsMiccompteprelevementreversementDTO.PR_TYPEOPERATION };
                     ZenithWebServeur.BOJ.clsMiccompteprelevementreversement clsMiccompteprelevementreversement = new ZenithWebServeur.BOJ.clsMiccompteprelevementreversement();
 
                     clsMiccompteprelevementreversement.AG_CODEAGENCE = clsMiccompteprelevementreversementDTO.AG_CODEAGENCE.ToString();

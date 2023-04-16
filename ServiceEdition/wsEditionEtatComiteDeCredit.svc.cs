@@ -189,8 +189,8 @@ namespace ZenithWebServeur.WCF
                 clsEditionEtatComiteDeCredit.PV_CODEPOINTVENTE = Objet.PV_CODEPOINTVENTE.ToString();
                 clsEditionEtatComiteDeCredit.PD_CODETYPEPRODUIT = Objet.PD_CODETYPEPRODUIT.ToString();
                 clsEditionEtatComiteDeCredit.PS_CODESOUSPRODUIT = Objet.PS_CODESOUSPRODUIT.ToString();
-                clsEditionEtatComiteDeCredit.DateJourneeComptable1 = Objet.DateJourneeComptable1.ToString();
-                clsEditionEtatComiteDeCredit.DateJourneeComptable2 = Objet.DateJourneeComptable2.ToString();
+                clsEditionEtatComiteDeCredit.DateJourneeComptable1 = Objet.DateJourneeComptable1.ToString().Replace("/", "-");
+                clsEditionEtatComiteDeCredit.DateJourneeComptable2 = Objet.DateJourneeComptable2.ToString().Replace("/", "-");
                 clsEditionEtatComiteDeCredit.OP_CODEOPERATEUREDITION = Objet.OP_CODEOPERATEUREDITION.ToString();
                 clsEditionEtatComiteDeCredit.TYPEETAT = Objet.TYPEETAT.ToString();
                 clsEditionEtatComiteDeCredit.TYPERETOUR = Objet.TYPERETOUR.ToString();
@@ -302,15 +302,15 @@ namespace ZenithWebServeur.WCF
 
             try
             {
-                clsDonnee.pvgDemarrerTransaction();
+                clsDonnee.pvgConnectionBase();
 
                 clsEditionEtatComiteDeCredit.SUPPRIMERTABLEINTERMEDIAIRE = Objet.SUPPRIMERTABLEINTERMEDIAIRE.ToString();
                 clsEditionEtatComiteDeCredit.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
                 clsEditionEtatComiteDeCredit.PV_CODEPOINTVENTE = Objet.PV_CODEPOINTVENTE.ToString();
                 clsEditionEtatComiteDeCredit.PD_CODETYPEPRODUIT = Objet.PD_CODETYPEPRODUIT.ToString();
                 clsEditionEtatComiteDeCredit.PS_CODESOUSPRODUIT = Objet.PS_CODESOUSPRODUIT.ToString();
-                clsEditionEtatComiteDeCredit.DateJourneeComptable1 = Objet.DateJourneeComptable1.ToString();
-                clsEditionEtatComiteDeCredit.DateJourneeComptable2 = Objet.DateJourneeComptable2.ToString();
+                clsEditionEtatComiteDeCredit.DateJourneeComptable1 = Objet.DateJourneeComptable1.ToString().Replace("/", "-");
+                clsEditionEtatComiteDeCredit.DateJourneeComptable2 = Objet.DateJourneeComptable2.ToString().Replace("/", "-");
                 clsEditionEtatComiteDeCredit.OP_CODEOPERATEUREDITION = Objet.OP_CODEOPERATEUREDITION.ToString();
                 clsEditionEtatComiteDeCredit.TYPEETAT = Objet.TYPEETAT.ToString();
                 clsEditionEtatComiteDeCredit.TYPERETOUR = Objet.TYPERETOUR.ToString();
@@ -394,7 +394,7 @@ namespace ZenithWebServeur.WCF
 
             finally
             {
-                clsDonnee.pvgTerminerTransaction(true);
+                clsDonnee.pvgConnectionBase();
             }
             return json;
         }

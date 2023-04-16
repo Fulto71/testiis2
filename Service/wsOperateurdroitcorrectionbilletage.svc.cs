@@ -94,8 +94,14 @@ namespace ZenithWebServeur.WCF
                     clsObjetEnvoi.OE_A = clsOperateurdroitcorrectionbilletageDTO.clsObjetEnvoi.OE_A;
                     clsObjetEnvoi.OE_Y = clsOperateurdroitcorrectionbilletageDTO.clsObjetEnvoi.OE_Y;
 
-                    clsOperateurdroitcorrectionbilletageAjout.Add(clsOperateurdroitcorrectionbilletage);
-                    clsOperateurdroitcompteSuppression.Add(clsOperateurdroitcorrectionbilletage);
+                    if (clsOperateurdroitcorrectionbilletageDTO.COCHER == "O")
+                    {
+                        clsOperateurdroitcorrectionbilletageAjout.Add(clsOperateurdroitcorrectionbilletage);
+                    }
+                    else
+                    {
+                        clsOperateurdroitcompteSuppression.Add(clsOperateurdroitcorrectionbilletage);
+                    }
                 }
                 clsObjetRetour.SetValue(true, clsOperateurdroitcorrectionbilletageWSBLL.pvgAjouterdroit(clsDonnee, clsOperateurdroitcorrectionbilletageAjout, clsOperateurdroitcompteSuppression, clsObjetEnvoi));
                 if (clsObjetRetour.OR_BOOLEEN)

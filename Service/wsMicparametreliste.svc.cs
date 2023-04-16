@@ -319,7 +319,7 @@ namespace ZenithWebServeur.WCF
             {
                 //clsDonnee.pvgConnectionBase();
                 clsDonnee.pvgDemarrerTransaction();
-                clsObjetEnvoi.OE_PARAM = new string[] { Objet.PS_CODESOUSPRODUIT };
+                clsObjetEnvoi.OE_PARAM = new string[] { Objet.PS_CODESOUSPRODUIT, "F#D#C#P" };
 
                 //foreach (ZenithWebServeur.DTO.clsMicparametreliste clsMicparametrelisteDTO in Objet)
                 //{

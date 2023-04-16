@@ -415,10 +415,10 @@ namespace ZenithWebServeur.WCF
 
                 Byte[] PU_PHOTO = null;
                 Byte[] PU_SIGNATURE = null;
-                if (clsMiccompteprocuration.PU_PHOTO != null)
-                    PU_PHOTO = System.Convert.FromBase64String(clsMiccompteprocuration.PU_PHOTO.ToString());
-                if (clsMiccompteprocuration.PU_SIGNATURE != null)
-                    PU_SIGNATURE = System.Convert.FromBase64String(clsMiccompteprocuration.PU_SIGNATURE.ToString());
+                if (Objet.PU_PHOTO != null)
+                    PU_PHOTO = System.Convert.FromBase64String(Objet.PU_PHOTO.ToString());
+                if (Objet.PU_SIGNATURE != null)
+                    PU_SIGNATURE = System.Convert.FromBase64String(Objet.PU_SIGNATURE.ToString());
 
                 clsMiccompteprocuration.PU_PHOTO = PU_PHOTO;
                 clsMiccompteprocuration.PU_SIGNATURE = PU_SIGNATURE;

@@ -2208,39 +2208,10 @@ namespace ZenithWebServeur.WCF
                 clsMiccredit.OP_AGENTCREDIT = Objet.OP_AGENTCREDIT.ToString();
                 clsMiccredit.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
                 clsMiccredit.CR_DATEMISEENPLACE = DateTime.Parse(Objet.CR_DATEMISEENPLACE.ToString());
-
-                //clsMiccredit.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
-                //clsMiccredit.PV_CODEPOINTVENTE = Objet.PV_CODEPOINTVENTE.ToString();
-                //clsMiccredit.CR_CODECREDIT = Objet.CR_CODECREDIT.ToString();
-                //clsMiccredit.NUMERODOSSIERCREDIT = Objet.NUMERODOSSIERCREDIT.ToString();
-                //clsMiccredit.CR_MONTANTCREDIT = Double.Parse(Objet.CR_MONTANTCREDIT.ToString());
-                //clsMiccredit.CR_MONTCREDITACCORDE = Double.Parse(Objet.CR_MONTCREDITACCORDE.ToString());
-                //clsMiccredit.CL_CODECLIENT = Objet.CL_CODECLIENT.ToString();
-                //clsMiccredit.PS_CODESOUSPRODUIT = Objet.PS_CODESOUSPRODUIT.ToString();
-                //clsMiccredit.CO_CODECOMPTE = Objet.CO_CODECOMPTE.ToString();
-                //clsMiccredit.CR_MONTANTGARANTIE = Double.Parse(Objet.CR_MONTANTGARANTIE.ToString());
-                //clsMiccredit.CR_MONTANTEPARGNE = Double.Parse(Objet.CR_MONTANTEPARGNE.ToString());
-                //clsMiccredit.CR_DATEPECHEANCE = DateTime.Parse(Objet.CR_DATEPECHEANCE.ToString());
-                //clsMiccredit.CR_TAUX = Double.Parse(Objet.CR_TAUX.ToString());
-                //clsMiccredit.CR_MONTANTFRAISFIXE = double.Parse(Objet.CR_MONTANTFRAISFIXE.ToString());
-                //clsMiccredit.CR_DUREE = int.Parse(Objet.CR_DUREE.ToString());
-                //clsMiccredit.CR_DIFFERE = int.Parse(Objet.CR_DIFFERE.ToString());
-                //clsMiccredit.PE_CODEPERIODICITE = Objet.PE_CODEPERIODICITE.ToString();
-                //clsMiccredit.CO_CODECOMMUNE = Objet.CO_CODECOMMUNE.ToString();
-                //clsMiccredit.AT_CODEACTIVITE = Objet.AT_CODEACTIVITE.ToString();
-                //clsMiccredit.AC_CODEACTIVITE = Objet.AC_CODEACTIVITE.ToString();
-                //clsMiccredit.TO_CODETOMBEE = Objet.TO_CODETOMBEE.ToString();
-                //clsMiccredit.CR_DESCRIPTIONACTIVITE = Objet.CR_DESCRIPTIONACTIVITE.ToString();
-                //clsMiccredit.CR_ADRESSEGEOGRAPHIQUEACTIVITE = Objet.CR_ADRESSEGEOGRAPHIQUEACTIVITE.ToString();
-                //clsMiccredit.OF_CODEOBJETFINANCEMENT = Objet.OF_CODEOBJETFINANCEMENT.ToString();
-                //clsMiccredit.OP_AGENTCREDIT = Objet.OP_AGENTCREDIT.ToString();
-                //clsMiccredit.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
-                //clsMiccredit.CR_DATEMISEENPLACE = DateTime.Parse(Objet.CR_DATEMISEENPLACE.ToString());
-
+                
                 clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
                 clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
-
-
+                
                 foreach (ZenithWebServeur.DTO.clsMiccreditfrais clsMiccreditDTO in Objet.clsMiccreditfrais)
                 {
                     ZenithWebServeur.BOJ.clsMiccreditfrais clsMiccreditfrais = new ZenithWebServeur.BOJ.clsMiccreditfrais();
@@ -2256,8 +2227,8 @@ namespace ZenithWebServeur.WCF
                     clsMiccreditfrais.CF_MONTANT = Double.Parse(clsMiccreditDTO.CF_MONTANT.ToString());
                     clsMiccreditfrais.CF_AFFICHERCOLONNE = clsMiccreditDTO.CF_AFFICHERCOLONNE.ToString();
 
-                    clsObjetEnvoi.OE_A = clsMiccreditDTO.clsObjetEnvoi.OE_A;
-                    clsObjetEnvoi.OE_Y = clsMiccreditDTO.clsObjetEnvoi.OE_Y;
+                    clsObjetEnvoi.OE_A = clsObjetEnvoi.OE_A;
+                    clsObjetEnvoi.OE_Y = clsObjetEnvoi.OE_Y;
 
                     clsMiccreditfraiss.Add(clsMiccreditfrais);
                 }
@@ -2757,6 +2728,7 @@ namespace ZenithWebServeur.WCF
                 clsMiccredit.PV_CODEPOINTVENTE = Objet.PV_CODEPOINTVENTE.ToString();
                 clsMiccredit.CODEPROCEDURE = Objet.CODEPROCEDURE.ToString();
                 clsMiccredit.DATEJOURNEE = DateTime.Parse(Objet.DATEJOURNEE.ToString());
+                clsMiccredit.CR_DATEMISEENPLACE = DateTime.Parse(Objet.DATEJOURNEE.ToString());
                 clsMiccredit.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
                 clsMiccredit.TS_CODETYPESCHEMACOMPTABLE = Objet.TS_CODETYPESCHEMACOMPTABLE.ToString();
 
@@ -3556,7 +3528,8 @@ namespace ZenithWebServeur.WCF
                 clsMiccredit.OP_AGENTCREDIT = Objet.OP_AGENTCREDIT.ToString();
                 clsMiccredit.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
                 clsMiccredit.CR_DATEMISEENPLACE = DateTime.Parse(Objet.CR_DATEMISEENPLACE.ToString());
-
+                clsMiccredit.TI_IDTIERS = Objet.TI_IDTIERS.ToString();
+                
                 clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
                 clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
 

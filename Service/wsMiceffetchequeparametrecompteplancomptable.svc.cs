@@ -60,21 +60,21 @@ namespace ZenithWebServeur.WCF
             clsDonnee.vogCleCryptage = clsObjetEnvoi.OE_D;
             clsDonnee.vogUtilisateur = clsObjetEnvoi.OE_X;
 
-            for (int Idx = 0; Idx < Objet.Count; Idx++)
-            {
-                //--TEST DES CHAMPS OBLIGATOIRES
-                DataSet = TestChampObligatoireInsertpvgAjouterListe(Objet[Idx]);
-                //--VERIFICATION DU RESULTAT DU TEST
-                if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
-                //--TEST DES TYPES DE DONNEES
-                DataSet = TestTypeDonnee(Objet[Idx]);
-                //--VERIFICATION DU RESULTAT DU TEST
-                if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
-                //--TEST CONTRAINTE
-                DataSet = TestTestContrainteListe(Objet[Idx]);
-                //--VERIFICATION DU RESULTAT DU TEST
-                if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
-            }
+            //for (int Idx = 0; Idx < Objet.Count; Idx++)
+            //{
+            //    //--TEST DES CHAMPS OBLIGATOIRES
+            //   // DataSet = TestChampObligatoireInsertpvgAjouterListe(Objet[Idx]);
+            //    //--VERIFICATION DU RESULTAT DU TEST
+            //   // if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
+            //    //--TEST DES TYPES DE DONNEES
+            //    DataSet = TestTypeDonnee(Objet[Idx]);
+            //    //--VERIFICATION DU RESULTAT DU TEST
+            //    if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
+            //    //--TEST CONTRAINTE
+            //    DataSet = TestTestContrainteListe(Objet[Idx]);
+            //    //--VERIFICATION DU RESULTAT DU TEST
+            //    if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
+            //}
 
             ZenithWebServeur.DTO.clsObjetRetour clsObjetRetour = new ZenithWebServeur.DTO.clsObjetRetour();
             try

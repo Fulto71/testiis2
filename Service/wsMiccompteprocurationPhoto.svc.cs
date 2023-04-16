@@ -169,8 +169,8 @@ namespace ZenithWebServeur.WCF
             dt.Columns.Add(new DataColumn("SL_CODEMESSAGE", typeof(string)));
             dt.Columns.Add(new DataColumn("SL_RESULTAT", typeof(string)));
             dt.Columns.Add(new DataColumn("SL_MESSAGE", typeof(string)));
-            dt.Columns.Add(new DataColumn("CM_PHOTO", typeof(string)));
-            dt.Columns.Add(new DataColumn("CM_SIGNATURE", typeof(string)));
+            dt.Columns.Add(new DataColumn("PU_PHOTO", typeof(string)));
+            dt.Columns.Add(new DataColumn("PU_SIGNATURE", typeof(string)));
 
             string json = "";
 

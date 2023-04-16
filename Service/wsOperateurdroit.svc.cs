@@ -99,6 +99,8 @@ namespace ZenithWebServeur.WCF
                     clsOperateurdroit.OD_IMPRIMER = clsOperateurdroitDTO.OD_IMPRIMER.ToString();
                     clsOperateurdroit.OD_IMPRIMERTOUT = clsOperateurdroitDTO.OD_IMPRIMERTOUT.ToString();
                     clsOperateurdroit.OD_NUMEROORDRE = int.Parse(clsOperateurdroitDTO.OD_NUMEROORDRE.ToString());
+                    clsOperateurdroit.LO_CODELOGICIEL = clsOperateurdroitDTO.LO_CODELOGICIEL.ToString();
+                    clsOperateurdroit.OB_RATTACHEA = clsOperateurdroitDTO.OB_RATTACHEA.ToString();
 
                     clsObjetEnvoi.OE_A = clsOperateurdroitDTO.clsObjetEnvoi.OE_A;
                     clsObjetEnvoi.OE_Y = clsOperateurdroitDTO.clsObjetEnvoi.OE_Y;

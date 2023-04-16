@@ -523,6 +523,7 @@ namespace ZenithWebServeur.WCF
                 //foreach (ZenithWebServeur.DTO.clsMiccreditsuivi clsMiccreditsuiviDTO in Objet)
                 //{
 
+                //clsMiccreditsuivi.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
                 clsMiccreditsuivi.SU_DATEDECISIONACCORD = DateTime.Parse(Objet.SU_DATEDECISIONACCORD.ToString());
                 clsMiccreditsuivi.SU_DATEDECISIONREJET = DateTime.Parse(Objet.SU_DATEDECISIONREJET.ToString());
 

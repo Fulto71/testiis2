@@ -886,7 +886,7 @@ namespace ZenithWebServeur.WCF
                     
                     for (int i = 0; i < DataSet.Tables[0].Rows.Count; i++)
                     {
-                        DataSet.Tables[0].Rows[i]["MB_IDTIERS_2"] = DataSet.Tables[0].Rows[i]["MB_IDTIERS"];
+                        DataSet.Tables[0].Rows[i]["MB_IDTIERS_2"] = DataSet.Tables[0].Rows[i]["MB_IDTIERS"].ToString();
                         DataSet.Tables[0].Rows[i]["SL_CODEMESSAGE"] = "00";
                         DataSet.Tables[0].Rows[i]["SL_RESULTAT"] = "TRUE";
                         DataSet.Tables[0].Rows[i]["SL_MESSAGE"] = "L'opération s'est réalisée avec succès";

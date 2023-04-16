@@ -380,6 +380,145 @@ namespace ZenithWebServeur.WCF
             return json;
         }
 
+
+         //LISTE
+        public string pvgTableLibelle(clsOperateurphoto Objet)
+        {
+            DataSet DataSet = new DataSet();
+            DataTable dt = new DataTable("TABLE");
+            dt.Columns.Add(new DataColumn("SL_CODEMESSAGE", typeof(string)));
+            dt.Columns.Add(new DataColumn("SL_RESULTAT", typeof(string)));
+            dt.Columns.Add(new DataColumn("SL_MESSAGE", typeof(string)));
+            dt.Columns.Add(new DataColumn("OH_PHOTO", typeof(string)));
+            dt.Columns.Add(new DataColumn("OH_SIGNATURE", typeof(string)));
+            dt.Columns.Add(new DataColumn("MG_PHOTO", typeof(string)));
+            dt.Columns.Add(new DataColumn("MG_SIGNATURE", typeof(string)));
+
+            string json = "";
+
+            ZenithWebServeur.BOJ.clsObjetEnvoi clsObjetEnvoi = new ZenithWebServeur.BOJ.clsObjetEnvoi();
+            ZenithWebServeur.BOJ.clsOperateurphoto clsOperateurphoto = new ZenithWebServeur.BOJ.clsOperateurphoto();
+            clsObjetEnvoi.OE_D = ConfigurationManager.AppSettings["OE_D"];
+            clsObjetEnvoi.OE_X = ConfigurationManager.AppSettings["OE_X"];
+            clsDonnee.vogCleCryptage = clsObjetEnvoi.OE_D;
+            clsDonnee.vogUtilisateur = clsObjetEnvoi.OE_X;
+
+            //for (int Idx = 0; Idx < Objet.Count; Idx++)
+            //{
+            //--TEST DES CHAMPS OBLIGATOIRES
+            //DataSet = TestChampObligatoireListe(Objet);
+            //--VERIFICATION DU RESULTAT DU TEST
+            //if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
+            //--TEST DES TYPES DE DONNEES
+            //DataSet = TestTypeDonnee(Objet);
+            //--VERIFICATION DU RESULTAT DU TEST
+            //if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
+            //--TEST CONTRAINTE
+            //DataSet = TestTestContrainteListe(Objet);
+            //--VERIFICATION DU RESULTAT DU TEST
+            //if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
+            //}
+
+            ZenithWebServeur.DTO.clsObjetRetour clsObjetRetour = new ZenithWebServeur.DTO.clsObjetRetour();
+            try
+            {
+                //clsDonnee.pvgConnectionBase();
+                clsDonnee.pvgDemarrerTransaction();
+                clsObjetEnvoi.OE_PARAM = new string[] { Objet.OP_CODEOPERATEUR };
+
+                //foreach (ZenithWebServeur.DTO.clsOperateurphoto clsOperateurphotoDTO in Objet)
+                //{
+
+                clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
+                clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
+                ZenithWebServeur.BOJ.clsOperateurphoto clsOperateurphotoBOJ = new ZenithWebServeur.BOJ.clsOperateurphoto();
+                clsOperateurphotoWSBLL clsOperateurphotoWSBLL = new clsOperateurphotoWSBLL();
+                clsOperateurphotoBOJ = clsOperateurphotoWSBLL.pvgTableLibelle(clsDonnee, clsObjetEnvoi);
+                //    clsMiccommercialPhotos = new List<Tontine.DTO.clsMiccommercialPhoto>();
+                if (clsOperateurphotoBOJ != null )
+                {
+                    //foreach (DataRow row in DataSet.Tables[0].Rows)
+                    //{
+                    string OH_PHOTOBASE64 = "";
+                    string OH_SIGNATUREBASE64 = "";
+                    //  Tontine.DTO.clsMiccommercialPhoto clsMiccommercialPhoto = new Tontine.DTO.clsMiccommercialPhoto();
+                    if (clsOperateurphotoBOJ.OH_PHOTO != null || clsOperateurphotoBOJ.OH_SIGNATURE != null)
+                    {
+                        if (clsOperateurphotoBOJ.OH_PHOTO != null)
+                            OH_PHOTOBASE64 = Convert.ToBase64String(clsOperateurphotoBOJ.OH_PHOTO);
+                        if (clsOperateurphotoBOJ.OH_SIGNATURE != null)
+                            OH_SIGNATUREBASE64 = Convert.ToBase64String(clsOperateurphotoBOJ.OH_SIGNATURE);
+
+                        DataSet = new DataSet();
+                        DataRow dr = dt.NewRow();
+                        dr["OH_PHOTO"] = OH_PHOTOBASE64;
+                        dr["OH_SIGNATURE"] = OH_SIGNATUREBASE64;
+                        dr["MG_PHOTO"] = OH_PHOTOBASE64;
+                        dr["MG_SIGNATURE"] = OH_SIGNATUREBASE64;
+                        dr["SL_CODEMESSAGE"] = "00";
+                        dr["SL_RESULTAT"] = "TRUE";
+                        dr["SL_MESSAGE"] = "Opération réalisée avec succès !!!";
+                        dt.Rows.Add(dr);
+                        DataSet.Tables.Add(dt);
+                        json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                    }
+
+                    else
+                    {
+                        DataSet = new DataSet();
+                        DataRow dr = dt.NewRow();
+                        dr["SL_CODEMESSAGE"] = "99";
+                        dr["SL_RESULTAT"] = "FALSE";
+                        dr["SL_MESSAGE"] = "Aucun enregistrement n'a été trouvé";
+                        dt.Rows.Add(dr);
+                        DataSet.Tables.Add(dt);
+                        json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                    }
+
+                }
+            }
+            catch (SqlException SQLEx)
+            {
+                DataSet = new DataSet();
+                DataRow dr = dt.NewRow();
+                dr["SL_CODEMESSAGE"] = "99";
+                dr["SL_RESULTAT"] = "FALSE";
+                dr["SL_MESSAGE"] = (SQLEx.Number == 2601 || SQLEx.Number == 2627) ? clsMessagesWSBLL.pvgTableLibelle(clsDonnee, "GNE0003").MS_LIBELLEMESSAGE : SQLEx.Message;
+                dt.Rows.Add(dr);
+                DataSet.Tables.Add(dt);
+                json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                //Execution du log
+                Log.Error(SQLEx.Message, null);
+            }
+            catch (Exception SQLEx)
+            {
+                DataSet = new DataSet();
+                DataRow dr = dt.NewRow();
+                dr["SL_CODEMESSAGE"] = "99";
+                dr["SL_RESULTAT"] = "FALSE";
+                dr["SL_MESSAGE"] = SQLEx.Message;
+                dt.Rows.Add(dr);
+                DataSet.Tables.Add(dt);
+                json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                //Execution du log
+                Log.Error(SQLEx.Message, null);
+            }
+
+            finally
+            {
+                bool OR_BOOLEEN = true;
+                if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE")
+                {
+                    OR_BOOLEEN = false;
+                }
+                clsDonnee.pvgTerminerTransaction(!OR_BOOLEEN);
+                //clsDonnee.pvgDeConnectionBase();
+            }
+
+            return json;
+        }
+
+
         //LISTE
         public string pvgChargerDansDataSet(clsMicpointvente Objet)
         {

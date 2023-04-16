@@ -471,12 +471,12 @@ namespace ZenithWebServeur.WCF
                 clsOperateur.OP_AGENTDECOLLECTEETDECREDIT = Objet.OP_AGENTDECOLLECTEETDECREDIT.ToString();
                 clsOperateur.OP_DATESAISIE = DateTime.Parse(Objet.OP_DATESAISIE.ToString());
                 clsOperateur.OP_MODIFICATIONPHOTOETSIGNATURECLIENT = Objet.OP_MODIFICATIONPHOTOETSIGNATURECLIENT.ToString();
-
+                clsOperateur.LO_CODELOGICIEL = Objet.LO_CODELOGICIEL.ToString();
                 clsOperateurphoto.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
                 clsOperateurphoto.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
-                if (clsOperateurphoto.OH_PHOTO != null)
+                if (Objet.OH_PHOTO != null)
                     clsOperateurphoto.OH_PHOTO = System.Convert.FromBase64String(Objet.OH_PHOTO.ToString());
-                if (clsOperateurphoto.OH_SIGNATURE != null)
+                if (Objet.OH_SIGNATURE != null)
                     clsOperateurphoto.OH_SIGNATURE = System.Convert.FromBase64String(Objet.OH_SIGNATURE.ToString());
 
                 clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
@@ -627,12 +627,13 @@ namespace ZenithWebServeur.WCF
                 clsOperateur.OP_AGENTDECOLLECTEETDECREDIT = Objet.OP_AGENTDECOLLECTEETDECREDIT.ToString();
                 clsOperateur.OP_DATESAISIE = DateTime.Parse(Objet.OP_DATESAISIE.ToString());
                 clsOperateur.OP_MODIFICATIONPHOTOETSIGNATURECLIENT = Objet.OP_MODIFICATIONPHOTOETSIGNATURECLIENT.ToString();
+                clsOperateur.LO_CODELOGICIEL = Objet.LO_CODELOGICIEL.ToString();
 
                 clsOperateurphoto.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
                 clsOperateurphoto.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
-                if (clsOperateurphoto.OH_PHOTO != null)
+                if (Objet.OH_PHOTO != null)
                     clsOperateurphoto.OH_PHOTO = System.Convert.FromBase64String(Objet.OH_PHOTO.ToString());
-                if (clsOperateurphoto.OH_SIGNATURE != null)
+                if (Objet.OH_SIGNATURE != null)
                     clsOperateurphoto.OH_SIGNATURE = System.Convert.FromBase64String(Objet.OH_SIGNATURE.ToString());
 
                 clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;

@@ -373,6 +373,7 @@ namespace ZenithWebServeur.WCF
             dt.Columns.Add(new DataColumn("SL_RESULTAT", typeof(string)));
             dt.Columns.Add(new DataColumn("SL_MESSAGE", typeof(string)));
             dt.Columns.Add(new DataColumn("SS_CODECOMPTESMS1", typeof(string)));
+            dt.Columns.Add(new DataColumn("CO_CODECOMPTE1", typeof(string)));
             string json = "";
 
             ZenithWebServeur.BOJ.clsObjetEnvoi clsObjetEnvoi = new ZenithWebServeur.BOJ.clsObjetEnvoi();
@@ -416,12 +417,14 @@ namespace ZenithWebServeur.WCF
                 {
                    
                     DataSet.Tables[0].Columns.Add(new DataColumn("SS_CODECOMPTESMS1", typeof(string)));
+                    DataSet.Tables[0].Columns.Add(new DataColumn("CO_CODECOMPTE1", typeof(string)));
                     DataSet.Tables[0].Columns.Add(new DataColumn("SL_CODEMESSAGE", typeof(string)));
                     DataSet.Tables[0].Columns.Add(new DataColumn("SL_RESULTAT", typeof(string)));
                     DataSet.Tables[0].Columns.Add(new DataColumn("SL_MESSAGE", typeof(string)));
                     for (int i = 0; i < DataSet.Tables[0].Rows.Count; i++)
                     {
-                       // DataSet.Tables[0].Rows[i]["SS_CODECOMPTESMS1"] = DataSet.Tables[i].SS_CODECOMPTESMS;
+                        DataSet.Tables[0].Rows[i]["SS_CODECOMPTESMS1"] = DataSet.Tables[0].Rows[i]["SS_CODECOMPTESMS"].ToString();
+                        DataSet.Tables[0].Rows[i]["CO_CODECOMPTE1"] = DataSet.Tables[0].Rows[i]["CO_CODECOMPTE"].ToString();
                         DataSet.Tables[0].Rows[i]["SL_CODEMESSAGE"] = "00";
                         DataSet.Tables[0].Rows[i]["SL_RESULTAT"] = "TRUE";
                         DataSet.Tables[0].Rows[i]["SL_MESSAGE"] = "L'opération s'est réalisée avec succès";

@@ -206,7 +206,8 @@ namespace ZenithWebServeur.WCF
                     clsRaprochementbancaire.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
                     clsRaprochementbancaire.PV_CODEPOINTVENTE = Objet.PV_CODEPOINTVENTE.ToString();
                     clsRaprochementbancaire.DATEJOURNEE = DateTime.Parse(Objet.DATEJOURNEE.ToString());
-
+                    clsRaprochementbancaire.MC_DATEPIECE = DateTime.Parse(Objet.DATEJOURNEE.ToString());
+                
                     clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
                     clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
                 //}
@@ -491,6 +492,7 @@ namespace ZenithWebServeur.WCF
             dt.Columns.Add(new DataColumn("SL_CODEMESSAGE", typeof(string)));
             dt.Columns.Add(new DataColumn("SL_RESULTAT", typeof(string)));
             dt.Columns.Add(new DataColumn("SL_MESSAGE", typeof(string)));
+            dt.Columns.Add(new DataColumn("RP_CODERAPPROCHEMENTNF", typeof(string)));
             string json = "";
 
             ZenithWebServeur.BOJ.clsObjetEnvoi clsObjetEnvoi = new ZenithWebServeur.BOJ.clsObjetEnvoi();
@@ -533,15 +535,17 @@ namespace ZenithWebServeur.WCF
 
                 clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
                 clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
-                
+
                 DataSet = clsRaprochementbancaireWSBLL.pvgChargerDansDataSet(clsDonnee, clsObjetEnvoi);
-                 if (DataSet.Tables[0].Rows.Count > 0)
+                if (DataSet.Tables[0].Rows.Count > 0)
                 {
                     DataSet.Tables[0].Columns.Add(new DataColumn("SL_CODEMESSAGE", typeof(string)));
                     DataSet.Tables[0].Columns.Add(new DataColumn("SL_RESULTAT", typeof(string)));
                     DataSet.Tables[0].Columns.Add(new DataColumn("SL_MESSAGE", typeof(string)));
+                    DataSet.Tables[0].Columns.Add(new DataColumn("RP_CODERAPPROCHEMENTNF", typeof(string)));
                     for (int i = 0; i < DataSet.Tables[0].Rows.Count; i++)
                     {
+                        DataSet.Tables[0].Rows[i]["RP_CODERAPPROCHEMENTNF"] = DataSet.Tables[0].Rows[i]["RP_CODERAPPROCHEMENT"].ToString();
                         DataSet.Tables[0].Rows[i]["SL_CODEMESSAGE"] = "00";
                         DataSet.Tables[0].Rows[i]["SL_RESULTAT"] = "TRUE";
                         DataSet.Tables[0].Rows[i]["SL_MESSAGE"] = "L'opération s'est réalisée avec succès";
@@ -562,7 +566,7 @@ namespace ZenithWebServeur.WCF
                 }
                 //}
             }
-             catch (SqlException SQLEx)
+            catch (SqlException SQLEx)
             {
                 DataSet = new DataSet();
                 DataRow dr = dt.NewRow();
@@ -602,5 +606,7 @@ namespace ZenithWebServeur.WCF
 
             return json;
         }
+
+
     }
 }

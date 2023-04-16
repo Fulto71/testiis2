@@ -78,8 +78,8 @@ namespace ZenithWebServeur.WCF
             ZenithWebServeur.DTO.clsObjetRetour clsObjetRetour = new ZenithWebServeur.DTO.clsObjetRetour();
             try
             {
-                //clsDonnee.pvgConnectionBase();
-                clsDonnee.pvgDemarrerTransaction();
+                clsDonnee.pvgConnectionBase();
+               // clsDonnee.pvgDemarrerTransaction();
                 clsObjetEnvoi.OE_PARAM = new string[] {  };
 
                 //foreach (ZenithWebServeur.DTO.clsTacheAutomatique clsTacheAutomatiqueDTO in Objet)
@@ -148,8 +148,8 @@ namespace ZenithWebServeur.WCF
                 {
                     OR_BOOLEEN = false;
                 }
-                clsDonnee.pvgTerminerTransaction(!OR_BOOLEEN);
-                //clsDonnee.pvgDeConnectionBase();
+               // clsDonnee.pvgTerminerTransaction(!OR_BOOLEEN);
+                clsDonnee.pvgDeConnectionBase();
             }
 
             return json;
@@ -197,8 +197,8 @@ namespace ZenithWebServeur.WCF
 
             try
             {
-                //clsDonnee.pvgConnectionBase();
-                clsDonnee.pvgDemarrerTransaction();
+                clsDonnee.pvgConnectionBase();
+               // clsDonnee.pvgDemarrerTransaction();
                 clsObjetEnvoi.OE_PARAM = new string[] { PO_CODEPROCEDUREAUTOMATIQUE };
 
                 //foreach (ZenithWebServeur.DTO.clsTacheAutomatique clsTacheAutomatiqueDTO in Objet)
@@ -267,8 +267,8 @@ namespace ZenithWebServeur.WCF
                 {
                     OR_BOOLEEN = false;
                 }
-                clsDonnee.pvgTerminerTransaction(!OR_BOOLEEN);
-                //clsDonnee.pvgDeConnectionBase();
+               // clsDonnee.pvgTerminerTransaction(!OR_BOOLEEN);
+                clsDonnee.pvgDeConnectionBase();
             }
 
             return json;

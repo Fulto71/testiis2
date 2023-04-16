@@ -746,7 +746,7 @@ namespace ZenithWebServeur.WCF
                     Objet.OB_NOMOBJET,
                     Objet.OP_CODEOPERATEUR,
                     Objet.PS_CODESOUSPRODUIT
-};
+                };
 
                 //foreach (ZenithWebServeur.DTO.clsTypeschemacomptable clsTypeschemacomptableDTO in Objet)
                 //{

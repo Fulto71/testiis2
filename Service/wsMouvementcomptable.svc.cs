@@ -116,7 +116,7 @@ namespace ZenithWebServeur.WCF
 
                     clsEtatmouvementacomptabilisers1.Add(clsEtatmouvementacomptabiliser);
                 }
-                clsObjetRetour.SetValue(true, clsMouvementcomptableWSBLL.pvgAjouterComptabilisation(clsDonnee, clsEtatmouvementacomptabilisers1, clsEtatmouvementacomptabilisers2, clsEtatmouvementacomptabilisers3, clsBilletages, clsObjetEnvoi));
+                clsObjetRetour.SetValue(true, clsMouvementcomptableWSBLL.pvgAjouterComptabilisation(clsDonnee, clsEtatmouvementacomptabilisers1, clsEtatmouvementacomptabilisers2, clsEtatmouvementacomptabilisers3, null, clsObjetEnvoi));
                 if (clsObjetRetour.OR_BOOLEEN)
                 {
                     DataSet = new DataSet();
@@ -1058,26 +1058,47 @@ namespace ZenithWebServeur.WCF
 
                     // clsEtatmouvementacomptabilisers
                     clsMouvementcomptable.AG_CODEAGENCE = clsMouvementcomptableDTO.AG_CODEAGENCE.ToString();
-                    clsMouvementcomptable.MC_DATEPIECE = DateTime.Parse(clsMouvementcomptableDTO.MC_DATEPIECE.ToString());
-                    clsMouvementcomptable.TABLE_NAME = clsMouvementcomptableDTO.TABLE_NAME.ToString();
-                    clsMouvementcomptable.IN_VALEURID = clsMouvementcomptableDTO.IN_VALEURID.ToString();
-                    clsMouvementcomptable.NB_ID = clsMouvementcomptableDTO.NB_ID.ToString();
-                    clsMouvementcomptable.MC_NUMPIECE = clsMouvementcomptableDTO.MC_NUMPIECE.ToString();
-                    clsMouvementcomptable.MC_REFERENCEPIECE = clsMouvementcomptableDTO.MC_REFERENCEPIECE.ToString();
-                    clsMouvementcomptable.TS_CODETYPESCHEMACOMPTABLE = clsMouvementcomptableDTO.TS_CODETYPESCHEMACOMPTABLE.ToString();
-                    clsMouvementcomptable.OP_CODEOPERATEUR = clsMouvementcomptableDTO.OP_CODEOPERATEUR.ToString();
-                    clsMouvementcomptable.MR_CODEMODEREGLEMENT = clsMouvementcomptableDTO.MR_CODEMODEREGLEMENT.ToString();
+                    clsMouvementcomptable.PV_CODEPOINTVENTE = clsMouvementcomptableDTO.PV_CODEPOINTVENTE.ToString();
                     clsMouvementcomptable.JO_CODEJOURNAL = clsMouvementcomptableDTO.JO_CODEJOURNAL.ToString();
+                    clsMouvementcomptable.MC_DATEPIECE = DateTime.Parse(clsMouvementcomptableDTO.MC_DATEPIECE.ToString());
+                    clsMouvementcomptable.PL_NUMCOMPTE = clsMouvementcomptableDTO.PL_NUMCOMPTE.ToString();
                     clsMouvementcomptable.CO_CODECOMPTE1 = clsMouvementcomptableDTO.CO_CODECOMPTE1.ToString();
-                    clsMouvementcomptable.PL_CODENUMCOMPTE = clsMouvementcomptableDTO.PL_CODENUMCOMPTE.ToString();
+                    clsMouvementcomptable.MC_REFERENCEPIECE = clsMouvementcomptableDTO.MC_REFERENCEPIECE.ToString();
                     clsMouvementcomptable.MC_LIBELLEOPERATION = clsMouvementcomptableDTO.MC_LIBELLEOPERATION.ToString();
-                    clsMouvementcomptable.PI_CODEPIECE = clsMouvementcomptableDTO.PI_CODEPIECE.ToString();
-                    clsMouvementcomptable.MC_NUMPIECETIERS = clsMouvementcomptableDTO.MC_NUMPIECETIERS.ToString();
-                    clsMouvementcomptable.MC_NOMTIERS = clsMouvementcomptableDTO.MC_NOMTIERS.ToString();
-                    clsMouvementcomptable.MC_SENSBILLETAGE = clsMouvementcomptableDTO.MC_SENSBILLETAGE.ToString();
                     clsMouvementcomptable.MC_MONTANTDEBIT = Double.Parse(clsMouvementcomptableDTO.MC_MONTANTDEBIT.ToString());
                     clsMouvementcomptable.MC_MONTANTCREDIT = Double.Parse(clsMouvementcomptableDTO.MC_MONTANTCREDIT.ToString());
-                    clsMouvementcomptable.MC_ANNULATION = clsMouvementcomptableDTO.MC_ANNULATION.ToString();
+                    clsMouvementcomptable.OP_CODEOPERATEUR = clsMouvementcomptableDTO.OP_CODEOPERATEUR.ToString();
+                    clsMouvementcomptable.SO_CODESOCIETE = clsMouvementcomptableDTO.SO_CODESOCIETE.ToString();
+                    clsMouvementcomptable.MR_CODEMODEREGLEMENT = clsMouvementcomptableDTO.MR_CODEMODEREGLEMENT.ToString();
+                    clsMouvementcomptable.EM_NOMOBJET = clsMouvementcomptableDTO.EM_NOMOBJET.ToString();
+                    clsMouvementcomptable.NUMEROCOMPTE = clsMouvementcomptableDTO.NUMEROCOMPTE.ToString();
+                    clsMouvementcomptable.PV_RAISONSOCIAL = clsMouvementcomptableDTO.PV_RAISONSOCIAL.ToString();
+                    clsMouvementcomptable.CL_IDCLIENT = clsMouvementcomptableDTO.CL_IDCLIENT.ToString();
+                    clsMouvementcomptable.CL_TELEPHONE = clsMouvementcomptableDTO.CL_TELEPHONE.ToString();
+                    //clsMouvementcomptable.MOUVEMENTCOMPTABLEANALYTIQUE = clsMouvementcomptableDTO.MOUVEMENTCOMPTABLEANALYTIQUE;
+                    clsMouvementcomptable.TS_CODETYPESCHEMACOMPTABLE = clsMouvementcomptableDTO.TS_CODETYPESCHEMACOMPTABLE.ToString();
+
+                    //clsMouvementcomptable.AG_CODEAGENCE = clsMouvementcomptableDTO.AG_CODEAGENCE.ToString();
+                    //clsMouvementcomptable.MC_DATEPIECE = DateTime.Parse(clsMouvementcomptableDTO.MC_DATEPIECE.ToString());
+                    //clsMouvementcomptable.TABLE_NAME = clsMouvementcomptableDTO.TABLE_NAME.ToString();
+                    //clsMouvementcomptable.IN_VALEURID = clsMouvementcomptableDTO.IN_VALEURID.ToString();
+                    //clsMouvementcomptable.NB_ID = clsMouvementcomptableDTO.NB_ID.ToString();
+                    //clsMouvementcomptable.MC_NUMPIECE = clsMouvementcomptableDTO.MC_NUMPIECE.ToString();
+                    //clsMouvementcomptable.MC_REFERENCEPIECE = clsMouvementcomptableDTO.MC_REFERENCEPIECE.ToString();
+                    //clsMouvementcomptable.TS_CODETYPESCHEMACOMPTABLE = clsMouvementcomptableDTO.TS_CODETYPESCHEMACOMPTABLE.ToString();
+                    //clsMouvementcomptable.OP_CODEOPERATEUR = clsMouvementcomptableDTO.OP_CODEOPERATEUR.ToString();
+                    //clsMouvementcomptable.MR_CODEMODEREGLEMENT = clsMouvementcomptableDTO.MR_CODEMODEREGLEMENT.ToString();
+                    //clsMouvementcomptable.JO_CODEJOURNAL = clsMouvementcomptableDTO.JO_CODEJOURNAL.ToString();
+                    //clsMouvementcomptable.CO_CODECOMPTE1 = clsMouvementcomptableDTO.CO_CODECOMPTE1.ToString();
+                    //clsMouvementcomptable.PL_CODENUMCOMPTE = clsMouvementcomptableDTO.PL_CODENUMCOMPTE.ToString();
+                    //clsMouvementcomptable.MC_LIBELLEOPERATION = clsMouvementcomptableDTO.MC_LIBELLEOPERATION.ToString();
+                    //clsMouvementcomptable.PI_CODEPIECE = clsMouvementcomptableDTO.PI_CODEPIECE.ToString();
+                    //clsMouvementcomptable.MC_NUMPIECETIERS = clsMouvementcomptableDTO.MC_NUMPIECETIERS.ToString();
+                    //clsMouvementcomptable.MC_NOMTIERS = clsMouvementcomptableDTO.MC_NOMTIERS.ToString();
+                    //clsMouvementcomptable.MC_SENSBILLETAGE = clsMouvementcomptableDTO.MC_SENSBILLETAGE.ToString();
+                    //clsMouvementcomptable.MC_MONTANTDEBIT = Double.Parse(clsMouvementcomptableDTO.MC_MONTANTDEBIT.ToString());
+                    //clsMouvementcomptable.MC_MONTANTCREDIT = Double.Parse(clsMouvementcomptableDTO.MC_MONTANTCREDIT.ToString());
+                    //clsMouvementcomptable.MC_ANNULATION = clsMouvementcomptableDTO.MC_ANNULATION.ToString();
 
                     clsObjetEnvoi.OE_A = clsMouvementcomptableDTO.clsObjetEnvoi.OE_A;
                     clsObjetEnvoi.OE_Y = clsMouvementcomptableDTO.clsObjetEnvoi.OE_Y;
@@ -2349,7 +2370,7 @@ namespace ZenithWebServeur.WCF
                 //{
 
                 clsMouvementcomptable.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
-                clsMouvementcomptable.MC_DATEPIECECOMPTABILISATION = DateTime.Parse(Objet.MC_DATEPIECECOMPTABILISATION.ToString());
+                clsMouvementcomptable.MC_DATESAISIE = DateTime.Parse(Objet.MC_DATESAISIE.ToString());
                 clsMouvementcomptable.MC_DATEPIECE = DateTime.Parse(Objet.MC_DATEPIECE.ToString());
                 clsMouvementcomptable.MC_NUMPIECE = Objet.MC_NUMPIECE.ToString();
                 clsMouvementcomptable.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
@@ -2760,6 +2781,197 @@ namespace ZenithWebServeur.WCF
                         }
 
                     // clsObjetRetour.SetValue(true, clsMouvementcomptableWSBLL.pvgAjouterComptabilisation(clsDonnee, clsEtatmouvementacomptabilisers1, clsEtatmouvementacomptabilisers2, clsEtatmouvementacomptabilisers3, clsBilletages, clsObjetEnvoi), clsMessagesWSBLL.pvgTableLibelle(clsDonnee, "GNE0069").MS_LIBELLEMESSAGE);
+                    clsMouvementcomptable = clsMouvementcomptableWSBLL.pvgAjouterComptabilisation(clsDonnee, clsEtatmouvementacomptabilisers1, clsEtatmouvementacomptabilisers2, clsEtatmouvementacomptabilisers3, null, clsObjetEnvoi);
+                }
+
+
+                // clsObjetRetour.SetValue(true, clsMouvementcomptableWSBLL.pvgAjouterComptabilisation(clsDonnee, clsEtatmouvementacomptabilisers1, clsEtatmouvementacomptabilisers2, clsEtatmouvementacomptabilisers3, clsBilletages, clsObjetEnvoi));
+                if (clsMouvementcomptable != null)
+                {
+                    DataSet = new DataSet();
+                    DataRow dr = dt.NewRow();
+                    dr["SL_CODEMESSAGE"] = "00";
+                    dr["NUMEROBORDEREAU"] = clsMouvementcomptable.NUMEROBORDEREAU;
+                    dr["SOLDECOMPTE"] = clsMouvementcomptable.SOLDECOMPTE;
+                    dr["SL_RESULTAT"] = "TRUE";
+                    dr["SL_MESSAGE"] = "L'opération s'est réalisée avec succès";
+                    dt.Rows.Add(dr);
+                    DataSet.Tables.Add(dt);
+                    json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                }
+            }
+            catch (SqlException SQLEx)
+            {
+                DataSet = new DataSet();
+                DataRow dr = dt.NewRow();
+                dr["SL_CODEMESSAGE"] = "99";
+                dr["SL_RESULTAT"] = "FALSE";
+                dr["SL_MESSAGE"] = (SQLEx.Number == 2601 || SQLEx.Number == 2627) ? clsMessagesWSBLL.pvgTableLibelle(clsDonnee, "GNE0003").MS_LIBELLEMESSAGE : SQLEx.Message;
+                dt.Rows.Add(dr);
+                DataSet.Tables.Add(dt);
+                json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                //Execution du log
+                Log.Error(SQLEx.Message, null);
+            }
+            catch (Exception SQLEx)
+            {
+                DataSet = new DataSet();
+                DataRow dr = dt.NewRow();
+                dr["SL_CODEMESSAGE"] = "99";
+                dr["SL_RESULTAT"] = "FALSE";
+                dr["SL_MESSAGE"] = SQLEx.Message;
+                dt.Rows.Add(dr);
+                DataSet.Tables.Add(dt);
+                json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                //Execution du log
+                Log.Error(SQLEx.Message, null);
+            }
+
+            finally
+            {
+                bool OR_BOOLEEN = true;
+                if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE")
+                {
+                    OR_BOOLEEN = false;
+                }
+                clsDonnee.pvgTerminerTransaction(!OR_BOOLEEN);
+                //clsDonnee.pvgDeConnectionBase();
+            }
+
+            return json;
+        }
+
+
+
+        public string pvgAjouterComptabilisation_second1(List<clsMouvementcomptableOperationdeCaisse> Objet)
+        {
+            DataSet DataSet = new DataSet();
+            DataTable dt = new DataTable("TABLE");
+            dt.Columns.Add(new DataColumn("SL_CODEMESSAGE", typeof(string)));
+            dt.Columns.Add(new DataColumn("SL_RESULTAT", typeof(string)));
+            dt.Columns.Add(new DataColumn("SL_MESSAGE", typeof(string)));
+            dt.Columns.Add(new DataColumn("NUMEROBORDEREAU", typeof(string)));
+            dt.Columns.Add(new DataColumn("SOLDECOMPTE", typeof(string)));
+            string json = "";
+
+            ZenithWebServeur.BOJ.clsObjetEnvoi clsObjetEnvoi = new ZenithWebServeur.BOJ.clsObjetEnvoi();
+            //List<ZenithWebServeur.BOJ.clsEtatmouvementacomptabiliser> clsEtatmouvementacomptabilisers1 = new List<ZenithWebServeur.BOJ.clsEtatmouvementacomptabiliser>();
+            //List<ZenithWebServeur.BOJ.clsEtatmouvementacomptabiliser> clsEtatmouvementacomptabilisers2 = new List<ZenithWebServeur.BOJ.clsEtatmouvementacomptabiliser>();
+            //List<ZenithWebServeur.BOJ.clsEtatmouvementacomptabiliser> clsEtatmouvementacomptabilisers3 = new List<ZenithWebServeur.BOJ.clsEtatmouvementacomptabiliser>();
+            //List<ZenithWebServeur.BOJ.clsBilletage> clsBilletages = new List<ZenithWebServeur.BOJ.clsBilletage>();
+            clsObjetEnvoi.OE_D = ConfigurationManager.AppSettings["OE_D"];
+            clsObjetEnvoi.OE_X = ConfigurationManager.AppSettings["OE_X"];
+            clsDonnee.vogCleCryptage = clsObjetEnvoi.OE_D;
+            clsDonnee.vogUtilisateur = clsObjetEnvoi.OE_X;
+
+            for (int Idx = 0; Idx < Objet.Count; Idx++)
+            {
+                //--TEST DES CHAMPS OBLIGATOIRES
+                //  DataSet = TestChampObligatoireInsert2(Objet[Idx]);
+                //--VERIFICATION DU RESULTAT DU TEST
+                //    if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
+                //--TEST DES TYPES DE DONNEES
+                // DataSet = TestTypeDonnee(Objet[Idx]);
+                //--VERIFICATION DU RESULTAT DU TEST
+                //  if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
+                //--TEST CONTRAINTE
+                // DataSet = TestTestContrainteListe(Objet[Idx]);
+                //--VERIFICATION DU RESULTAT DU TEST
+                // if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
+            }
+
+            ZenithWebServeur.DTO.clsObjetRetour clsObjetRetour = new ZenithWebServeur.DTO.clsObjetRetour();
+            try
+            {
+                //clsDonnee.pvgConnectionBase();
+                clsDonnee.pvgDemarrerTransaction();
+                clsObjetEnvoi.OE_PARAM = new string[] { };
+                ZenithWebServeur.BOJ.clsMouvementcomptable clsMouvementcomptable = new ZenithWebServeur.BOJ.clsMouvementcomptable();
+                foreach (ZenithWebServeur.DTO.clsMouvementcomptableOperationdeCaisse clsMouvementcomptableDTO in Objet)
+                {
+
+                    //  clsObjetEnvoi.OE_A = clsMouvementcomptableDTO.clsObjetEnvoi.OE_A;
+                    //  clsObjetEnvoi.OE_Y = clsMouvementcomptableDTO.clsObjetEnvoi.OE_Y;
+
+                    List<ZenithWebServeur.BOJ.clsEtatmouvementacomptabiliser> clsEtatmouvementacomptabilisers1 = new List<ZenithWebServeur.BOJ.clsEtatmouvementacomptabiliser>();
+                    List<ZenithWebServeur.BOJ.clsEtatmouvementacomptabiliser> clsEtatmouvementacomptabilisers2 = new List<ZenithWebServeur.BOJ.clsEtatmouvementacomptabiliser>();
+                    List<ZenithWebServeur.BOJ.clsEtatmouvementacomptabiliser> clsEtatmouvementacomptabilisers3 = new List<ZenithWebServeur.BOJ.clsEtatmouvementacomptabiliser>();
+                    List<ZenithWebServeur.BOJ.clsBilletage> clsBilletages = new List<ZenithWebServeur.BOJ.clsBilletage>();
+
+                    if (clsMouvementcomptableDTO.clsMouvementcomptable1 != null)
+                        foreach (ZenithWebServeur.DTO.clsMouvementcomptable clsEtatmouvementacomptabiliserDTO in clsMouvementcomptableDTO.clsMouvementcomptable1)
+                        {
+                            ZenithWebServeur.BOJ.clsEtatmouvementacomptabiliser clsEtatmouvementacomptabiliser = new ZenithWebServeur.BOJ.clsEtatmouvementacomptabiliser();
+                            clsEtatmouvementacomptabiliser.AG_CODEAGENCE = clsEtatmouvementacomptabiliserDTO.AG_CODEAGENCE.ToString();
+                            clsEtatmouvementacomptabiliser.EM_DATEPIECE = DateTime.Parse(clsEtatmouvementacomptabiliserDTO.EM_DATEPIECE.ToString());
+                            clsEtatmouvementacomptabiliser.CO_CODECOMPTE = clsEtatmouvementacomptabiliserDTO.CO_CODECOMPTE.ToString();
+                            clsEtatmouvementacomptabiliser.EM_NOMOBJET = clsEtatmouvementacomptabiliserDTO.EM_NOMOBJET.ToString();
+                            clsEtatmouvementacomptabiliser.EM_SCHEMACOMPTABLECODE = clsEtatmouvementacomptabiliserDTO.EM_SCHEMACOMPTABLECODE.ToString();
+                            clsEtatmouvementacomptabiliser.EM_NUMEROSEQUENCE = clsEtatmouvementacomptabiliserDTO.EM_NUMEROSEQUENCE.ToString();
+                            clsEtatmouvementacomptabiliser.EM_REFERENCEPIECE = clsEtatmouvementacomptabiliserDTO.EM_REFERENCEPIECE.ToString();
+                            clsEtatmouvementacomptabiliser.EM_LIBELLEOPERATION = clsEtatmouvementacomptabiliserDTO.EM_LIBELLEOPERATION.ToString();
+                            clsEtatmouvementacomptabiliser.EM_NOMTIERS = clsEtatmouvementacomptabiliserDTO.EM_NOMTIERS.ToString();
+                            clsEtatmouvementacomptabiliser.PI_CODEPIECE = clsEtatmouvementacomptabiliserDTO.PI_CODEPIECE.ToString();
+                            clsEtatmouvementacomptabiliser.EM_NUMPIECETIERS = clsEtatmouvementacomptabiliserDTO.EM_NUMPIECETIERS.ToString();
+                            clsEtatmouvementacomptabiliser.TS_CODETYPESCHEMACOMPTABLE = clsEtatmouvementacomptabiliserDTO.TS_CODETYPESCHEMACOMPTABLE.ToString();
+                            clsEtatmouvementacomptabiliser.EM_MONTANT = Double.Parse(clsEtatmouvementacomptabiliserDTO.EM_MONTANT.ToString());
+                            clsEtatmouvementacomptabiliser.OP_CODEOPERATEUR = clsEtatmouvementacomptabiliserDTO.OP_CODEOPERATEUR.ToString();
+                            clsEtatmouvementacomptabiliser.SC_LIGNECACHEE = clsEtatmouvementacomptabiliserDTO.SC_LIGNECACHEE.ToString();
+                            clsEtatmouvementacomptabiliser.EM_SENSBILLETAGE = clsEtatmouvementacomptabiliserDTO.EM_SENSBILLETAGE.ToString();
+                            clsEtatmouvementacomptabiliser.PL_CODENUMCOMPTE = clsEtatmouvementacomptabiliserDTO.PL_CODENUMCOMPTE.ToString();
+
+                            clsEtatmouvementacomptabilisers1.Add(clsEtatmouvementacomptabiliser);
+                        }
+
+                    if (clsMouvementcomptableDTO.clsMouvementcomptable2 != null)
+                        foreach (ZenithWebServeur.DTO.clsMouvementcomptable clsEtatmouvementacomptabiliserDTO in clsMouvementcomptableDTO.clsMouvementcomptable2)
+                        {
+                            ZenithWebServeur.BOJ.clsEtatmouvementacomptabiliser clsEtatmouvementacomptabiliser = new ZenithWebServeur.BOJ.clsEtatmouvementacomptabiliser();
+                            clsEtatmouvementacomptabiliser.TS_CODETYPESCHEMACOMPTABLE = clsEtatmouvementacomptabiliserDTO.TS_CODETYPESCHEMACOMPTABLE.ToString();
+                            clsEtatmouvementacomptabiliser.AG_CODEAGENCE = clsEtatmouvementacomptabiliserDTO.AG_CODEAGENCE.ToString();
+                            clsEtatmouvementacomptabiliser.EM_DATEPIECE = DateTime.Parse(clsEtatmouvementacomptabiliserDTO.EM_DATEPIECE.ToString());
+                            clsEtatmouvementacomptabiliser.CO_CODECOMPTE = clsEtatmouvementacomptabiliserDTO.CO_CODECOMPTE.ToString();
+                            clsEtatmouvementacomptabiliser.PL_CODENUMCOMPTE = clsEtatmouvementacomptabiliserDTO.PL_CODENUMCOMPTE.ToString();
+                            clsEtatmouvementacomptabiliser.EM_REFERENCEPIECE = clsEtatmouvementacomptabiliserDTO.EM_REFERENCEPIECE.ToString();
+                            clsEtatmouvementacomptabiliser.EM_LIBELLEOPERATION = clsEtatmouvementacomptabiliserDTO.EM_LIBELLEOPERATION.ToString();
+                            clsEtatmouvementacomptabiliser.EM_MONTANT = Double.Parse(clsEtatmouvementacomptabiliserDTO.EM_MONTANT.ToString());
+                            clsEtatmouvementacomptabiliser.OP_CODEOPERATEUR = clsEtatmouvementacomptabiliserDTO.OP_CODEOPERATEUR.ToString();
+                            clsEtatmouvementacomptabiliser.SC_LIGNECACHEE = clsEtatmouvementacomptabiliserDTO.SC_LIGNECACHEE.ToString();
+
+                            clsEtatmouvementacomptabilisers2.Add(clsEtatmouvementacomptabiliser);
+                        }
+
+                    if (clsMouvementcomptableDTO.clsMouvementcomptable3 != null)
+                        foreach (ZenithWebServeur.DTO.clsMouvementcomptable clsEtatmouvementacomptabiliserDTO in clsMouvementcomptableDTO.clsMouvementcomptable3)
+                        {
+                            ZenithWebServeur.BOJ.clsEtatmouvementacomptabiliser clsEtatmouvementacomptabiliser = new ZenithWebServeur.BOJ.clsEtatmouvementacomptabiliser();
+                            clsEtatmouvementacomptabiliser.TS_CODETYPESCHEMACOMPTABLE = clsEtatmouvementacomptabiliserDTO.TS_CODETYPESCHEMACOMPTABLE.ToString();
+                            clsEtatmouvementacomptabiliser.AG_CODEAGENCE = clsEtatmouvementacomptabiliserDTO.AG_CODEAGENCE.ToString();
+                            clsEtatmouvementacomptabiliser.EM_DATEPIECE = DateTime.Parse(clsEtatmouvementacomptabiliserDTO.EM_DATEPIECE.ToString());
+                            clsEtatmouvementacomptabiliser.CO_CODECOMPTE = clsEtatmouvementacomptabiliserDTO.CO_CODECOMPTE.ToString();
+                            clsEtatmouvementacomptabiliser.PL_CODENUMCOMPTE = clsEtatmouvementacomptabiliserDTO.PL_CODENUMCOMPTE.ToString();
+                            clsEtatmouvementacomptabiliser.EM_REFERENCEPIECE = clsEtatmouvementacomptabiliserDTO.EM_REFERENCEPIECE.ToString();
+                            clsEtatmouvementacomptabiliser.EM_LIBELLEOPERATION = clsEtatmouvementacomptabiliserDTO.EM_LIBELLEOPERATION.ToString();
+                            clsEtatmouvementacomptabiliser.EM_MONTANT = Double.Parse(clsEtatmouvementacomptabiliserDTO.EM_MONTANT.ToString());
+                            clsEtatmouvementacomptabiliser.OP_CODEOPERATEUR = clsEtatmouvementacomptabiliserDTO.OP_CODEOPERATEUR.ToString();
+                            clsEtatmouvementacomptabiliser.SC_LIGNECACHEE = clsEtatmouvementacomptabiliserDTO.SC_LIGNECACHEE.ToString();
+
+                            clsEtatmouvementacomptabilisers3.Add(clsEtatmouvementacomptabiliser);
+                        }
+
+                    if (clsMouvementcomptableDTO.clsBilletages1 != null)
+                        foreach (ZenithWebServeur.DTO.clsMouvementcomptable clsBilletageDTO in clsMouvementcomptableDTO.clsBilletages1)
+                        {
+                            ZenithWebServeur.BOJ.clsBilletage clsBilletage = new ZenithWebServeur.BOJ.clsBilletage();
+                            clsBilletage.AG_CODEAGENCE = clsBilletageDTO.AG_CODEAGENCE;
+                            clsBilletage.CB_CODECOUPURE = clsBilletageDTO.CB_CODECOUPURE;
+                            clsBilletage.BI_QUANTITEENTREE = int.Parse(clsBilletageDTO.BI_QUANTITEENTREE);
+                            clsBilletage.BI_QUANTITESORTIE = int.Parse(clsBilletageDTO.BI_QUANTITESORTIE);
+
+                            clsBilletages.Add(clsBilletage);
+                        }
+
+                    // clsObjetRetour.SetValue(true, clsMouvementcomptableWSBLL.pvgAjouterComptabilisation(clsDonnee, clsEtatmouvementacomptabilisers1, clsEtatmouvementacomptabilisers2, clsEtatmouvementacomptabilisers3, clsBilletages, clsObjetEnvoi), clsMessagesWSBLL.pvgTableLibelle(clsDonnee, "GNE0069").MS_LIBELLEMESSAGE);
                     clsMouvementcomptable = clsMouvementcomptableWSBLL.pvgAjouterComptabilisation(clsDonnee, clsEtatmouvementacomptabilisers1, clsEtatmouvementacomptabilisers2, clsEtatmouvementacomptabilisers3, clsBilletages, clsObjetEnvoi);
                 }
 
@@ -2819,6 +3031,7 @@ namespace ZenithWebServeur.WCF
 
             return json;
         }
+
 
         public string pvgAjouterComptabilisationTontine1(List<clsMouvementcomptableOperationdeCaisse> Objet)
         {

@@ -1107,7 +1107,7 @@ namespace ZenithWebServeur.WCF
                      clsMiccompte.TI_NUMEROTIERS = clsMiccompteDTO.TI_NUMEROTIERS.ToString();
                      clsMiccompte.CO_OUVERTABLANC = clsMiccompteDTO.CO_OUVERTABLANC.ToString();
                      clsMiccompte.TS_CODETYPESCHEMACOMPTABLE = clsMiccompteDTO.TS_CODETYPESCHEMACOMPTABLE.ToString();*/
-
+                    var vlpDuree = clsMiccompteDTO.AG_CODEAGENCE.ToString();
                     clsMiccompte.AG_CODEAGENCE = clsMiccompteDTO.AG_CODEAGENCE.ToString();
                     clsMiccompte.PV_CODEPOINTVENTE = clsMiccompteDTO.PV_CODEPOINTVENTE.ToString();
                     clsMiccompte.TI_NUMEROTIERS = clsMiccompteDTO.TI_NUMEROTIERS.ToString();
@@ -1121,7 +1121,7 @@ namespace ZenithWebServeur.WCF
                     clsMiccompte.CO_OUVERTABLANC = clsMiccompteDTO.CO_OUVERTABLANC.ToString();
                     clsMiccompte.PL_CODEPARAMETRELISTE = clsMiccompteDTO.PL_CODEPARAMETRELISTE.ToString();
                     clsMiccompte.CC_VALEUR = clsMiccompteDTO.CC_VALEUR.ToString();
-                    clsMiccompte.CO_DATEFIN = DateTime.Parse(clsMiccompteDTO.CO_DATEFIN.ToString());
+                    clsMiccompte.CO_DATEFIN =  ZenithWebServeur.WSTOOLS.clsDate.ClasseDate.pvgDateAdd(DateTime.Parse(clsMiccompteDTO.CO_DATEOUVERTURE.ToString()),double.Parse(clsMiccompteDTO.DURRE), "M") ;//DateTime.Parse(clsMiccompteDTO.CO_DATEFIN.ToString());
 
 
                     clsMiccompteparametreliste = new BOJ.clsMiccompteparametreliste();
@@ -2959,6 +2959,7 @@ namespace ZenithWebServeur.WCF
                 clsMiccompte.PV_CODEPOINTVENTE = Objet.PV_CODEPOINTVENTE.ToString();
                 clsMiccompte.CODEPROCEDURE = Objet.CODEPROCEDURE.ToString();
                 clsMiccompte.DATEJOURNEE = DateTime.Parse(Objet.DATEJOURNEE.ToString());
+                clsMiccompte.CO_DATEOUVERTURE = DateTime.Parse(Objet.DATEJOURNEE.ToString());
                 clsMiccompte.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
                 clsMiccompte.TS_CODETYPESCHEMACOMPTABLE = Objet.TS_CODETYPESCHEMACOMPTABLE.ToString();
 
@@ -3067,6 +3068,7 @@ namespace ZenithWebServeur.WCF
                 clsMiccompte.PV_CODEPOINTVENTE = Objet.PV_CODEPOINTVENTE.ToString();
                 clsMiccompte.CODEPROCEDURE = Objet.CODEPROCEDURE.ToString();
                 clsMiccompte.DATEJOURNEE = DateTime.Parse(Objet.DATEJOURNEE.ToString());
+                clsMiccompte.CO_DATEOUVERTURE = DateTime.Parse(Objet.DATEJOURNEE.ToString());
                 clsMiccompte.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
                 clsMiccompte.TS_CODETYPESCHEMACOMPTABLE = Objet.TS_CODETYPESCHEMACOMPTABLE.ToString();
 

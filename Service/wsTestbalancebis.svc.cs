@@ -90,11 +90,11 @@ namespace ZenithWebServeur.WCF
                     clsTestbalancebis.SO_CODESOCIETE = clsTestbalancebisDTO.SO_CODESOCIETE.ToString();
                     clsTestbalancebis.AG_CODEAGENCE = clsTestbalancebisDTO.AG_CODEAGENCE.ToString();
                     clsTestbalancebis.PL_NUMCOMPTE = clsTestbalancebisDTO.PL_NUMCOMPTE.ToString();
-                    clsTestbalancebis.BA_DATEJOURNEECOMPTABLE = clsTestbalancebisDTO.BA_DATEJOURNEECOMPTABLE.ToString();
-                    clsTestbalancebis.BA_MONTANTPERIODEDEBIT = clsTestbalancebisDTO.BA_MONTANTPERIODEDEBIT.ToString();
-                    clsTestbalancebis.BA_MONTANTPERIODECREDIT = clsTestbalancebisDTO.BA_MONTANTPERIODECREDIT.ToString();
-                    clsTestbalancebis.BA_MONTANTPERIODEDEBIT1 = clsTestbalancebisDTO.BA_MONTANTPERIODEDEBIT1.ToString();
-                    clsTestbalancebis.BA_MONTANTPERIODECREDIT1 = clsTestbalancebisDTO.BA_MONTANTPERIODECREDIT1.ToString();
+                    clsTestbalancebis.BA_DATEJOURNEECOMPTABLE = DateTime.Parse(clsTestbalancebisDTO.BA_DATEJOURNEECOMPTABLE.ToString());
+                    clsTestbalancebis.BA_MONTANTPERIODEDEBIT = double.Parse(clsTestbalancebisDTO.BA_MONTANTPERIODEDEBIT.ToString());
+                    clsTestbalancebis.BA_MONTANTPERIODECREDIT = double.Parse(clsTestbalancebisDTO.BA_MONTANTPERIODECREDIT.ToString());
+                    clsTestbalancebis.BA_MONTANTPERIODEDEBIT1 = double.Parse(clsTestbalancebisDTO.BA_MONTANTPERIODEDEBIT1.ToString());
+                    clsTestbalancebis.BA_MONTANTPERIODECREDIT1 = double.Parse(clsTestbalancebisDTO.BA_MONTANTPERIODECREDIT1.ToString());
 
                     clsObjetEnvoi.OE_A = clsTestbalancebisDTO.clsObjetEnvoi.OE_A;
                 clsObjetEnvoi.OE_Y = clsTestbalancebisDTO.clsObjetEnvoi.OE_Y;

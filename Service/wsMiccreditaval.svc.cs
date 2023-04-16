@@ -438,6 +438,121 @@ namespace ZenithWebServeur.WCF
             return json;
         }
 
+
+        //MODIFICATION
+        public string pvgModifier3(clsMiccreditaval Objet)
+        {
+            DataSet DataSet = new DataSet();
+            DataTable dt = new DataTable("TABLE");
+            dt.Columns.Add(new DataColumn("SL_CODEMESSAGE", typeof(string)));
+            dt.Columns.Add(new DataColumn("SL_RESULTAT", typeof(string)));
+            dt.Columns.Add(new DataColumn("SL_MESSAGE", typeof(string)));
+            string json = "";
+
+            ZenithWebServeur.BOJ.clsObjetEnvoi clsObjetEnvoi = new ZenithWebServeur.BOJ.clsObjetEnvoi();
+            ZenithWebServeur.BOJ.clsMiccreditaval clsMiccreditaval = new ZenithWebServeur.BOJ.clsMiccreditaval();
+            clsObjetEnvoi.OE_D = ConfigurationManager.AppSettings["OE_D"];
+            clsObjetEnvoi.OE_X = ConfigurationManager.AppSettings["OE_X"];
+            clsDonnee.vogCleCryptage = clsObjetEnvoi.OE_D;
+            clsDonnee.vogUtilisateur = clsObjetEnvoi.OE_X;
+
+            //for (int Idx = 0; Idx < Objet.Count; Idx++)
+            //{
+            //--TEST DES CHAMPS OBLIGATOIRES
+            //DataSet = TestChampObligatoireUpdate(Objet);
+            ////--VERIFICATION DU RESULTAT DU TEST
+            //if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
+            ////--TEST DES TYPES DE DONNEES
+            //DataSet = TestTypeDonnee(Objet);
+            ////--VERIFICATION DU RESULTAT DU TEST
+            //if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
+            ////--TEST CONTRAINTE
+            //DataSet = TestTestContrainteListe(Objet);
+            ////--VERIFICATION DU RESULTAT DU TEST
+            //if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
+            //}
+
+            ZenithWebServeur.DTO.clsObjetRetour clsObjetRetour = new ZenithWebServeur.DTO.clsObjetRetour();
+            try
+            {
+                //clsDonnee.pvgConnectionBase();
+                clsDonnee.pvgDemarrerTransaction();
+                clsObjetEnvoi.OE_PARAM = new string[] { Objet.AG_CODEAGENCE, Objet.CR_CODECREDIT, Objet.AV_CODEAVAL };
+
+                //foreach (ZenithWebServeur.DTO.clsMiccreditaval clsMiccreditavalDTO in Objet)
+                //{
+
+                clsMiccreditaval.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
+                clsMiccreditaval.CR_CODECREDIT = Objet.CR_CODECREDIT.ToString();
+                clsMiccreditaval.AV_CODEAVAL = Objet.AV_CODEAVAL.ToString();
+                clsMiccreditaval.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
+                clsMiccreditaval.CL_CODECLIENT = Objet.CL_CODECLIENT.ToString();
+                clsMiccreditaval.AB_CODEAGENCEBANCAIRE = Objet.AB_CODEAGENCEBANCAIRE.ToString();
+                clsMiccreditaval.AV_NUMEROCOMPTEBANQUE = Objet.AV_NUMEROCOMPTEBANQUE.ToString();
+                clsMiccreditaval.AV_MONTANTSALAIRE = Double.Parse(Objet.AV_MONTANTSALAIRE.ToString());
+                clsMiccreditaval.AV_DATEMISEENPLACE = DateTime.Parse(Objet.AV_DATEMISEENPLACE.ToString());
+
+                clsMiccreditaval.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
+
+                clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
+                clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
+
+                clsObjetRetour.SetValue(true, clsMiccreditavalWSBLL.pvgModifier(clsDonnee, clsMiccreditaval, clsObjetEnvoi));
+                if (clsObjetRetour.OR_BOOLEEN)
+                {
+                    DataSet = new DataSet();
+                    DataRow dr = dt.NewRow();
+                    dr["SL_CODEMESSAGE"] = "00";
+                    dr["SL_RESULTAT"] = "TRUE";
+                    dr["SL_MESSAGE"] = "L'opération s'est réalisée avec succès";
+                    dt.Rows.Add(dr);
+                    DataSet.Tables.Add(dt);
+                    json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                }
+                //}
+            }
+            catch (SqlException SQLEx)
+            {
+                DataSet = new DataSet();
+                DataRow dr = dt.NewRow();
+                dr["SL_CODEMESSAGE"] = "99";
+                dr["SL_RESULTAT"] = "FALSE";
+                dr["SL_MESSAGE"] = (SQLEx.Number == 2601 || SQLEx.Number == 2627) ? clsMessagesWSBLL.pvgTableLibelle(clsDonnee, "GNE0003").MS_LIBELLEMESSAGE : SQLEx.Message;
+                dt.Rows.Add(dr);
+                DataSet.Tables.Add(dt);
+                json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                //Execution du log
+                Log.Error(SQLEx.Message, null);
+            }
+            catch (Exception SQLEx)
+            {
+                DataSet = new DataSet();
+                DataRow dr = dt.NewRow();
+                dr["SL_CODEMESSAGE"] = "99";
+                dr["SL_RESULTAT"] = "FALSE";
+                dr["SL_MESSAGE"] = SQLEx.Message;
+                dt.Rows.Add(dr);
+                DataSet.Tables.Add(dt);
+                json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                //Execution du log
+                Log.Error(SQLEx.Message, null);
+            }
+
+            finally
+            {
+                bool OR_BOOLEEN = true;
+                if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE")
+                {
+                    OR_BOOLEEN = false;
+                }
+                clsDonnee.pvgTerminerTransaction(!OR_BOOLEEN);
+                //clsDonnee.pvgDeConnectionBase();
+            }
+
+            return json;
+        }
+
+
         //AJOUT
         public string pvgAjouterListe2(List<clsMiccreditaval> Objet)
         {

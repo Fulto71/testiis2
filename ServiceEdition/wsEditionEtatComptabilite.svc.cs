@@ -217,7 +217,7 @@ namespace ZenithWebServeur.WCF
             clsEditionEtatComptabilite.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
             clsEditionEtatComptabilite.OP_CODEOPERATEUREDITION = Objet.OP_CODEOPERATEUREDITION.ToString();
             clsEditionEtatComptabilite.PS_CODESOUSPRODUIT = Objet.PS_CODESOUSPRODUIT.ToString();
-
+            clsEditionEtatComptabilite.TYPEETAT = Objet.TYPEETAT;
             try
             {
                 clsDonnee.pvgConnectionBase();

@@ -265,7 +265,8 @@ namespace ZenithWebServeur.WCF
                     clsMiceffetcheque.EC_DATEFINVALEUR = DateTime.Parse(clsMiceffetchequeDTO.EC_DATEFINVALEUR.ToString());//
                     clsMiceffetcheque.OP_CODEOPERATEUR = clsMiceffetchequeDTO.OP_CODEOPERATEUR.ToString();
                     clsMiceffetcheque.TYPEOPERATION = clsMiceffetchequeDTO.TYPEOPERATION.ToString();//
-
+                    clsMiceffetcheque.EC_AUTRESINFORMATIONS = clsMiceffetchequeDTO.EC_AUTRESINFORMATIONS.ToString();//
+                    
                     if (Double.Parse(clsMiceffetchequeDTO.EE_VALEUR) > 0)
                     {
                         clsMiceffetchequecaracteristique.AG_CODEAGENCE = clsMiceffetchequeDTO.AG_CODEAGENCE;
@@ -1070,6 +1071,119 @@ namespace ZenithWebServeur.WCF
             return json;
         }
 
+
+
+        public string pvgExecuterOperation5(clsMiceffetcheque Objet)
+        {
+            DataSet DataSet = new DataSet();
+            DataTable dt = new DataTable("TABLE");
+            dt.Columns.Add(new DataColumn("SL_CODEMESSAGE", typeof(string)));
+            dt.Columns.Add(new DataColumn("SL_RESULTAT", typeof(string)));
+            dt.Columns.Add(new DataColumn("SL_MESSAGE", typeof(string)));
+            string json = "";
+
+            ZenithWebServeur.BOJ.clsObjetEnvoi clsObjetEnvoi = new ZenithWebServeur.BOJ.clsObjetEnvoi();
+            ZenithWebServeur.BOJ.clsMiceffetcheque clsMiceffetcheque = new ZenithWebServeur.BOJ.clsMiceffetcheque();
+            clsObjetEnvoi.OE_D = ConfigurationManager.AppSettings["OE_D"];
+            clsObjetEnvoi.OE_X = ConfigurationManager.AppSettings["OE_X"];
+            clsDonnee.vogCleCryptage = clsObjetEnvoi.OE_D;
+            clsDonnee.vogUtilisateur = clsObjetEnvoi.OE_X;
+
+            //for (int Idx = 0; Idx < Objet.Count; Idx++)
+            //{
+            //--TEST DES CHAMPS OBLIGATOIRES
+            //DataSet = TestChampObligatoireDelete(Objet);
+            ////--VERIFICATION DU RESULTAT DU TEST
+            //if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
+            ////--TEST DES TYPES DE DONNEES
+            //DataSet = TestTypeDonnee(Objet);
+            ////--VERIFICATION DU RESULTAT DU TEST
+            //if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
+            ////--TEST CONTRAINTE
+            //DataSet = TestTestContrainteListe(Objet);
+            ////--VERIFICATION DU RESULTAT DU TEST
+            //if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
+            //}
+
+            ZenithWebServeur.DTO.clsObjetRetour clsObjetRetour = new ZenithWebServeur.DTO.clsObjetRetour();
+            try
+            {
+                //clsDonnee.pvgConnectionBase();
+                clsDonnee.pvgDemarrerTransaction();
+                clsObjetEnvoi.OE_PARAM = new string[] { };
+
+                //foreach (ZenithWebServeur.DTO.clsMiceffetcheque clsMiceffetchequeDTO in Objet)
+                //{
+
+                clsMiceffetcheque.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();//
+                clsMiceffetcheque.PV_CODEPOINTVENTE = Objet.PV_CODEPOINTVENTE.ToString();//
+                clsMiceffetcheque.EC_CODEEFFETCHEQUE = Objet.EC_CODEEFFETCHEQUE.ToString();//
+                clsMiceffetcheque.TYPEOPERATION = Objet.TYPEOPERATION.ToString();//
+                clsMiceffetcheque.EC_CPTEBANQUE = Objet.EC_CPTEBANQUE.ToString();//
+                clsMiceffetcheque.TS_CODETYPESCHEMACOMPTABLE = Objet.TS_CODETYPESCHEMACOMPTABLE.ToString();//
+                clsMiceffetcheque.CO_CODECOMPTE = Objet.CO_CODECOMPTE.ToString();//
+                clsMiceffetcheque.EC_ESCOMPTE = Objet.EC_ESCOMPTE.ToString();//
+                clsMiceffetcheque.EC_DATEDEPOTBANQUE = DateTime.Parse(Objet.EC_DATEDEPOTBANQUE.ToString());//
+                clsMiceffetcheque.DATEJOURNEE = DateTime.Parse(Objet.DATEJOURNEE.ToString());//
+                clsMiceffetcheque.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();//
+
+                clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
+                clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
+
+                clsObjetRetour.SetValue(true, clsMiceffetchequeWSBLL.pvgExecuterOperation(clsDonnee, clsMiceffetcheque, clsObjetEnvoi));
+                if (clsObjetRetour.OR_BOOLEEN)
+                {
+                    DataSet = new DataSet();
+                    DataRow dr = dt.NewRow();
+                    dr["SL_CODEMESSAGE"] = "00";
+                    dr["SL_RESULTAT"] = "TRUE";
+                    dr["SL_MESSAGE"] = "L'opération s'est réalisée avec succès";
+                    dt.Rows.Add(dr);
+                    DataSet.Tables.Add(dt);
+                    json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                }
+                //}
+            }
+            catch (SqlException SQLEx)
+            {
+                DataSet = new DataSet();
+                DataRow dr = dt.NewRow();
+                dr["SL_CODEMESSAGE"] = "99";
+                dr["SL_RESULTAT"] = "FALSE";
+                dr["SL_MESSAGE"] = (SQLEx.Number == 2601 || SQLEx.Number == 2627) ? clsMessagesWSBLL.pvgTableLibelle(clsDonnee, "GNE0003").MS_LIBELLEMESSAGE : SQLEx.Message;
+                dt.Rows.Add(dr);
+                DataSet.Tables.Add(dt);
+                json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                //Execution du log
+                Log.Error(SQLEx.Message, null);
+            }
+            catch (Exception SQLEx)
+            {
+                DataSet = new DataSet();
+                DataRow dr = dt.NewRow();
+                dr["SL_CODEMESSAGE"] = "99";
+                dr["SL_RESULTAT"] = "FALSE";
+                dr["SL_MESSAGE"] = SQLEx.Message;
+                dt.Rows.Add(dr);
+                DataSet.Tables.Add(dt);
+                json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                //Execution du log
+                Log.Error(SQLEx.Message, null);
+            }
+
+            finally
+            {
+                bool OR_BOOLEEN = true;
+                if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE")
+                {
+                    OR_BOOLEEN = false;
+                }
+                clsDonnee.pvgTerminerTransaction(!OR_BOOLEEN);
+                //clsDonnee.pvgDeConnectionBase();
+            }
+
+            return json;
+        }
         //LISTE
         public string pvgChargerDansDataSetDepot(clsMiceffetcheque Objet)
         {
@@ -1409,6 +1523,7 @@ namespace ZenithWebServeur.WCF
             dt.Columns.Add(new DataColumn("SL_CODEMESSAGE", typeof(string)));
             dt.Columns.Add(new DataColumn("SL_RESULTAT", typeof(string)));
             dt.Columns.Add(new DataColumn("SL_MESSAGE", typeof(string)));
+            dt.Columns.Add(new DataColumn("CO_CODECOMPTE2", typeof(string)));
             string json = "";
 
             ZenithWebServeur.BOJ.clsObjetEnvoi clsObjetEnvoi = new ZenithWebServeur.BOJ.clsObjetEnvoi();
@@ -1462,11 +1577,13 @@ namespace ZenithWebServeur.WCF
                 DataSet = clsMiceffetchequeWSBLL.pvgChargerDansDataSetRemise(clsDonnee, clsObjetEnvoi);
                 if (DataSet.Tables[0].Rows.Count > 0)
                 {
+                    DataSet.Tables[0].Columns.Add(new DataColumn("CO_CODECOMPTE2", typeof(string))); 
                     DataSet.Tables[0].Columns.Add(new DataColumn("SL_CODEMESSAGE", typeof(string)));
                     DataSet.Tables[0].Columns.Add(new DataColumn("SL_RESULTAT", typeof(string)));
                     DataSet.Tables[0].Columns.Add(new DataColumn("SL_MESSAGE", typeof(string)));
                     for (int i = 0; i < DataSet.Tables[0].Rows.Count; i++)
                     {
+                        DataSet.Tables[0].Rows[i]["CO_CODECOMPTE2"] = DataSet.Tables[0].Rows[i]["CO_CODECOMPTE"].ToString(); 
                         DataSet.Tables[0].Rows[i]["SL_CODEMESSAGE"] = "00";
                         DataSet.Tables[0].Rows[i]["SL_RESULTAT"] = "TRUE";
                         DataSet.Tables[0].Rows[i]["SL_MESSAGE"] = "L'opération s'est réalisée avec succès";
@@ -1536,6 +1653,7 @@ namespace ZenithWebServeur.WCF
             dt.Columns.Add(new DataColumn("SL_CODEMESSAGE", typeof(string)));
             dt.Columns.Add(new DataColumn("SL_RESULTAT", typeof(string)));
             dt.Columns.Add(new DataColumn("SL_MESSAGE", typeof(string)));
+            dt.Columns.Add(new DataColumn("CO_CODECOMPTE2", typeof(string))); 
             string json = "";
 
             ZenithWebServeur.BOJ.clsObjetEnvoi clsObjetEnvoi = new ZenithWebServeur.BOJ.clsObjetEnvoi();
@@ -1589,11 +1707,13 @@ namespace ZenithWebServeur.WCF
                 DataSet = clsMiceffetchequeWSBLL.pvgChargerDansDataSetConfirmationaAnnuler(clsDonnee, clsObjetEnvoi);
                 if (DataSet.Tables[0].Rows.Count > 0)
                 {
+                    DataSet.Tables[0].Columns.Add(new DataColumn("CO_CODECOMPTE2", typeof(string)));
                     DataSet.Tables[0].Columns.Add(new DataColumn("SL_CODEMESSAGE", typeof(string)));
                     DataSet.Tables[0].Columns.Add(new DataColumn("SL_RESULTAT", typeof(string)));
                     DataSet.Tables[0].Columns.Add(new DataColumn("SL_MESSAGE", typeof(string)));
                     for (int i = 0; i < DataSet.Tables[0].Rows.Count; i++)
                     {
+                        DataSet.Tables[0].Rows[i]["CO_CODECOMPTE2"] = DataSet.Tables[0].Rows[i]["CO_CODECOMPTE"].ToString();
                         DataSet.Tables[0].Rows[i]["SL_CODEMESSAGE"] = "00";
                         DataSet.Tables[0].Rows[i]["SL_RESULTAT"] = "TRUE";
                         DataSet.Tables[0].Rows[i]["SL_MESSAGE"] = "L'opération s'est réalisée avec succès";

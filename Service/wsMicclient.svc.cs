@@ -27,6 +27,7 @@ namespace ZenithWebServeur.WCF
         private clsDonnee _clsDonnee = new clsDonnee();
         private clsMessagesWSBLL clsMessagesWSBLL = new clsMessagesWSBLL();
         private clsMicclientWSBLL clsMicclientWSBLL = new clsMicclientWSBLL();
+        private clsJourneetravailWSBLL clsJourneetravailWSBLL = new clsJourneetravailWSBLL();
 
         public clsDonnee clsDonnee
         {
@@ -82,82 +83,110 @@ namespace ZenithWebServeur.WCF
                 //clsDonnee.pvgConnectionBase();
                 clsDonnee.pvgDemarrerTransaction();
                 //clsObjetEnvoi.OE_PARAM = new string[] { Objet.AG_CODEAGENCE };
+                if (Objet.clsObjetEnvoi != null)
+                {
+                    clsObjetEnvoi.OE_J = DateTime.Parse(Objet.clsObjetEnvoi.OE_J);
+                    clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
+                    if (Objet.clsObjetEnvoi.OE_J != "")
+                        clsObjetEnvoi.OE_J = DateTime.Parse(Objet.clsObjetEnvoi.OE_J);
+                    clsObjetEnvoi.OE_Y = clsObjetEnvoi.OE_Y;
+                    clsObjetEnvoi.OE_U = clsObjetEnvoi.OE_U;
+                    if (Objet.clsObjetEnvoi.OE_G != "")
+                        clsObjetEnvoi.OE_G = DateTime.Parse(Objet.clsObjetEnvoi.OE_G);
+                    clsObjetEnvoi.OE_F = Objet.clsObjetEnvoi.OE_F;
+                    clsObjetEnvoi.OE_T = Objet.clsObjetEnvoi.OE_T;
+                }
 
-                //foreach (ZenithWebServeur.DTO.clsMicclient clsMicclientDTO in Objet)
-                //{
-
-                clsMicclient.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
-                clsMicclient.PV_CODEPOINTVENTE = Objet.PV_CODEPOINTVENTE.ToString();
-                clsMicclient.CL_CODELIENTPROVISOIRE = Objet.CL_CODELIENTPROVISOIRE.ToString();
-                clsMicclient.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
-                clsMicclient.CO_CODECOMMUNE = Objet.CO_CODECOMMUNE.ToString();
-                clsMicclient.PY_CODEPAYSNATIONALITE = Objet.PY_CODEPAYSNATIONALITE.ToString();
-                clsMicclient.CL_ADRESSEGEOGRAPHIQUE = Objet.CL_ADRESSEGEOGRAPHIQUE.ToString();
-                clsMicclient.SM_CODESITUATIONMATRIMONIALE = Objet.SM_CODESITUATIONMATRIMONIALE.ToString();
-                clsMicclient.FM_CODEFORMEJURIDIQUE = Objet.FM_CODEFORMEJURIDIQUE.ToString();
-                clsMicclient.TM_CODEMEMBRE = Objet.TM_CODEMEMBRE.ToString();
-                clsMicclient.TT_CODETITREMEMBRE = Objet.TT_CODETITREMEMBRE.ToString();
-                clsMicclient.TP_CODETYPEPERSONNEL = Objet.TP_CODETYPEPERSONNEL.ToString();
-                clsMicclient.TC_CODETYPECONTRAT = Objet.TC_CODETYPECONTRAT.ToString();
-                clsMicclient.TM_CODEMEMBREPERSONNELIE = Objet.TM_CODEMEMBREPERSONNELIE.ToString();
-                clsMicclient.TT_CODETITREMEMBREPERSONNELIE = Objet.TT_CODETITREMEMBREPERSONNELIE.ToString();
-                clsMicclient.TP_CODETYPEPERSONNELPERSONNELIE = Objet.TP_CODETYPEPERSONNELPERSONNELIE.ToString();
-                clsMicclient.TC_CODETYPECONTRATPERSONNELIE = Objet.TC_CODETYPECONTRATPERSONNELIE.ToString();
-                clsMicclient.AC_CODEACTIVITE = Objet.AC_CODEACTIVITE.ToString();
-                clsMicclient.PF_CODEPROFESSION = Objet.PF_CODEPROFESSION.ToString();
-                clsMicclient.RC_CODERAISONDEPART = Objet.RC_CODERAISONDEPART.ToString();
-                clsMicclient.PI_CODEPIECE = Objet.PI_CODEPIECE.ToString();
-                clsMicclient.GR_CODEGROUPE = Objet.GR_CODEGROUPE.ToString();
-                clsMicclient.PS_CODESOUSPRODUIT = Objet.PS_CODESOUSPRODUIT.ToString();
-                clsMicclient.CL_IDCLIENTPERSONNELIE = Objet.CL_IDCLIENTPERSONNELIE.ToString();
-                clsMicclient.CL_DATECREATION = DateTime.Parse(Objet.CL_DATECREATION.ToString());
-                clsMicclient.CL_DATEDEPART = DateTime.Parse(Objet.CL_DATEDEPART.ToString());
-                clsMicclient.CL_DESCRIPTIONRAISONDEPART = Objet.CL_DESCRIPTIONRAISONDEPART.ToString();
-                clsMicclient.CL_BOITEPOSTALE = Objet.CL_BOITEPOSTALE.ToString();
-                clsMicclient.CL_REGISTRECOMMERCE = Objet.CL_REGISTRECOMMERCE.ToString();
-                clsMicclient.CL_NUMEROCOMPTECONTRIBUABLE = Objet.CL_NUMEROCOMPTECONTRIBUABLE.ToString();
-                clsMicclient.CL_NOMCLIENT = Objet.CL_NOMCLIENT.ToString();
-                clsMicclient.CL_PRENOMCLIENT = Objet.CL_PRENOMCLIENT.ToString();
-                clsMicclient.CL_DATENAISSANCE = DateTime.Parse(Objet.CL_DATENAISSANCE.ToString());
-                clsMicclient.CL_LIEUNAISSANCE = Objet.CL_LIEUNAISSANCE.ToString();
-                clsMicclient.CL_TELEPHONE = Objet.CL_TELEPHONE.ToString();
-                clsMicclient.CL_FAX = Objet.CL_FAX.ToString();
-                clsMicclient.CL_EMAIL = Objet.CL_EMAIL.ToString();
-                clsMicclient.CL_SITEWEB = Objet.CL_SITEWEB.ToString();
-                clsMicclient.CL_NUMPIECE = Objet.CL_NUMPIECE.ToString();
-                clsMicclient.CL_DATEEXPIRATIONPIECE = DateTime.Parse(Objet.CL_DATEEXPIRATIONPIECE.ToString());
-                clsMicclient.CL_REGIMEMATRIMONIALE = Objet.CL_REGIMEMATRIMONIALE.ToString();
-                clsMicclient.CL_NBENFANT = int.Parse(Objet.CL_NBENFANT.ToString());
-                clsMicclient.CL_DESCRIPTIONEMPLOYEUR = Objet.CL_DESCRIPTIONEMPLOYEUR.ToString();
-                clsMicclient.CL_BOITEPOSTALEEMPLOYEUR = Objet.CL_BOITEPOSTALEEMPLOYEUR.ToString();
-                clsMicclient.CL_TELEMPLOYEUR = Objet.CL_TELEMPLOYEUR.ToString();
-                clsMicclient.CL_MATRICULEEMPLOYE = Objet.CL_MATRICULEEMPLOYE.ToString();
-                clsMicclient.OP_GESTIONNAIRECOMPTE = Objet.OP_GESTIONNAIRECOMPTE.ToString();
-                clsMicclient.CM_IDCOMMERCIAL = Objet.CM_IDCOMMERCIAL.ToString();
-                clsMicclient.CL_CAPITAL = Double.Parse(Objet.CL_CAPITAL.ToString());
-                clsMicclient.CL_SALAIRENET = Double.Parse(Objet.CL_SALAIRENET.ToString());
-                clsMicclient.CL_TAUXREMUNERATION = Double.Parse(Objet.CL_TAUXREMUNERATION.ToString());
-                clsMicclient.CL_CHIFFREAFFAIRE = Double.Parse(Objet.CL_CHIFFREAFFAIRE.ToString());
-                clsMicclient.OB_NOMOBJET = Objet.OB_NOMOBJET.ToString();
-                clsMicclient.OP_AGENTDECOLLECTEETDECREDIT = Objet.OP_AGENTDECOLLECTEETDECREDIT.ToString();
-                clsMicclient.GM_CODESEGMENT = Objet.GM_CODESEGMENT.ToString();
-                clsMicclient.GT_CODETYPECLIENT = Objet.GT_CODETYPECLIENT.ToString();
-
-                clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
-                clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
-
-                clsObjetRetour.SetValue(true, clsMicclientWSBLL.pvgAjouter(clsDonnee, clsMicclient, clsObjetEnvoi));
-                if (clsObjetRetour.OR_BOOLEEN)
+                if (clsJourneetravailWSBLL.pvgValeurScalaireRequeteCount2(clsDonnee, clsObjetEnvoi) == "0")
                 {
                     DataSet = new DataSet();
                     DataRow dr = dt.NewRow();
-                    dr["SL_CODEMESSAGE"] = "00";
-                    dr["SL_RESULTAT"] = "TRUE";
-                    dr["SL_MESSAGE"] = "L'opération s'est réalisée avec succès";
+                    dr["SL_CODEMESSAGE"] = "99";
+                    dr["SL_RESULTAT"] = "FALSE";
+                    dr["SL_MESSAGE"] = "Cette journée a été déjà fermée ou non encore ouverte !!!";
                     dt.Rows.Add(dr);
                     DataSet.Tables.Add(dt);
                     json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
                 }
+                else
+                {
+                    //foreach (ZenithWebServeur.DTO.clsMicclient clsMicclientDTO in Objet)
+                    //{
+
+                    clsMicclient.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
+                    clsMicclient.PV_CODEPOINTVENTE = Objet.PV_CODEPOINTVENTE.ToString();
+                    clsMicclient.CL_CODELIENTPROVISOIRE = Objet.CL_CODELIENTPROVISOIRE.ToString();
+                    clsMicclient.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
+                    clsMicclient.CO_CODECOMMUNE = Objet.CO_CODECOMMUNE.ToString();
+                    clsMicclient.PY_CODEPAYSNATIONALITE = Objet.PY_CODEPAYSNATIONALITE.ToString();
+                    clsMicclient.CL_ADRESSEGEOGRAPHIQUE = Objet.CL_ADRESSEGEOGRAPHIQUE.ToString();
+                    clsMicclient.SM_CODESITUATIONMATRIMONIALE = Objet.SM_CODESITUATIONMATRIMONIALE.ToString();
+                    clsMicclient.FM_CODEFORMEJURIDIQUE = Objet.FM_CODEFORMEJURIDIQUE.ToString();
+                    clsMicclient.TM_CODEMEMBRE = Objet.TM_CODEMEMBRE.ToString();
+                    clsMicclient.TT_CODETITREMEMBRE = Objet.TT_CODETITREMEMBRE.ToString();
+                    clsMicclient.TP_CODETYPEPERSONNEL = Objet.TP_CODETYPEPERSONNEL.ToString();
+                    clsMicclient.TC_CODETYPECONTRAT = Objet.TC_CODETYPECONTRAT.ToString();
+                    clsMicclient.TM_CODEMEMBREPERSONNELIE = Objet.TM_CODEMEMBREPERSONNELIE.ToString();
+                    clsMicclient.TT_CODETITREMEMBREPERSONNELIE = Objet.TT_CODETITREMEMBREPERSONNELIE.ToString();
+                    clsMicclient.TP_CODETYPEPERSONNELPERSONNELIE = Objet.TP_CODETYPEPERSONNELPERSONNELIE.ToString();
+                    clsMicclient.TC_CODETYPECONTRATPERSONNELIE = Objet.TC_CODETYPECONTRATPERSONNELIE.ToString();
+                    clsMicclient.AC_CODEACTIVITE = Objet.AC_CODEACTIVITE.ToString();
+                    clsMicclient.PF_CODEPROFESSION = Objet.PF_CODEPROFESSION.ToString();
+                    clsMicclient.RC_CODERAISONDEPART = Objet.RC_CODERAISONDEPART.ToString();
+                    clsMicclient.PI_CODEPIECE = Objet.PI_CODEPIECE.ToString();
+                    clsMicclient.GR_CODEGROUPE = Objet.GR_CODEGROUPE.ToString();
+                    clsMicclient.PS_CODESOUSPRODUIT = Objet.PS_CODESOUSPRODUIT.ToString();
+                    clsMicclient.CL_IDCLIENTPERSONNELIE = Objet.CL_IDCLIENTPERSONNELIE.ToString();
+                    clsMicclient.CL_DATECREATION = DateTime.Parse(Objet.CL_DATECREATION.ToString());
+                    clsMicclient.CL_DATEDEPART = DateTime.Parse(Objet.CL_DATEDEPART.ToString());
+                    clsMicclient.CL_DESCRIPTIONRAISONDEPART = Objet.CL_DESCRIPTIONRAISONDEPART.ToString();
+                    clsMicclient.CL_BOITEPOSTALE = Objet.CL_BOITEPOSTALE.ToString();
+                    clsMicclient.CL_REGISTRECOMMERCE = Objet.CL_REGISTRECOMMERCE.ToString();
+                    clsMicclient.CL_NUMEROCOMPTECONTRIBUABLE = Objet.CL_NUMEROCOMPTECONTRIBUABLE.ToString();
+                    clsMicclient.CL_NOMCLIENT = Objet.CL_NOMCLIENT.ToString();
+                    clsMicclient.CL_PRENOMCLIENT = Objet.CL_PRENOMCLIENT.ToString();
+                    clsMicclient.CL_DATENAISSANCE = DateTime.Parse(Objet.CL_DATENAISSANCE.ToString());
+                    clsMicclient.CL_LIEUNAISSANCE = Objet.CL_LIEUNAISSANCE.ToString();
+                    clsMicclient.CL_TELEPHONE = Objet.CL_TELEPHONE.ToString();
+                    clsMicclient.CL_FAX = Objet.CL_FAX.ToString();
+                    clsMicclient.CL_EMAIL = Objet.CL_EMAIL.ToString();
+                    clsMicclient.CL_SITEWEB = Objet.CL_SITEWEB.ToString();
+                    clsMicclient.CL_NUMPIECE = Objet.CL_NUMPIECE.ToString();
+                    clsMicclient.CL_DATEEXPIRATIONPIECE = DateTime.Parse(Objet.CL_DATEEXPIRATIONPIECE.ToString());
+                    clsMicclient.CL_REGIMEMATRIMONIALE = Objet.CL_REGIMEMATRIMONIALE.ToString();
+                    clsMicclient.CL_NBENFANT = int.Parse(Objet.CL_NBENFANT.ToString());
+                    clsMicclient.CL_DESCRIPTIONEMPLOYEUR = Objet.CL_DESCRIPTIONEMPLOYEUR.ToString();
+                    clsMicclient.CL_BOITEPOSTALEEMPLOYEUR = Objet.CL_BOITEPOSTALEEMPLOYEUR.ToString();
+                    clsMicclient.CL_TELEMPLOYEUR = Objet.CL_TELEMPLOYEUR.ToString();
+                    clsMicclient.CL_MATRICULEEMPLOYE = Objet.CL_MATRICULEEMPLOYE.ToString();
+                    clsMicclient.OP_GESTIONNAIRECOMPTE = Objet.OP_GESTIONNAIRECOMPTE.ToString();
+                    clsMicclient.CM_IDCOMMERCIAL = Objet.CM_IDCOMMERCIAL.ToString();
+                    clsMicclient.CL_CAPITAL = Double.Parse(Objet.CL_CAPITAL.ToString());
+                    clsMicclient.CL_SALAIRENET = Double.Parse(Objet.CL_SALAIRENET.ToString());
+                    clsMicclient.CL_TAUXREMUNERATION = Double.Parse(Objet.CL_TAUXREMUNERATION.ToString());
+                    clsMicclient.CL_CHIFFREAFFAIRE = Double.Parse(Objet.CL_CHIFFREAFFAIRE.ToString());
+                    clsMicclient.OB_NOMOBJET = Objet.OB_NOMOBJET.ToString();
+                    clsMicclient.OP_AGENTDECOLLECTEETDECREDIT = Objet.OP_AGENTDECOLLECTEETDECREDIT.ToString();
+                    clsMicclient.GM_CODESEGMENT = Objet.GM_CODESEGMENT.ToString();
+                    clsMicclient.GT_CODETYPECLIENT = Objet.GT_CODETYPECLIENT.ToString();
+
+                    clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
+                    clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
+
+                    clsObjetRetour.SetValue(true, clsMicclientWSBLL.pvgAjouter(clsDonnee, clsMicclient, clsObjetEnvoi));
+                    if (clsObjetRetour.OR_BOOLEEN)
+                    {
+                        DataSet = new DataSet();
+                        DataRow dr = dt.NewRow();
+                        dr["SL_CODEMESSAGE"] = "00";
+                        dr["SL_RESULTAT"] = "TRUE";
+                        dr["SL_MESSAGE"] = "L'opération s'est réalisée avec succès";
+                        dt.Rows.Add(dr);
+                        DataSet.Tables.Add(dt);
+                        json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                    }
+                }
+               
                 //}
             }
              catch (SqlException SQLEx)
@@ -527,6 +556,8 @@ namespace ZenithWebServeur.WCF
 
             ZenithWebServeur.BOJ.clsObjetEnvoi clsObjetEnvoi = new ZenithWebServeur.BOJ.clsObjetEnvoi();
             ZenithWebServeur.BOJ.clsMicclient clsMicclient = new ZenithWebServeur.BOJ.clsMicclient();
+            ZenithWebServeur.BOJ.clsMicclientphoto clsMicclientphoto = new ZenithWebServeur.BOJ.clsMicclientphoto();
+            ZenithWebServeur.DTO.clsMicclientphoto clsMicclientphotodto = new ZenithWebServeur.DTO.clsMicclientphoto();
             clsObjetEnvoi.OE_D = ConfigurationManager.AppSettings["OE_D"];
             clsObjetEnvoi.OE_X = ConfigurationManager.AppSettings["OE_X"];
             clsDonnee.vogCleCryptage = clsObjetEnvoi.OE_D;
@@ -672,10 +703,25 @@ namespace ZenithWebServeur.WCF
                 //clsMicclient.CH_PHOTO = System.Convert.FromBase64String(Objet.CH_PHOTO.ToString());
                 //clsMicclient.CH_SIGNATURE = System.Convert.FromBase64String(Objet.CH_SIGNATURE.ToString());
 
+                //objet photo
+                clsMicclientphoto.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
+                clsMicclientphoto.CL_IDCLIENT = Objet.CL_IDCLIENT.ToString();
+                // clsMicclientphoto.CH_PHOTO = System.Convert.FromBase64String(Objet.CH_PHOTO.ToString());
+                // clsMicclientphoto.CH_SIGNATURE = System.Convert.FromBase64String(Objet.CH_SIGNATURE.ToString());
+                Byte[] CM_PHOTO = null;
+                Byte[] CM_SIGNATURE = null;
+                if (Objet.CH_PHOTO != "")
+                    CM_PHOTO = System.Convert.FromBase64String(Objet.CH_PHOTO);
+                if (Objet.CH_SIGNATURE != "")
+                    CM_SIGNATURE = System.Convert.FromBase64String(Objet.CH_SIGNATURE);
+
+                clsMicclientphoto.CH_PHOTO = CM_PHOTO;
+                clsMicclientphoto.CH_SIGNATURE = CM_SIGNATURE;
+
                 clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
                 clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
 
-                clsObjetRetour.SetValue(true, clsMicclientWSBLL.pvgAjouterValidation(clsDonnee, clsMicclient, clsObjetEnvoi));
+                clsObjetRetour.SetValue(true, clsMicclientWSBLL.pvgAjouterValidation(clsDonnee, clsMicclient, clsMicclientphoto, clsObjetEnvoi));
                 if (clsObjetRetour.OR_BOOLEEN)
                 {
                     DataSet = new DataSet();
@@ -1349,147 +1395,175 @@ namespace ZenithWebServeur.WCF
                 //clsDonnee.pvgConnectionBase();
                 clsDonnee.pvgDemarrerTransaction();
                 clsObjetEnvoi.OE_PARAM = new string[] { Objet.CL_CODECLIENT };
+                if (Objet.clsObjetEnvoi != null)
+                {
+                    clsObjetEnvoi.OE_J = DateTime.Parse(Objet.clsObjetEnvoi.OE_J);
+                    clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
+                    if (Objet.clsObjetEnvoi.OE_J != "")
+                        clsObjetEnvoi.OE_J = DateTime.Parse(Objet.clsObjetEnvoi.OE_J);
+                    clsObjetEnvoi.OE_Y = clsObjetEnvoi.OE_Y;
+                    clsObjetEnvoi.OE_U = clsObjetEnvoi.OE_U;
+                    if (Objet.clsObjetEnvoi.OE_G != "")
+                        clsObjetEnvoi.OE_G = DateTime.Parse(Objet.clsObjetEnvoi.OE_G);
+                    clsObjetEnvoi.OE_F = Objet.clsObjetEnvoi.OE_F;
+                    clsObjetEnvoi.OE_T = Objet.clsObjetEnvoi.OE_T;
+                }
 
-                //foreach (ZenithWebServeur.DTO.clsMicclient clsMicclientDTO in Objet)
-                //{
-
-                clsMicclient.CL_CODECLIENT = Objet.CL_CODECLIENT.ToString();
-                clsMicclient.CL_IDCLIENT = Objet.CL_IDCLIENT.ToString();
-                clsMicclient.OP_GESTIONNAIRE = Objet.OP_GESTIONNAIRE.ToString();
-                clsMicclient.OP_GESTIONNAIRECOMPTE = Objet.OP_GESTIONNAIRECOMPTE.ToString();
-                clsMicclient.CL_IDCLIENTDEMANDEUR = Objet.CL_IDCLIENTDEMANDEUR.ToString();
-                clsMicclient.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
-                clsMicclient.PV_CODEPOINTVENTE = Objet.PV_CODEPOINTVENTE.ToString();
-                clsMicclient.CL_CODELIENTPROVISOIRE = Objet.CL_CODELIENTPROVISOIRE.ToString();
-                clsMicclient.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
-                clsMicclient.CO_CODECOMMUNE = Objet.CO_CODECOMMUNE.ToString();
-                clsMicclient.PY_CODEPAYSNATIONALITE = Objet.PY_CODEPAYSNATIONALITE.ToString();
-                clsMicclient.CL_ADRESSEGEOGRAPHIQUE = Objet.CL_ADRESSEGEOGRAPHIQUE.ToString();
-                clsMicclient.SM_CODESITUATIONMATRIMONIALE = Objet.SM_CODESITUATIONMATRIMONIALE.ToString();
-                clsMicclient.FM_CODEFORMEJURIDIQUE = Objet.FM_CODEFORMEJURIDIQUE.ToString();
-                clsMicclient.TM_CODEMEMBRE = Objet.TM_CODEMEMBRE.ToString();
-                clsMicclient.TT_CODETITREMEMBRE = Objet.TT_CODETITREMEMBRE.ToString();
-                clsMicclient.TP_CODETYPEPERSONNEL = Objet.TP_CODETYPEPERSONNEL.ToString();
-                clsMicclient.TC_CODETYPECONTRAT = Objet.TC_CODETYPECONTRAT.ToString();
-                clsMicclient.TM_CODEMEMBREPERSONNELIE = Objet.TM_CODEMEMBREPERSONNELIE.ToString();
-                clsMicclient.TT_CODETITREMEMBREPERSONNELIE = Objet.TT_CODETITREMEMBREPERSONNELIE.ToString();
-                clsMicclient.TP_CODETYPEPERSONNELPERSONNELIE = Objet.TP_CODETYPEPERSONNELPERSONNELIE.ToString();
-                clsMicclient.TC_CODETYPECONTRATPERSONNELIE = Objet.TC_CODETYPECONTRATPERSONNELIE.ToString();
-                clsMicclient.AC_CODEACTIVITE = Objet.AC_CODEACTIVITE.ToString();
-                clsMicclient.PF_CODEPROFESSION = Objet.PF_CODEPROFESSION.ToString();
-                clsMicclient.RC_CODERAISONDEPART = Objet.RC_CODERAISONDEPART.ToString();
-                clsMicclient.PI_CODEPIECE = Objet.PI_CODEPIECE.ToString();
-                clsMicclient.GR_CODEGROUPE = Objet.GR_CODEGROUPE.ToString();
-                clsMicclient.PS_CODESOUSPRODUIT = Objet.PS_CODESOUSPRODUIT.ToString();
-                clsMicclient.CL_IDCLIENTPERSONNELIE = Objet.CL_IDCLIENTPERSONNELIE.ToString();
-                clsMicclient.CL_DATECREATION = DateTime.Parse(Objet.CL_DATECREATION.ToString());
-                clsMicclient.CL_DESCRIPTIONRAISONDEPART = Objet.CL_DESCRIPTIONRAISONDEPART.ToString();
-                clsMicclient.CL_BOITEPOSTALE = Objet.CL_BOITEPOSTALE.ToString();
-                clsMicclient.CL_REGISTRECOMMERCE = Objet.CL_REGISTRECOMMERCE.ToString();
-                clsMicclient.CL_NUMEROCOMPTECONTRIBUABLE = Objet.CL_NUMEROCOMPTECONTRIBUABLE.ToString();
-                clsMicclient.CL_NOMCLIENT = Objet.CL_NOMCLIENT.ToString();
-                clsMicclient.CL_PRENOMCLIENT = Objet.CL_PRENOMCLIENT.ToString();
-                clsMicclient.CL_DATENAISSANCE = DateTime.Parse(Objet.CL_DATENAISSANCE.ToString());
-                clsMicclient.CL_LIEUNAISSANCE = Objet.CL_LIEUNAISSANCE.ToString();
-                clsMicclient.CL_TELEPHONE = Objet.CL_TELEPHONE.ToString();
-                clsMicclient.CL_FAX = Objet.CL_FAX.ToString();
-                clsMicclient.CL_EMAIL = Objet.CL_EMAIL.ToString();
-                clsMicclient.CL_SITEWEB = Objet.CL_SITEWEB.ToString();
-                clsMicclient.CL_NUMPIECE = Objet.CL_NUMPIECE.ToString();
-                clsMicclient.CL_DATEEXPIRATIONPIECE = DateTime.Parse(Objet.CL_DATEEXPIRATIONPIECE.ToString());
-                clsMicclient.CL_REGIMEMATRIMONIALE = Objet.CL_REGIMEMATRIMONIALE.ToString();
-                clsMicclient.CL_NBENFANT = int.Parse(Objet.CL_NBENFANT.ToString());
-                clsMicclient.CL_DESCRIPTIONEMPLOYEUR = Objet.CL_DESCRIPTIONEMPLOYEUR.ToString();
-                clsMicclient.CL_BOITEPOSTALEEMPLOYEUR = Objet.CL_BOITEPOSTALEEMPLOYEUR.ToString();
-                clsMicclient.CL_TELEMPLOYEUR = Objet.CL_TELEMPLOYEUR.ToString();
-                clsMicclient.CL_MATRICULEEMPLOYE = Objet.CL_MATRICULEEMPLOYE.ToString();
-                clsMicclient.CM_IDCOMMERCIAL = Objet.CM_IDCOMMERCIAL.ToString();
-                clsMicclient.CL_CAPITAL = Double.Parse(Objet.CL_CAPITAL.ToString());
-                clsMicclient.CL_SALAIRENET = Double.Parse(Objet.CL_SALAIRENET.ToString());
-                clsMicclient.CL_TAUXREMUNERATION = Double.Parse(Objet.CL_TAUXREMUNERATION.ToString());
-                clsMicclient.OB_NOMOBJET = Objet.OB_NOMOBJET.ToString();
-                clsMicclient.OP_AGENTDECOLLECTEETDECREDIT = Objet.OP_AGENTDECOLLECTEETDECREDIT.ToString();
-                clsMicclient.GM_CODESEGMENT = Objet.GM_CODESEGMENT.ToString();
-                clsMicclient.GT_CODETYPECLIENT = Objet.GT_CODETYPECLIENT.ToString();
-
-                //clsMicclient.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
-                //clsMicclient.PV_CODEPOINTVENTE = Objet.PV_CODEPOINTVENTE.ToString();
-                //clsMicclient.CL_CODECLIENT = Objet.CL_CODECLIENT.ToString();
-                //clsMicclient.CL_IDCLIENT = Objet.CL_IDCLIENT.ToString();
-                //clsMicclient.CL_CODELIENTPROVISOIRE = Objet.CL_CODELIENTPROVISOIRE.ToString();
-                //clsMicclient.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
-                //clsMicclient.CO_CODECOMMUNE = Objet.CO_CODECOMMUNE.ToString();
-                //clsMicclient.PY_CODEPAYSNATIONALITE = Objet.PY_CODEPAYSNATIONALITE.ToString();
-                //clsMicclient.CL_ADRESSEGEOGRAPHIQUE = Objet.CL_ADRESSEGEOGRAPHIQUE.ToString();
-                //clsMicclient.SM_CODESITUATIONMATRIMONIALE = Objet.SM_CODESITUATIONMATRIMONIALE.ToString();
-                //clsMicclient.FM_CODEFORMEJURIDIQUE = Objet.FM_CODEFORMEJURIDIQUE.ToString();
-                //clsMicclient.TM_CODEMEMBRE = Objet.TM_CODEMEMBRE.ToString();
-                //clsMicclient.TT_CODETITREMEMBRE = Objet.TT_CODETITREMEMBRE.ToString();
-                //clsMicclient.TP_CODETYPEPERSONNEL = Objet.TP_CODETYPEPERSONNEL.ToString();
-                //clsMicclient.TC_CODETYPECONTRAT = Objet.TC_CODETYPECONTRAT.ToString();
-                //clsMicclient.TM_CODEMEMBREPERSONNELIE = Objet.TM_CODEMEMBREPERSONNELIE.ToString();
-                //clsMicclient.TT_CODETITREMEMBREPERSONNELIE = Objet.TT_CODETITREMEMBREPERSONNELIE.ToString();
-                //clsMicclient.TP_CODETYPEPERSONNELPERSONNELIE = Objet.TP_CODETYPEPERSONNELPERSONNELIE.ToString();
-                //clsMicclient.TC_CODETYPECONTRATPERSONNELIE = Objet.TC_CODETYPECONTRATPERSONNELIE.ToString();
-                //clsMicclient.AC_CODEACTIVITE = Objet.AC_CODEACTIVITE.ToString();
-                //clsMicclient.PF_CODEPROFESSION = Objet.PF_CODEPROFESSION.ToString();
-                //clsMicclient.RC_CODERAISONDEPART = Objet.RC_CODERAISONDEPART.ToString();
-                //clsMicclient.PI_CODEPIECE = Objet.PI_CODEPIECE.ToString();
-                //clsMicclient.GR_CODEGROUPE = Objet.GR_CODEGROUPE.ToString();
-                //clsMicclient.PS_CODESOUSPRODUIT = Objet.PS_CODESOUSPRODUIT.ToString();
-                //clsMicclient.CL_IDCLIENTPERSONNELIE = Objet.CL_IDCLIENTPERSONNELIE.ToString();
-                //clsMicclient.CL_DATECREATION = DateTime.Parse(Objet.CL_DATECREATION.ToString());
-                //clsMicclient.CL_DATEDEPART = DateTime.Parse(Objet.CL_DATEDEPART.ToString());
-                //clsMicclient.CL_DESCRIPTIONRAISONDEPART = Objet.CL_DESCRIPTIONRAISONDEPART.ToString();
-                //clsMicclient.CL_BOITEPOSTALE = Objet.CL_BOITEPOSTALE.ToString();
-                //clsMicclient.CL_REGISTRECOMMERCE = Objet.CL_REGISTRECOMMERCE.ToString();
-                //clsMicclient.CL_NUMEROCOMPTECONTRIBUABLE = Objet.CL_NUMEROCOMPTECONTRIBUABLE.ToString();
-                //clsMicclient.CL_NOMCLIENT = Objet.CL_NOMCLIENT.ToString();
-                //clsMicclient.CL_PRENOMCLIENT = Objet.CL_PRENOMCLIENT.ToString();
-                //clsMicclient.CL_DATENAISSANCE = DateTime.Parse(Objet.CL_DATENAISSANCE.ToString());
-                //clsMicclient.CL_LIEUNAISSANCE = Objet.CL_LIEUNAISSANCE.ToString();
-                //clsMicclient.CL_TELEPHONE = Objet.CL_TELEPHONE.ToString();
-                //clsMicclient.CL_FAX = Objet.CL_FAX.ToString();
-                //clsMicclient.CL_EMAIL = Objet.CL_EMAIL.ToString();
-                //clsMicclient.CL_SITEWEB = Objet.CL_SITEWEB.ToString();
-                //clsMicclient.CL_NUMPIECE = Objet.CL_NUMPIECE.ToString();
-                //clsMicclient.CL_DATEEXPIRATIONPIECE = DateTime.Parse(Objet.CL_DATEEXPIRATIONPIECE.ToString());
-                //clsMicclient.CL_REGIMEMATRIMONIALE = Objet.CL_REGIMEMATRIMONIALE.ToString();
-                //clsMicclient.CL_NBENFANT = int.Parse(Objet.CL_NBENFANT.ToString());
-                //clsMicclient.CL_DESCRIPTIONEMPLOYEUR = Objet.CL_DESCRIPTIONEMPLOYEUR.ToString();
-                //clsMicclient.CL_BOITEPOSTALEEMPLOYEUR = Objet.CL_BOITEPOSTALEEMPLOYEUR.ToString();
-                //clsMicclient.CL_TELEMPLOYEUR = Objet.CL_TELEMPLOYEUR.ToString();
-                //clsMicclient.CL_MATRICULEEMPLOYE = Objet.CL_MATRICULEEMPLOYE.ToString();
-                //clsMicclient.OP_GESTIONNAIRECOMPTE = Objet.OP_GESTIONNAIRECOMPTE.ToString();
-                //clsMicclient.CM_IDCOMMERCIAL = Objet.CM_IDCOMMERCIAL.ToString();
-                //clsMicclient.CL_CAPITAL = Double.Parse(Objet.CL_CAPITAL.ToString());
-                //clsMicclient.CL_SALAIRENET = Double.Parse(Objet.CL_SALAIRENET.ToString());
-                //clsMicclient.CL_TAUXREMUNERATION = Double.Parse(Objet.CL_TAUXREMUNERATION.ToString());
-                //clsMicclient.CL_CHIFFREAFFAIRE = Double.Parse(Objet.CL_CHIFFREAFFAIRE.ToString());
-                //clsMicclient.OB_NOMOBJET = Objet.OB_NOMOBJET.ToString();
-                //clsMicclient.OP_AGENTDECOLLECTEETDECREDIT = Objet.OP_AGENTDECOLLECTEETDECREDIT.ToString();
-                //clsMicclient.GM_CODESEGMENT = Objet.GM_CODESEGMENT.ToString();
-                //clsMicclient.GT_CODETYPECLIENT = Objet.GT_CODETYPECLIENT.ToString();
-                //if (clsMicclient.CH_PHOTO != null)
-                //    clsMicclient.CH_PHOTO = System.Convert.FromBase64String(Objet.CH_PHOTO.ToString());
-                //if (clsMicclient.CH_SIGNATURE != null)
-                //    clsMicclient.CH_SIGNATURE = System.Convert.FromBase64String(Objet.CH_SIGNATURE.ToString());
-
-                clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
-                clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
-
-                clsObjetRetour.SetValue(true, clsMicclientWSBLL.pvgModifier(clsDonnee, clsMicclient, clsObjetEnvoi));
-                if (clsObjetRetour.OR_BOOLEEN)
+                if (clsJourneetravailWSBLL.pvgValeurScalaireRequeteCount2(clsDonnee, clsObjetEnvoi) == "0")
                 {
                     DataSet = new DataSet();
                     DataRow dr = dt.NewRow();
-                    dr["SL_CODEMESSAGE"] = "00";
-                    dr["SL_RESULTAT"] = "TRUE";
-                    dr["SL_MESSAGE"] = "L'opération s'est réalisée avec succès";
+                    dr["SL_CODEMESSAGE"] = "99";
+                    dr["SL_RESULTAT"] = "FALSE";
+                    dr["SL_MESSAGE"] = "Cette journée a été déjà fermée ou non encore ouverte !!!";
                     dt.Rows.Add(dr);
                     DataSet.Tables.Add(dt);
                     json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
                 }
+                else
+                {
+                    //foreach (ZenithWebServeur.DTO.clsMicclient clsMicclientDTO in Objet)
+                    //{
+
+                    clsMicclient.CL_CODECLIENT = Objet.CL_CODECLIENT.ToString();
+                    clsMicclient.CL_IDCLIENT = Objet.CL_IDCLIENT.ToString();
+                    clsMicclient.OP_GESTIONNAIRE = Objet.OP_GESTIONNAIRE.ToString();
+                    clsMicclient.OP_GESTIONNAIRECOMPTE = Objet.OP_GESTIONNAIRECOMPTE.ToString();
+                    clsMicclient.CL_IDCLIENTDEMANDEUR = Objet.CL_IDCLIENTDEMANDEUR.ToString();
+                    clsMicclient.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
+                    clsMicclient.PV_CODEPOINTVENTE = Objet.PV_CODEPOINTVENTE.ToString();
+                    clsMicclient.CL_CODELIENTPROVISOIRE = Objet.CL_CODELIENTPROVISOIRE.ToString();
+                    clsMicclient.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
+                    clsMicclient.CO_CODECOMMUNE = Objet.CO_CODECOMMUNE.ToString();
+                    clsMicclient.PY_CODEPAYSNATIONALITE = Objet.PY_CODEPAYSNATIONALITE.ToString();
+                    clsMicclient.CL_ADRESSEGEOGRAPHIQUE = Objet.CL_ADRESSEGEOGRAPHIQUE.ToString();
+                    clsMicclient.SM_CODESITUATIONMATRIMONIALE = Objet.SM_CODESITUATIONMATRIMONIALE.ToString();
+                    clsMicclient.FM_CODEFORMEJURIDIQUE = Objet.FM_CODEFORMEJURIDIQUE.ToString();
+                    clsMicclient.TM_CODEMEMBRE = Objet.TM_CODEMEMBRE.ToString();
+                    clsMicclient.TT_CODETITREMEMBRE = Objet.TT_CODETITREMEMBRE.ToString();
+                    clsMicclient.TP_CODETYPEPERSONNEL = Objet.TP_CODETYPEPERSONNEL.ToString();
+                    clsMicclient.TC_CODETYPECONTRAT = Objet.TC_CODETYPECONTRAT.ToString();
+                    clsMicclient.TM_CODEMEMBREPERSONNELIE = Objet.TM_CODEMEMBREPERSONNELIE.ToString();
+                    clsMicclient.TT_CODETITREMEMBREPERSONNELIE = Objet.TT_CODETITREMEMBREPERSONNELIE.ToString();
+                    clsMicclient.TP_CODETYPEPERSONNELPERSONNELIE = Objet.TP_CODETYPEPERSONNELPERSONNELIE.ToString();
+                    clsMicclient.TC_CODETYPECONTRATPERSONNELIE = Objet.TC_CODETYPECONTRATPERSONNELIE.ToString();
+                    clsMicclient.AC_CODEACTIVITE = Objet.AC_CODEACTIVITE.ToString();
+                    clsMicclient.PF_CODEPROFESSION = Objet.PF_CODEPROFESSION.ToString();
+                    clsMicclient.RC_CODERAISONDEPART = Objet.RC_CODERAISONDEPART.ToString();
+                    clsMicclient.PI_CODEPIECE = Objet.PI_CODEPIECE.ToString();
+                    clsMicclient.GR_CODEGROUPE = Objet.GR_CODEGROUPE.ToString();
+                    clsMicclient.PS_CODESOUSPRODUIT = Objet.PS_CODESOUSPRODUIT.ToString();
+                    clsMicclient.CL_IDCLIENTPERSONNELIE = Objet.CL_IDCLIENTPERSONNELIE.ToString();
+                    clsMicclient.CL_DATECREATION = DateTime.Parse(Objet.CL_DATECREATION.ToString());
+                    clsMicclient.CL_DESCRIPTIONRAISONDEPART = Objet.CL_DESCRIPTIONRAISONDEPART.ToString();
+                    clsMicclient.CL_BOITEPOSTALE = Objet.CL_BOITEPOSTALE.ToString();
+                    clsMicclient.CL_REGISTRECOMMERCE = Objet.CL_REGISTRECOMMERCE.ToString();
+                    clsMicclient.CL_NUMEROCOMPTECONTRIBUABLE = Objet.CL_NUMEROCOMPTECONTRIBUABLE.ToString();
+                    clsMicclient.CL_NOMCLIENT = Objet.CL_NOMCLIENT.ToString();
+                    clsMicclient.CL_PRENOMCLIENT = Objet.CL_PRENOMCLIENT.ToString();
+                    clsMicclient.CL_DATENAISSANCE = DateTime.Parse(Objet.CL_DATENAISSANCE.ToString());
+                    clsMicclient.CL_LIEUNAISSANCE = Objet.CL_LIEUNAISSANCE.ToString();
+                    clsMicclient.CL_TELEPHONE = Objet.CL_TELEPHONE.ToString();
+                    clsMicclient.CL_FAX = Objet.CL_FAX.ToString();
+                    clsMicclient.CL_EMAIL = Objet.CL_EMAIL.ToString();
+                    clsMicclient.CL_SITEWEB = Objet.CL_SITEWEB.ToString();
+                    clsMicclient.CL_NUMPIECE = Objet.CL_NUMPIECE.ToString();
+                    clsMicclient.CL_DATEEXPIRATIONPIECE = DateTime.Parse(Objet.CL_DATEEXPIRATIONPIECE.ToString());
+                    clsMicclient.CL_REGIMEMATRIMONIALE = Objet.CL_REGIMEMATRIMONIALE.ToString();
+                    clsMicclient.CL_NBENFANT = int.Parse(Objet.CL_NBENFANT.ToString());
+                    clsMicclient.CL_DESCRIPTIONEMPLOYEUR = Objet.CL_DESCRIPTIONEMPLOYEUR.ToString();
+                    clsMicclient.CL_BOITEPOSTALEEMPLOYEUR = Objet.CL_BOITEPOSTALEEMPLOYEUR.ToString();
+                    clsMicclient.CL_TELEMPLOYEUR = Objet.CL_TELEMPLOYEUR.ToString();
+                    clsMicclient.CL_MATRICULEEMPLOYE = Objet.CL_MATRICULEEMPLOYE.ToString();
+                    clsMicclient.CM_IDCOMMERCIAL = Objet.CM_IDCOMMERCIAL.ToString();
+                    clsMicclient.CL_CAPITAL = Double.Parse(Objet.CL_CAPITAL.ToString());
+                    clsMicclient.CL_SALAIRENET = Double.Parse(Objet.CL_SALAIRENET.ToString());
+                    clsMicclient.CL_TAUXREMUNERATION = Double.Parse(Objet.CL_TAUXREMUNERATION.ToString());
+                    clsMicclient.OB_NOMOBJET = Objet.OB_NOMOBJET.ToString();
+                    clsMicclient.OP_AGENTDECOLLECTEETDECREDIT = Objet.OP_AGENTDECOLLECTEETDECREDIT.ToString();
+                    clsMicclient.GM_CODESEGMENT = Objet.GM_CODESEGMENT.ToString();
+                    clsMicclient.GT_CODETYPECLIENT = Objet.GT_CODETYPECLIENT.ToString();
+
+                    //clsMicclient.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
+                    //clsMicclient.PV_CODEPOINTVENTE = Objet.PV_CODEPOINTVENTE.ToString();
+                    //clsMicclient.CL_CODECLIENT = Objet.CL_CODECLIENT.ToString();
+                    //clsMicclient.CL_IDCLIENT = Objet.CL_IDCLIENT.ToString();
+                    //clsMicclient.CL_CODELIENTPROVISOIRE = Objet.CL_CODELIENTPROVISOIRE.ToString();
+                    //clsMicclient.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
+                    //clsMicclient.CO_CODECOMMUNE = Objet.CO_CODECOMMUNE.ToString();
+                    //clsMicclient.PY_CODEPAYSNATIONALITE = Objet.PY_CODEPAYSNATIONALITE.ToString();
+                    //clsMicclient.CL_ADRESSEGEOGRAPHIQUE = Objet.CL_ADRESSEGEOGRAPHIQUE.ToString();
+                    //clsMicclient.SM_CODESITUATIONMATRIMONIALE = Objet.SM_CODESITUATIONMATRIMONIALE.ToString();
+                    //clsMicclient.FM_CODEFORMEJURIDIQUE = Objet.FM_CODEFORMEJURIDIQUE.ToString();
+                    //clsMicclient.TM_CODEMEMBRE = Objet.TM_CODEMEMBRE.ToString();
+                    //clsMicclient.TT_CODETITREMEMBRE = Objet.TT_CODETITREMEMBRE.ToString();
+                    //clsMicclient.TP_CODETYPEPERSONNEL = Objet.TP_CODETYPEPERSONNEL.ToString();
+                    //clsMicclient.TC_CODETYPECONTRAT = Objet.TC_CODETYPECONTRAT.ToString();
+                    //clsMicclient.TM_CODEMEMBREPERSONNELIE = Objet.TM_CODEMEMBREPERSONNELIE.ToString();
+                    //clsMicclient.TT_CODETITREMEMBREPERSONNELIE = Objet.TT_CODETITREMEMBREPERSONNELIE.ToString();
+                    //clsMicclient.TP_CODETYPEPERSONNELPERSONNELIE = Objet.TP_CODETYPEPERSONNELPERSONNELIE.ToString();
+                    //clsMicclient.TC_CODETYPECONTRATPERSONNELIE = Objet.TC_CODETYPECONTRATPERSONNELIE.ToString();
+                    //clsMicclient.AC_CODEACTIVITE = Objet.AC_CODEACTIVITE.ToString();
+                    //clsMicclient.PF_CODEPROFESSION = Objet.PF_CODEPROFESSION.ToString();
+                    //clsMicclient.RC_CODERAISONDEPART = Objet.RC_CODERAISONDEPART.ToString();
+                    //clsMicclient.PI_CODEPIECE = Objet.PI_CODEPIECE.ToString();
+                    //clsMicclient.GR_CODEGROUPE = Objet.GR_CODEGROUPE.ToString();
+                    //clsMicclient.PS_CODESOUSPRODUIT = Objet.PS_CODESOUSPRODUIT.ToString();
+                    //clsMicclient.CL_IDCLIENTPERSONNELIE = Objet.CL_IDCLIENTPERSONNELIE.ToString();
+                    //clsMicclient.CL_DATECREATION = DateTime.Parse(Objet.CL_DATECREATION.ToString());
+                    //clsMicclient.CL_DATEDEPART = DateTime.Parse(Objet.CL_DATEDEPART.ToString());
+                    //clsMicclient.CL_DESCRIPTIONRAISONDEPART = Objet.CL_DESCRIPTIONRAISONDEPART.ToString();
+                    //clsMicclient.CL_BOITEPOSTALE = Objet.CL_BOITEPOSTALE.ToString();
+                    //clsMicclient.CL_REGISTRECOMMERCE = Objet.CL_REGISTRECOMMERCE.ToString();
+                    //clsMicclient.CL_NUMEROCOMPTECONTRIBUABLE = Objet.CL_NUMEROCOMPTECONTRIBUABLE.ToString();
+                    //clsMicclient.CL_NOMCLIENT = Objet.CL_NOMCLIENT.ToString();
+                    //clsMicclient.CL_PRENOMCLIENT = Objet.CL_PRENOMCLIENT.ToString();
+                    //clsMicclient.CL_DATENAISSANCE = DateTime.Parse(Objet.CL_DATENAISSANCE.ToString());
+                    //clsMicclient.CL_LIEUNAISSANCE = Objet.CL_LIEUNAISSANCE.ToString();
+                    //clsMicclient.CL_TELEPHONE = Objet.CL_TELEPHONE.ToString();
+                    //clsMicclient.CL_FAX = Objet.CL_FAX.ToString();
+                    //clsMicclient.CL_EMAIL = Objet.CL_EMAIL.ToString();
+                    //clsMicclient.CL_SITEWEB = Objet.CL_SITEWEB.ToString();
+                    //clsMicclient.CL_NUMPIECE = Objet.CL_NUMPIECE.ToString();
+                    //clsMicclient.CL_DATEEXPIRATIONPIECE = DateTime.Parse(Objet.CL_DATEEXPIRATIONPIECE.ToString());
+                    //clsMicclient.CL_REGIMEMATRIMONIALE = Objet.CL_REGIMEMATRIMONIALE.ToString();
+                    //clsMicclient.CL_NBENFANT = int.Parse(Objet.CL_NBENFANT.ToString());
+                    //clsMicclient.CL_DESCRIPTIONEMPLOYEUR = Objet.CL_DESCRIPTIONEMPLOYEUR.ToString();
+                    //clsMicclient.CL_BOITEPOSTALEEMPLOYEUR = Objet.CL_BOITEPOSTALEEMPLOYEUR.ToString();
+                    //clsMicclient.CL_TELEMPLOYEUR = Objet.CL_TELEMPLOYEUR.ToString();
+                    //clsMicclient.CL_MATRICULEEMPLOYE = Objet.CL_MATRICULEEMPLOYE.ToString();
+                    //clsMicclient.OP_GESTIONNAIRECOMPTE = Objet.OP_GESTIONNAIRECOMPTE.ToString();
+                    //clsMicclient.CM_IDCOMMERCIAL = Objet.CM_IDCOMMERCIAL.ToString();
+                    //clsMicclient.CL_CAPITAL = Double.Parse(Objet.CL_CAPITAL.ToString());
+                    //clsMicclient.CL_SALAIRENET = Double.Parse(Objet.CL_SALAIRENET.ToString());
+                    //clsMicclient.CL_TAUXREMUNERATION = Double.Parse(Objet.CL_TAUXREMUNERATION.ToString());
+                    //clsMicclient.CL_CHIFFREAFFAIRE = Double.Parse(Objet.CL_CHIFFREAFFAIRE.ToString());
+                    //clsMicclient.OB_NOMOBJET = Objet.OB_NOMOBJET.ToString();
+                    //clsMicclient.OP_AGENTDECOLLECTEETDECREDIT = Objet.OP_AGENTDECOLLECTEETDECREDIT.ToString();
+                    //clsMicclient.GM_CODESEGMENT = Objet.GM_CODESEGMENT.ToString();
+                    //clsMicclient.GT_CODETYPECLIENT = Objet.GT_CODETYPECLIENT.ToString();
+                    //if (clsMicclient.CH_PHOTO != null)
+                    //    clsMicclient.CH_PHOTO = System.Convert.FromBase64String(Objet.CH_PHOTO.ToString());
+                    //if (clsMicclient.CH_SIGNATURE != null)
+                    //    clsMicclient.CH_SIGNATURE = System.Convert.FromBase64String(Objet.CH_SIGNATURE.ToString());
+
+                    clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
+                    clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
+
+                    clsObjetRetour.SetValue(true, clsMicclientWSBLL.pvgModifier(clsDonnee, clsMicclient, clsObjetEnvoi));
+                    if (clsObjetRetour.OR_BOOLEEN)
+                    {
+                        DataSet = new DataSet();
+                        DataRow dr = dt.NewRow();
+                        dr["SL_CODEMESSAGE"] = "00";
+                        dr["SL_RESULTAT"] = "TRUE";
+                        dr["SL_MESSAGE"] = "L'opération s'est réalisée avec succès";
+                        dt.Rows.Add(dr);
+                        DataSet.Tables.Add(dt);
+                        json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                    }
+                }
+                
                 //}
             }
              catch (SqlException SQLEx)
@@ -1574,100 +1648,129 @@ namespace ZenithWebServeur.WCF
                 //clsDonnee.pvgConnectionBase();
                 clsDonnee.pvgDemarrerTransaction();
                 //clsObjetEnvoi.OE_PARAM = new string[] { Objet.AG_CODEAGENCE };
+                if (Objet.clsObjetEnvoi != null)
+                {
+                    clsObjetEnvoi.OE_J = DateTime.Parse(Objet.clsObjetEnvoi.OE_J);
+                    clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
+                    if (Objet.clsObjetEnvoi.OE_J != "")
+                        clsObjetEnvoi.OE_J = DateTime.Parse(Objet.clsObjetEnvoi.OE_J);
+                    clsObjetEnvoi.OE_Y = clsObjetEnvoi.OE_Y;
+                    clsObjetEnvoi.OE_U = clsObjetEnvoi.OE_U;
+                    if (Objet.clsObjetEnvoi.OE_G != "")
+                        clsObjetEnvoi.OE_G = DateTime.Parse(Objet.clsObjetEnvoi.OE_G);
+                    clsObjetEnvoi.OE_F = Objet.clsObjetEnvoi.OE_F;
+                    clsObjetEnvoi.OE_T = Objet.clsObjetEnvoi.OE_T;
+                }
 
-                //foreach (ZenithWebServeur.DTO.clsMicclient clsMicclientDTO in Objet)
-                //{
-
-                // objet principal
-                clsMicclient.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
-                clsMicclient.PV_CODEPOINTVENTE = Objet.PV_CODEPOINTVENTE.ToString();
-                clsMicclient.CL_CODECLIENT = Objet.CL_CODECLIENT.ToString();
-                clsMicclient.CL_IDCLIENT = Objet.CL_IDCLIENT.ToString();
-                clsMicclient.CL_CODELIENTPROVISOIRE = Objet.CL_CODELIENTPROVISOIRE.ToString();
-                clsMicclient.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
-                clsMicclient.CO_CODECOMMUNE = Objet.CO_CODECOMMUNE.ToString();
-                clsMicclient.PY_CODEPAYSNATIONALITE = Objet.PY_CODEPAYSNATIONALITE.ToString();
-                clsMicclient.CL_ADRESSEGEOGRAPHIQUE = Objet.CL_ADRESSEGEOGRAPHIQUE.ToString();
-                clsMicclient.SM_CODESITUATIONMATRIMONIALE = Objet.SM_CODESITUATIONMATRIMONIALE.ToString();
-                clsMicclient.FM_CODEFORMEJURIDIQUE = Objet.FM_CODEFORMEJURIDIQUE.ToString();
-                clsMicclient.TM_CODEMEMBRE = Objet.TM_CODEMEMBRE.ToString();
-                clsMicclient.TT_CODETITREMEMBRE = Objet.TT_CODETITREMEMBRE.ToString();
-                clsMicclient.TP_CODETYPEPERSONNEL = Objet.TP_CODETYPEPERSONNEL.ToString();
-                clsMicclient.TC_CODETYPECONTRAT = Objet.TC_CODETYPECONTRAT.ToString();
-                clsMicclient.TM_CODEMEMBREPERSONNELIE = Objet.TM_CODEMEMBREPERSONNELIE.ToString();
-                clsMicclient.TT_CODETITREMEMBREPERSONNELIE = Objet.TT_CODETITREMEMBREPERSONNELIE.ToString();
-                clsMicclient.TP_CODETYPEPERSONNELPERSONNELIE = Objet.TP_CODETYPEPERSONNELPERSONNELIE.ToString();
-                clsMicclient.TC_CODETYPECONTRATPERSONNELIE = Objet.TC_CODETYPECONTRATPERSONNELIE.ToString();
-                clsMicclient.AC_CODEACTIVITE = Objet.AC_CODEACTIVITE.ToString();
-                clsMicclient.PF_CODEPROFESSION = Objet.PF_CODEPROFESSION.ToString();
-                clsMicclient.RC_CODERAISONDEPART = Objet.RC_CODERAISONDEPART.ToString();
-                clsMicclient.PI_CODEPIECE = Objet.PI_CODEPIECE.ToString();
-                clsMicclient.GR_CODEGROUPE = Objet.GR_CODEGROUPE.ToString();
-                clsMicclient.PS_CODESOUSPRODUIT = Objet.PS_CODESOUSPRODUIT.ToString();
-                clsMicclient.CL_IDCLIENTPERSONNELIE = Objet.CL_IDCLIENTPERSONNELIE.ToString();
-                clsMicclient.CL_DATECREATION = DateTime.Parse(Objet.CL_DATECREATION.ToString());
-                clsMicclient.CL_DATEDEPART = DateTime.Parse(Objet.CL_DATEDEPART.ToString());
-                clsMicclient.CL_DESCRIPTIONRAISONDEPART = Objet.CL_DESCRIPTIONRAISONDEPART.ToString();
-                clsMicclient.CL_BOITEPOSTALE = Objet.CL_BOITEPOSTALE.ToString();
-                clsMicclient.CL_REGISTRECOMMERCE = Objet.CL_REGISTRECOMMERCE.ToString();
-                clsMicclient.CL_NUMEROCOMPTECONTRIBUABLE = Objet.CL_NUMEROCOMPTECONTRIBUABLE.ToString();
-                clsMicclient.CL_NOMCLIENT = Objet.CL_NOMCLIENT.ToString();
-                clsMicclient.CL_PRENOMCLIENT = Objet.CL_PRENOMCLIENT.ToString();
-                clsMicclient.CL_DATENAISSANCE = DateTime.Parse(Objet.CL_DATENAISSANCE.ToString());
-                clsMicclient.CL_LIEUNAISSANCE = Objet.CL_LIEUNAISSANCE.ToString();
-                clsMicclient.CL_TELEPHONE = Objet.CL_TELEPHONE.ToString();
-                clsMicclient.CL_FAX = Objet.CL_FAX.ToString();
-                clsMicclient.CL_EMAIL = Objet.CL_EMAIL.ToString();
-                clsMicclient.CL_SITEWEB = Objet.CL_SITEWEB.ToString();
-                clsMicclient.CL_NUMPIECE = Objet.CL_NUMPIECE.ToString();
-                clsMicclient.CL_DATEEXPIRATIONPIECE = DateTime.Parse(Objet.CL_DATEEXPIRATIONPIECE.ToString());
-                clsMicclient.CL_REGIMEMATRIMONIALE = Objet.CL_REGIMEMATRIMONIALE.ToString();
-                clsMicclient.CL_NBENFANT = int.Parse(Objet.CL_NBENFANT.ToString());
-                clsMicclient.CL_DESCRIPTIONEMPLOYEUR = Objet.CL_DESCRIPTIONEMPLOYEUR.ToString();
-                clsMicclient.CL_BOITEPOSTALEEMPLOYEUR = Objet.CL_BOITEPOSTALEEMPLOYEUR.ToString();
-                clsMicclient.CL_TELEMPLOYEUR = Objet.CL_TELEMPLOYEUR.ToString();
-                clsMicclient.CL_MATRICULEEMPLOYE = Objet.CL_MATRICULEEMPLOYE.ToString();
-                clsMicclient.OP_GESTIONNAIRECOMPTE = Objet.OP_GESTIONNAIRECOMPTE.ToString();
-                clsMicclient.CM_IDCOMMERCIAL = Objet.CM_IDCOMMERCIAL.ToString();
-                clsMicclient.CL_CAPITAL = Double.Parse(Objet.CL_CAPITAL.ToString());
-                clsMicclient.CL_SALAIRENET = Double.Parse(Objet.CL_SALAIRENET.ToString());
-                clsMicclient.CL_TAUXREMUNERATION = Double.Parse(Objet.CL_TAUXREMUNERATION.ToString());
-                clsMicclient.CL_CHIFFREAFFAIRE = Double.Parse(Objet.CL_CHIFFREAFFAIRE.ToString());
-                clsMicclient.OB_NOMOBJET = Objet.OB_NOMOBJET.ToString();
-                clsMicclient.OP_AGENTDECOLLECTEETDECREDIT = Objet.OP_AGENTDECOLLECTEETDECREDIT.ToString();
-                clsMicclient.GM_CODESEGMENT = Objet.GM_CODESEGMENT.ToString();
-                clsMicclient.GT_CODETYPECLIENT = Objet.GT_CODETYPECLIENT.ToString();
-
-                //objet photo
-                clsMicclientphoto.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
-                clsMicclientphoto.CL_IDCLIENT = Objet.CL_IDCLIENT.ToString();
-                // clsMicclientphoto.CH_PHOTO = System.Convert.FromBase64String(Objet.CH_PHOTO.ToString());
-                // clsMicclientphoto.CH_SIGNATURE = System.Convert.FromBase64String(Objet.CH_SIGNATURE.ToString());
-                Byte[] CM_PHOTO = null;
-                Byte[] CM_SIGNATURE = null;
-                if (Objet.CH_PHOTO != "")
-                    CM_PHOTO = System.Convert.FromBase64String(Objet.CH_PHOTO);
-                if (Objet.CH_SIGNATURE != "")
-                    CM_SIGNATURE = System.Convert.FromBase64String(Objet.CH_SIGNATURE);
-
-                clsMicclientphoto.CH_PHOTO = CM_PHOTO;
-                clsMicclientphoto.CH_SIGNATURE = CM_SIGNATURE;
-
-                clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
-                clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
-
-                clsObjetRetour.SetValue(true, clsMicclientWSBLL.pvgAjouterClientPhoto(clsDonnee, clsMicclient, clsMicclientphoto, clsObjetEnvoi));
-                if (clsObjetRetour.OR_BOOLEEN)
+                if (clsJourneetravailWSBLL.pvgValeurScalaireRequeteCount2(clsDonnee, clsObjetEnvoi) == "0")
                 {
                     DataSet = new DataSet();
                     DataRow dr = dt.NewRow();
-                    dr["SL_CODEMESSAGE"] = "00";
-                    dr["SL_RESULTAT"] = "TRUE";
-                    dr["SL_MESSAGE"] = "L'opération s'est réalisée avec succès";
+                    dr["SL_CODEMESSAGE"] = "99";
+                    dr["SL_RESULTAT"] = "FALSE";
+                    dr["SL_MESSAGE"] = "Cette journée a été déjà fermée ou non encore ouverte !!!";
                     dt.Rows.Add(dr);
                     DataSet.Tables.Add(dt);
                     json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
                 }
+                else
+                {
+                    //foreach (ZenithWebServeur.DTO.clsMicclient clsMicclientDTO in Objet)
+                    //{
+
+                    // objet principal
+                    clsMicclient.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
+                    clsMicclient.PV_CODEPOINTVENTE = Objet.PV_CODEPOINTVENTE.ToString();
+                    clsMicclient.CL_CODECLIENT = Objet.CL_CODECLIENT.ToString();
+                    clsMicclient.CL_IDCLIENT = Objet.CL_IDCLIENT.ToString();
+                    clsMicclient.CL_CODELIENTPROVISOIRE = Objet.CL_CODELIENTPROVISOIRE.ToString();
+                    clsMicclient.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
+                    clsMicclient.CO_CODECOMMUNE = Objet.CO_CODECOMMUNE.ToString();
+                    clsMicclient.PY_CODEPAYSNATIONALITE = Objet.PY_CODEPAYSNATIONALITE.ToString();
+                    clsMicclient.CL_ADRESSEGEOGRAPHIQUE = Objet.CL_ADRESSEGEOGRAPHIQUE.ToString();
+                    clsMicclient.SM_CODESITUATIONMATRIMONIALE = Objet.SM_CODESITUATIONMATRIMONIALE.ToString();
+                    clsMicclient.FM_CODEFORMEJURIDIQUE = Objet.FM_CODEFORMEJURIDIQUE.ToString();
+                    clsMicclient.TM_CODEMEMBRE = Objet.TM_CODEMEMBRE.ToString();
+                    clsMicclient.TT_CODETITREMEMBRE = Objet.TT_CODETITREMEMBRE.ToString();
+                    clsMicclient.TP_CODETYPEPERSONNEL = Objet.TP_CODETYPEPERSONNEL.ToString();
+                    clsMicclient.TC_CODETYPECONTRAT = Objet.TC_CODETYPECONTRAT.ToString();
+                    clsMicclient.TM_CODEMEMBREPERSONNELIE = Objet.TM_CODEMEMBREPERSONNELIE.ToString();
+                    clsMicclient.TT_CODETITREMEMBREPERSONNELIE = Objet.TT_CODETITREMEMBREPERSONNELIE.ToString();
+                    clsMicclient.TP_CODETYPEPERSONNELPERSONNELIE = Objet.TP_CODETYPEPERSONNELPERSONNELIE.ToString();
+                    clsMicclient.TC_CODETYPECONTRATPERSONNELIE = Objet.TC_CODETYPECONTRATPERSONNELIE.ToString();
+                    clsMicclient.AC_CODEACTIVITE = Objet.AC_CODEACTIVITE.ToString();
+                    clsMicclient.PF_CODEPROFESSION = Objet.PF_CODEPROFESSION.ToString();
+                    clsMicclient.RC_CODERAISONDEPART = Objet.RC_CODERAISONDEPART.ToString();
+                    clsMicclient.PI_CODEPIECE = Objet.PI_CODEPIECE.ToString();
+                    clsMicclient.GR_CODEGROUPE = Objet.GR_CODEGROUPE.ToString();
+                    clsMicclient.PS_CODESOUSPRODUIT = Objet.PS_CODESOUSPRODUIT.ToString();
+                    clsMicclient.CL_IDCLIENTPERSONNELIE = Objet.CL_IDCLIENTPERSONNELIE.ToString();
+                    clsMicclient.CL_DATECREATION = DateTime.Parse(Objet.CL_DATECREATION.ToString());
+                    clsMicclient.CL_DATEDEPART = DateTime.Parse(Objet.CL_DATEDEPART.ToString());
+                    clsMicclient.CL_DESCRIPTIONRAISONDEPART = Objet.CL_DESCRIPTIONRAISONDEPART.ToString();
+                    clsMicclient.CL_BOITEPOSTALE = Objet.CL_BOITEPOSTALE.ToString();
+                    clsMicclient.CL_REGISTRECOMMERCE = Objet.CL_REGISTRECOMMERCE.ToString();
+                    clsMicclient.CL_NUMEROCOMPTECONTRIBUABLE = Objet.CL_NUMEROCOMPTECONTRIBUABLE.ToString();
+                    clsMicclient.CL_NOMCLIENT = Objet.CL_NOMCLIENT.ToString();
+                    clsMicclient.CL_PRENOMCLIENT = Objet.CL_PRENOMCLIENT.ToString();
+                    clsMicclient.CL_DATENAISSANCE = DateTime.Parse(Objet.CL_DATENAISSANCE.ToString());
+                    clsMicclient.CL_LIEUNAISSANCE = Objet.CL_LIEUNAISSANCE.ToString();
+                    clsMicclient.CL_TELEPHONE = Objet.CL_TELEPHONE.ToString();
+                    clsMicclient.CL_FAX = Objet.CL_FAX.ToString();
+                    clsMicclient.CL_EMAIL = Objet.CL_EMAIL.ToString();
+                    clsMicclient.CL_SITEWEB = Objet.CL_SITEWEB.ToString();
+                    clsMicclient.CL_NUMPIECE = Objet.CL_NUMPIECE.ToString();
+                    clsMicclient.CL_DATEEXPIRATIONPIECE = DateTime.Parse(Objet.CL_DATEEXPIRATIONPIECE.ToString());
+                    clsMicclient.CL_REGIMEMATRIMONIALE = Objet.CL_REGIMEMATRIMONIALE.ToString();
+                    clsMicclient.CL_NBENFANT = int.Parse(Objet.CL_NBENFANT.ToString());
+                    clsMicclient.CL_DESCRIPTIONEMPLOYEUR = Objet.CL_DESCRIPTIONEMPLOYEUR.ToString();
+                    clsMicclient.CL_BOITEPOSTALEEMPLOYEUR = Objet.CL_BOITEPOSTALEEMPLOYEUR.ToString();
+                    clsMicclient.CL_TELEMPLOYEUR = Objet.CL_TELEMPLOYEUR.ToString();
+                    clsMicclient.CL_MATRICULEEMPLOYE = Objet.CL_MATRICULEEMPLOYE.ToString();
+                    clsMicclient.OP_GESTIONNAIRECOMPTE = Objet.OP_GESTIONNAIRECOMPTE.ToString();
+                    clsMicclient.CM_IDCOMMERCIAL = Objet.CM_IDCOMMERCIAL.ToString();
+                    clsMicclient.CL_CAPITAL = Double.Parse(Objet.CL_CAPITAL.ToString());
+                    clsMicclient.CL_SALAIRENET = Double.Parse(Objet.CL_SALAIRENET.ToString());
+                    clsMicclient.CL_TAUXREMUNERATION = Double.Parse(Objet.CL_TAUXREMUNERATION.ToString());
+                    clsMicclient.CL_CHIFFREAFFAIRE = Double.Parse(Objet.CL_CHIFFREAFFAIRE.ToString());
+                    clsMicclient.OB_NOMOBJET = Objet.OB_NOMOBJET.ToString();
+                    clsMicclient.OP_AGENTDECOLLECTEETDECREDIT = Objet.OP_AGENTDECOLLECTEETDECREDIT.ToString();
+                    clsMicclient.GM_CODESEGMENT = Objet.GM_CODESEGMENT.ToString();
+                    clsMicclient.GT_CODETYPECLIENT = Objet.GT_CODETYPECLIENT.ToString();
+
+                    //objet photo
+                    clsMicclientphoto.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
+                    clsMicclientphoto.CL_IDCLIENT = Objet.CL_IDCLIENT.ToString();
+                    // clsMicclientphoto.CH_PHOTO = System.Convert.FromBase64String(Objet.CH_PHOTO.ToString());
+                    // clsMicclientphoto.CH_SIGNATURE = System.Convert.FromBase64String(Objet.CH_SIGNATURE.ToString());
+                    Byte[] CM_PHOTO = null;
+                    Byte[] CM_SIGNATURE = null;
+                    if (Objet.CH_PHOTO != "")
+                        CM_PHOTO = System.Convert.FromBase64String(Objet.CH_PHOTO);
+                    if (Objet.CH_SIGNATURE != "")
+                        CM_SIGNATURE = System.Convert.FromBase64String(Objet.CH_SIGNATURE);
+
+                    clsMicclientphoto.CH_PHOTO = CM_PHOTO;
+                    clsMicclientphoto.CH_SIGNATURE = CM_SIGNATURE;
+
+                    clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
+                    clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
+
+                    clsObjetRetour.SetValue(true, clsMicclientWSBLL.pvgAjouterClientPhoto(clsDonnee, clsMicclient, clsMicclientphoto, clsObjetEnvoi));
+                    if (clsObjetRetour.OR_BOOLEEN)
+                    {
+                        DataSet = new DataSet();
+                        DataRow dr = dt.NewRow();
+                        dr["SL_CODEMESSAGE"] = "00";
+                        dr["SL_RESULTAT"] = "TRUE";
+                        dr["SL_MESSAGE"] = "L'opération s'est réalisée avec succès";
+                        dt.Rows.Add(dr);
+                        DataSet.Tables.Add(dt);
+                        json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                    }
+
+                }
+                
                 //}
             }
              catch (SqlException SQLEx)
@@ -2095,99 +2198,128 @@ namespace ZenithWebServeur.WCF
                 clsDonnee.pvgDemarrerTransaction();
                 clsObjetEnvoi.OE_PARAM = new string[] { Objet.CL_IDCLIENT };
 
-                //foreach (ZenithWebServeur.DTO.clsMicclient clsMicclientDTO in Objet)
-                //{
+                if (Objet.clsObjetEnvoi != null)
+                {
+                    clsObjetEnvoi.OE_J = DateTime.Parse(Objet.clsObjetEnvoi.OE_J);
+                    clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
+                    if (Objet.clsObjetEnvoi.OE_J != "")
+                        clsObjetEnvoi.OE_J = DateTime.Parse(Objet.clsObjetEnvoi.OE_J);
+                    clsObjetEnvoi.OE_Y = clsObjetEnvoi.OE_Y;
+                    clsObjetEnvoi.OE_U = clsObjetEnvoi.OE_U;
+                    if (Objet.clsObjetEnvoi.OE_G != "")
+                        clsObjetEnvoi.OE_G = DateTime.Parse(Objet.clsObjetEnvoi.OE_G);
+                    clsObjetEnvoi.OE_F = Objet.clsObjetEnvoi.OE_F;
+                    clsObjetEnvoi.OE_T = Objet.clsObjetEnvoi.OE_T;
+                }
 
-                // objet principal
-                clsMicclient.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
-                clsMicclient.PV_CODEPOINTVENTE = Objet.PV_CODEPOINTVENTE.ToString();
-                clsMicclient.CL_CODECLIENT = Objet.CL_CODECLIENT.ToString();
-                clsMicclient.CL_IDCLIENT = Objet.CL_IDCLIENT.ToString();
-                clsMicclient.CL_CODELIENTPROVISOIRE = Objet.CL_CODELIENTPROVISOIRE.ToString();
-                clsMicclient.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
-                clsMicclient.CO_CODECOMMUNE = Objet.CO_CODECOMMUNE.ToString();
-                clsMicclient.PY_CODEPAYSNATIONALITE = Objet.PY_CODEPAYSNATIONALITE.ToString();
-                clsMicclient.CL_ADRESSEGEOGRAPHIQUE = Objet.CL_ADRESSEGEOGRAPHIQUE.ToString();
-                clsMicclient.SM_CODESITUATIONMATRIMONIALE = Objet.SM_CODESITUATIONMATRIMONIALE.ToString();
-                clsMicclient.FM_CODEFORMEJURIDIQUE = Objet.FM_CODEFORMEJURIDIQUE.ToString();
-                clsMicclient.TM_CODEMEMBRE = Objet.TM_CODEMEMBRE.ToString();
-                clsMicclient.TT_CODETITREMEMBRE = Objet.TT_CODETITREMEMBRE.ToString();
-                clsMicclient.TP_CODETYPEPERSONNEL = Objet.TP_CODETYPEPERSONNEL.ToString();
-                clsMicclient.TC_CODETYPECONTRAT = Objet.TC_CODETYPECONTRAT.ToString();
-                clsMicclient.TM_CODEMEMBREPERSONNELIE = Objet.TM_CODEMEMBREPERSONNELIE.ToString();
-                clsMicclient.TT_CODETITREMEMBREPERSONNELIE = Objet.TT_CODETITREMEMBREPERSONNELIE.ToString();
-                clsMicclient.TP_CODETYPEPERSONNELPERSONNELIE = Objet.TP_CODETYPEPERSONNELPERSONNELIE.ToString();
-                clsMicclient.TC_CODETYPECONTRATPERSONNELIE = Objet.TC_CODETYPECONTRATPERSONNELIE.ToString();
-                clsMicclient.AC_CODEACTIVITE = Objet.AC_CODEACTIVITE.ToString();
-                clsMicclient.PF_CODEPROFESSION = Objet.PF_CODEPROFESSION.ToString();
-                clsMicclient.RC_CODERAISONDEPART = Objet.RC_CODERAISONDEPART.ToString();
-                clsMicclient.PI_CODEPIECE = Objet.PI_CODEPIECE.ToString();
-                clsMicclient.GR_CODEGROUPE = Objet.GR_CODEGROUPE.ToString();
-                clsMicclient.PS_CODESOUSPRODUIT = Objet.PS_CODESOUSPRODUIT.ToString();
-                clsMicclient.CL_IDCLIENTPERSONNELIE = Objet.CL_IDCLIENTPERSONNELIE.ToString();
-                clsMicclient.CL_DATECREATION = DateTime.Parse(Objet.CL_DATECREATION.ToString());
-                clsMicclient.CL_DATEDEPART = DateTime.Parse(Objet.CL_DATEDEPART.ToString());
-                clsMicclient.CL_DESCRIPTIONRAISONDEPART = Objet.CL_DESCRIPTIONRAISONDEPART.ToString();
-                clsMicclient.CL_BOITEPOSTALE = Objet.CL_BOITEPOSTALE.ToString();
-                clsMicclient.CL_REGISTRECOMMERCE = Objet.CL_REGISTRECOMMERCE.ToString();
-                clsMicclient.CL_NUMEROCOMPTECONTRIBUABLE = Objet.CL_NUMEROCOMPTECONTRIBUABLE.ToString();
-                clsMicclient.CL_NOMCLIENT = Objet.CL_NOMCLIENT.ToString();
-                clsMicclient.CL_PRENOMCLIENT = Objet.CL_PRENOMCLIENT.ToString();
-                clsMicclient.CL_DATENAISSANCE = DateTime.Parse(Objet.CL_DATENAISSANCE.ToString());
-                clsMicclient.CL_LIEUNAISSANCE = Objet.CL_LIEUNAISSANCE.ToString();
-                clsMicclient.CL_TELEPHONE = Objet.CL_TELEPHONE.ToString();
-                clsMicclient.CL_FAX = Objet.CL_FAX.ToString();
-                clsMicclient.CL_EMAIL = Objet.CL_EMAIL.ToString();
-                clsMicclient.CL_SITEWEB = Objet.CL_SITEWEB.ToString();
-                clsMicclient.CL_NUMPIECE = Objet.CL_NUMPIECE.ToString();
-                clsMicclient.CL_DATEEXPIRATIONPIECE = DateTime.Parse(Objet.CL_DATEEXPIRATIONPIECE.ToString());
-                clsMicclient.CL_REGIMEMATRIMONIALE = Objet.CL_REGIMEMATRIMONIALE.ToString();
-                clsMicclient.CL_NBENFANT = int.Parse(Objet.CL_NBENFANT.ToString());
-                clsMicclient.CL_DESCRIPTIONEMPLOYEUR = Objet.CL_DESCRIPTIONEMPLOYEUR.ToString();
-                clsMicclient.CL_BOITEPOSTALEEMPLOYEUR = Objet.CL_BOITEPOSTALEEMPLOYEUR.ToString();
-                clsMicclient.CL_TELEMPLOYEUR = Objet.CL_TELEMPLOYEUR.ToString();
-                clsMicclient.CL_MATRICULEEMPLOYE = Objet.CL_MATRICULEEMPLOYE.ToString();
-                clsMicclient.OP_GESTIONNAIRECOMPTE = Objet.OP_GESTIONNAIRECOMPTE.ToString();
-                clsMicclient.CM_IDCOMMERCIAL = Objet.CM_IDCOMMERCIAL.ToString();
-                clsMicclient.CL_CAPITAL = Double.Parse(Objet.CL_CAPITAL.ToString());
-                clsMicclient.CL_SALAIRENET = Double.Parse(Objet.CL_SALAIRENET.ToString());
-                clsMicclient.CL_TAUXREMUNERATION = Double.Parse(Objet.CL_TAUXREMUNERATION.ToString());
-                clsMicclient.CL_CHIFFREAFFAIRE = Double.Parse(Objet.CL_CHIFFREAFFAIRE.ToString());
-                clsMicclient.OB_NOMOBJET = Objet.OB_NOMOBJET.ToString();
-                clsMicclient.OP_AGENTDECOLLECTEETDECREDIT = Objet.OP_AGENTDECOLLECTEETDECREDIT.ToString();
-                clsMicclient.GM_CODESEGMENT = Objet.GM_CODESEGMENT.ToString();
-                clsMicclient.GT_CODETYPECLIENT = Objet.GT_CODETYPECLIENT.ToString();
-
-                //objet photo
-                clsMicclientphoto.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
-                clsMicclientphoto.CL_IDCLIENT = Objet.CL_IDCLIENT.ToString();
-                //clsMicclientphoto.CH_PHOTO = System.Convert.FromBase64String(Objet.CH_PHOTO.ToString());
-                //clsMicclientphoto.CH_SIGNATURE = System.Convert.FromBase64String(Objet.CH_SIGNATURE.ToString());
-                Byte[] CM_PHOTO = null;
-                Byte[] CM_SIGNATURE = null;
-                if (Objet.CH_PHOTO != "")
-                    CM_PHOTO = System.Convert.FromBase64String(Objet.CH_PHOTO);
-                if (Objet.CH_SIGNATURE != "")
-                    CM_SIGNATURE = System.Convert.FromBase64String(Objet.CH_SIGNATURE);
-
-                clsMicclientphoto.CH_PHOTO = CM_PHOTO;
-                clsMicclientphoto.CH_SIGNATURE = CM_SIGNATURE;
-
-                clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
-                clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
-
-                clsObjetRetour.SetValue(true, clsMicclientWSBLL.pvgModifierClientPhoto(clsDonnee, clsMicclient, clsMicclientphoto, clsObjetEnvoi));
-                if (clsObjetRetour.OR_BOOLEEN)
+                if (clsJourneetravailWSBLL.pvgValeurScalaireRequeteCount2(clsDonnee, clsObjetEnvoi) == "0")
                 {
                     DataSet = new DataSet();
                     DataRow dr = dt.NewRow();
-                    dr["SL_CODEMESSAGE"] = "00";
-                    dr["SL_RESULTAT"] = "TRUE";
-                    dr["SL_MESSAGE"] = "L'opération s'est réalisée avec succès";
+                    dr["SL_CODEMESSAGE"] = "99";
+                    dr["SL_RESULTAT"] = "FALSE";
+                    dr["SL_MESSAGE"] = "Cette journée a été déjà fermée ou non encore ouverte !!!";
                     dt.Rows.Add(dr);
                     DataSet.Tables.Add(dt);
                     json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
                 }
+                else
+                {
+                    //foreach (ZenithWebServeur.DTO.clsMicclient clsMicclientDTO in Objet)
+                    //{
+
+                    // objet principal
+                    clsMicclient.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
+                    clsMicclient.PV_CODEPOINTVENTE = Objet.PV_CODEPOINTVENTE.ToString();
+                    clsMicclient.CL_CODECLIENT = Objet.CL_CODECLIENT.ToString();
+                    clsMicclient.CL_IDCLIENT = Objet.CL_IDCLIENT.ToString();
+                    clsMicclient.CL_CODELIENTPROVISOIRE = Objet.CL_CODELIENTPROVISOIRE.ToString();
+                    clsMicclient.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
+                    clsMicclient.CO_CODECOMMUNE = Objet.CO_CODECOMMUNE.ToString();
+                    clsMicclient.PY_CODEPAYSNATIONALITE = Objet.PY_CODEPAYSNATIONALITE.ToString();
+                    clsMicclient.CL_ADRESSEGEOGRAPHIQUE = Objet.CL_ADRESSEGEOGRAPHIQUE.ToString();
+                    clsMicclient.SM_CODESITUATIONMATRIMONIALE = Objet.SM_CODESITUATIONMATRIMONIALE.ToString();
+                    clsMicclient.FM_CODEFORMEJURIDIQUE = Objet.FM_CODEFORMEJURIDIQUE.ToString();
+                    clsMicclient.TM_CODEMEMBRE = Objet.TM_CODEMEMBRE.ToString();
+                    clsMicclient.TT_CODETITREMEMBRE = Objet.TT_CODETITREMEMBRE.ToString();
+                    clsMicclient.TP_CODETYPEPERSONNEL = Objet.TP_CODETYPEPERSONNEL.ToString();
+                    clsMicclient.TC_CODETYPECONTRAT = Objet.TC_CODETYPECONTRAT.ToString();
+                    clsMicclient.TM_CODEMEMBREPERSONNELIE = Objet.TM_CODEMEMBREPERSONNELIE.ToString();
+                    clsMicclient.TT_CODETITREMEMBREPERSONNELIE = Objet.TT_CODETITREMEMBREPERSONNELIE.ToString();
+                    clsMicclient.TP_CODETYPEPERSONNELPERSONNELIE = Objet.TP_CODETYPEPERSONNELPERSONNELIE.ToString();
+                    clsMicclient.TC_CODETYPECONTRATPERSONNELIE = Objet.TC_CODETYPECONTRATPERSONNELIE.ToString();
+                    clsMicclient.AC_CODEACTIVITE = Objet.AC_CODEACTIVITE.ToString();
+                    clsMicclient.PF_CODEPROFESSION = Objet.PF_CODEPROFESSION.ToString();
+                    clsMicclient.RC_CODERAISONDEPART = Objet.RC_CODERAISONDEPART.ToString();
+                    clsMicclient.PI_CODEPIECE = Objet.PI_CODEPIECE.ToString();
+                    clsMicclient.GR_CODEGROUPE = Objet.GR_CODEGROUPE.ToString();
+                    clsMicclient.PS_CODESOUSPRODUIT = Objet.PS_CODESOUSPRODUIT.ToString();
+                    clsMicclient.CL_IDCLIENTPERSONNELIE = Objet.CL_IDCLIENTPERSONNELIE.ToString();
+                    clsMicclient.CL_DATECREATION = DateTime.Parse(Objet.CL_DATECREATION.ToString());
+                    clsMicclient.CL_DATEDEPART = DateTime.Parse(Objet.CL_DATEDEPART.ToString());
+                    clsMicclient.CL_DESCRIPTIONRAISONDEPART = Objet.CL_DESCRIPTIONRAISONDEPART.ToString();
+                    clsMicclient.CL_BOITEPOSTALE = Objet.CL_BOITEPOSTALE.ToString();
+                    clsMicclient.CL_REGISTRECOMMERCE = Objet.CL_REGISTRECOMMERCE.ToString();
+                    clsMicclient.CL_NUMEROCOMPTECONTRIBUABLE = Objet.CL_NUMEROCOMPTECONTRIBUABLE.ToString();
+                    clsMicclient.CL_NOMCLIENT = Objet.CL_NOMCLIENT.ToString();
+                    clsMicclient.CL_PRENOMCLIENT = Objet.CL_PRENOMCLIENT.ToString();
+                    clsMicclient.CL_DATENAISSANCE = DateTime.Parse(Objet.CL_DATENAISSANCE.ToString());
+                    clsMicclient.CL_LIEUNAISSANCE = Objet.CL_LIEUNAISSANCE.ToString();
+                    clsMicclient.CL_TELEPHONE = Objet.CL_TELEPHONE.ToString();
+                    clsMicclient.CL_FAX = Objet.CL_FAX.ToString();
+                    clsMicclient.CL_EMAIL = Objet.CL_EMAIL.ToString();
+                    clsMicclient.CL_SITEWEB = Objet.CL_SITEWEB.ToString();
+                    clsMicclient.CL_NUMPIECE = Objet.CL_NUMPIECE.ToString();
+                    clsMicclient.CL_DATEEXPIRATIONPIECE = DateTime.Parse(Objet.CL_DATEEXPIRATIONPIECE.ToString());
+                    clsMicclient.CL_REGIMEMATRIMONIALE = Objet.CL_REGIMEMATRIMONIALE.ToString();
+                    clsMicclient.CL_NBENFANT = int.Parse(Objet.CL_NBENFANT.ToString());
+                    clsMicclient.CL_DESCRIPTIONEMPLOYEUR = Objet.CL_DESCRIPTIONEMPLOYEUR.ToString();
+                    clsMicclient.CL_BOITEPOSTALEEMPLOYEUR = Objet.CL_BOITEPOSTALEEMPLOYEUR.ToString();
+                    clsMicclient.CL_TELEMPLOYEUR = Objet.CL_TELEMPLOYEUR.ToString();
+                    clsMicclient.CL_MATRICULEEMPLOYE = Objet.CL_MATRICULEEMPLOYE.ToString();
+                    clsMicclient.OP_GESTIONNAIRECOMPTE = Objet.OP_GESTIONNAIRECOMPTE.ToString();
+                    clsMicclient.CM_IDCOMMERCIAL = Objet.CM_IDCOMMERCIAL.ToString();
+                    clsMicclient.CL_CAPITAL = Double.Parse(Objet.CL_CAPITAL.ToString());
+                    clsMicclient.CL_SALAIRENET = Double.Parse(Objet.CL_SALAIRENET.ToString());
+                    clsMicclient.CL_TAUXREMUNERATION = Double.Parse(Objet.CL_TAUXREMUNERATION.ToString());
+                    clsMicclient.CL_CHIFFREAFFAIRE = Double.Parse(Objet.CL_CHIFFREAFFAIRE.ToString());
+                    clsMicclient.OB_NOMOBJET = Objet.OB_NOMOBJET.ToString();
+                    clsMicclient.OP_AGENTDECOLLECTEETDECREDIT = Objet.OP_AGENTDECOLLECTEETDECREDIT.ToString();
+                    clsMicclient.GM_CODESEGMENT = Objet.GM_CODESEGMENT.ToString();
+                    clsMicclient.GT_CODETYPECLIENT = Objet.GT_CODETYPECLIENT.ToString();
+
+                    //objet photo
+                    clsMicclientphoto.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
+                    clsMicclientphoto.CL_IDCLIENT = Objet.CL_IDCLIENT.ToString();
+                    //clsMicclientphoto.CH_PHOTO = System.Convert.FromBase64String(Objet.CH_PHOTO.ToString());
+                    //clsMicclientphoto.CH_SIGNATURE = System.Convert.FromBase64String(Objet.CH_SIGNATURE.ToString());
+                    Byte[] CM_PHOTO = null;
+                    Byte[] CM_SIGNATURE = null;
+                    if (Objet.CH_PHOTO != "")
+                        CM_PHOTO = System.Convert.FromBase64String(Objet.CH_PHOTO);
+                    if (Objet.CH_SIGNATURE != "")
+                        CM_SIGNATURE = System.Convert.FromBase64String(Objet.CH_SIGNATURE);
+
+                    clsMicclientphoto.CH_PHOTO = CM_PHOTO;
+                    clsMicclientphoto.CH_SIGNATURE = CM_SIGNATURE;
+
+                    clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
+                    clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
+
+                    clsObjetRetour.SetValue(true, clsMicclientWSBLL.pvgModifierClientPhoto(clsDonnee, clsMicclient, clsMicclientphoto, clsObjetEnvoi));
+                    if (clsObjetRetour.OR_BOOLEEN)
+                    {
+                        DataSet = new DataSet();
+                        DataRow dr = dt.NewRow();
+                        dr["SL_CODEMESSAGE"] = "00";
+                        dr["SL_RESULTAT"] = "TRUE";
+                        dr["SL_MESSAGE"] = "L'opération s'est réalisée avec succès";
+                        dt.Rows.Add(dr);
+                        DataSet.Tables.Add(dt);
+                        json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                    }
+                }
+               
                 //}
             }
              catch (SqlException SQLEx)
@@ -2270,25 +2402,53 @@ namespace ZenithWebServeur.WCF
                 //clsDonnee.pvgConnectionBase();
                 clsDonnee.pvgDemarrerTransaction();
                 clsObjetEnvoi.OE_PARAM = new string[] { Objet.AG_CODEAGENCE, Objet.CL_CODECLIENT };
+                if (Objet.clsObjetEnvoi != null)
+                {
+                    clsObjetEnvoi.OE_J = DateTime.Parse(Objet.clsObjetEnvoi.OE_J);
+                    clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
+                    if (Objet.clsObjetEnvoi.OE_J != "")
+                        clsObjetEnvoi.OE_J = DateTime.Parse(Objet.clsObjetEnvoi.OE_J);
+                    clsObjetEnvoi.OE_Y = clsObjetEnvoi.OE_Y;
+                    clsObjetEnvoi.OE_U = clsObjetEnvoi.OE_U;
+                    if (Objet.clsObjetEnvoi.OE_G != "")
+                        clsObjetEnvoi.OE_G = DateTime.Parse(Objet.clsObjetEnvoi.OE_G);
+                    clsObjetEnvoi.OE_F = Objet.clsObjetEnvoi.OE_F;
+                    clsObjetEnvoi.OE_T = Objet.clsObjetEnvoi.OE_T;
+                }
 
-                //foreach (ZenithWebServeur.DTO.clsMicclient clsMicclientDTO in Objet)
-                //{
-
-                clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
-                clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
-
-                clsObjetRetour.SetValue(true, clsMicclientWSBLL.pvgSupprimer(clsDonnee, clsObjetEnvoi));
-                if (clsObjetRetour.OR_BOOLEEN)
+                if (clsJourneetravailWSBLL.pvgValeurScalaireRequeteCount2(clsDonnee, clsObjetEnvoi) == "0")
                 {
                     DataSet = new DataSet();
                     DataRow dr = dt.NewRow();
-                    dr["SL_CODEMESSAGE"] = "00";
-                    dr["SL_RESULTAT"] = "TRUE";
-                    dr["SL_MESSAGE"] = "L'opération s'est réalisée avec succès";
+                    dr["SL_CODEMESSAGE"] = "99";
+                    dr["SL_RESULTAT"] = "FALSE";
+                    dr["SL_MESSAGE"] = "Cette journée a été déjà fermée ou non encore ouverte !!!";
                     dt.Rows.Add(dr);
                     DataSet.Tables.Add(dt);
                     json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
                 }
+                else
+                {
+                    //foreach (ZenithWebServeur.DTO.clsMicclient clsMicclientDTO in Objet)
+                    //{
+
+                    clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
+                    clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
+
+                    clsObjetRetour.SetValue(true, clsMicclientWSBLL.pvgSupprimer(clsDonnee, clsObjetEnvoi));
+                    if (clsObjetRetour.OR_BOOLEEN)
+                    {
+                        DataSet = new DataSet();
+                        DataRow dr = dt.NewRow();
+                        dr["SL_CODEMESSAGE"] = "00";
+                        dr["SL_RESULTAT"] = "TRUE";
+                        dr["SL_MESSAGE"] = "L'opération s'est réalisée avec succès";
+                        dt.Rows.Add(dr);
+                        DataSet.Tables.Add(dt);
+                        json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                    }
+                }
+                 
                 //}
             }
              catch (SqlException SQLEx)

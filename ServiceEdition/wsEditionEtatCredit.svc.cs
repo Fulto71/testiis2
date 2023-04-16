@@ -104,7 +104,7 @@ namespace ZenithWebServeur.WCF
                 {
                     // json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
                     string reportPath = "~/Etats/" + Objet.ET_DOSSIER;
-                    string reportFileName = Objet.ED_NOMETAT;
+                    string reportFileName = Objet.ET_NOMETAT;
                     string exportFilename = "";
                     string URL_ETAT = "";
 
@@ -399,7 +399,8 @@ namespace ZenithWebServeur.WCF
                 clsEditionEtatCredit.PREFIXE = Objet.PREFIXE.ToString();
                 clsEditionEtatCredit.SUPPRIMERTABLEINTERMEDIAIRE = Objet.SUPPRIMERTABLEINTERMEDIAIRE.ToString();
                 clsEditionEtatCredit.OP_AGENTCREDIT = Objet.OP_AGENTCREDIT.ToString();
-
+                clsEditionEtatCredit.ST_CODESTATUTCLIENT = Objet.ST_CODESTATUTCLIENT.ToString();
+                
 
                 clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
                 clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
@@ -475,7 +476,10 @@ namespace ZenithWebServeur.WCF
             return json;
         }
 
-        public string pvgInsertIntoDataSetCredit_second(clsEditionEtatCredit Objet)
+
+        ///<summary>Cette fonction permet de d'executer une requete SELECT dans la base de donnees </summary>
+        ///<author>Home Technology</author>
+        public string pvgInsertIntoDataSetCreditGarentieAvalListe(clsEditionEtatCredit Objet)
         {
             DataSet DataSet = new DataSet();
             DataTable dt = new DataTable("TABLE");
@@ -556,6 +560,160 @@ namespace ZenithWebServeur.WCF
                 clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
                 clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
                 //}
+                DataSet = clsEditionEtatCreditWSBLL.pvgInsertIntoDataSetCreditGarentieAvalListe(clsDonnee, clsEditionEtatCredit, clsObjetEnvoi);
+                if (DataSet.Tables[0].Rows.Count > 0)
+                {
+                    // json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                    string reportPath = "~/Etats/" + Objet.ET_DOSSIER;
+                    string reportFileName = Objet.ET_NOMETAT;
+                    string exportFilename = "";
+                    string URL_ETAT = "";
+
+                    URL_ETAT = Stock.WCF.Utilities.CrystalReport.RenderReport(reportPath, reportFileName, exportFilename, DataSet, Objet.vappNomFormule, Objet.vappValeurFormule, Objet.FORMEETAT);
+
+
+                    DataSet = new DataSet();
+                    DataRow dr = dt.NewRow();
+                    dr["SL_CODEMESSAGE"] = "00";
+                    dr["SL_RESULTAT"] = "TRUE";
+                    dr["SL_MESSAGE"] = "Opération réalisée avec succès !!!";
+                    dr["URL_ETAT"] = URL_ETAT;
+                    dt.Rows.Add(dr);
+                    DataSet.Tables.Add(dt);
+                    json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                    // }
+                }
+                else
+                {
+                    DataSet = new DataSet();
+                    DataRow dr = dt.NewRow();
+                    dr["SL_CODEMESSAGE"] = "99";
+                    dr["SL_RESULTAT"] = "FALSE";
+                    dr["SL_MESSAGE"] = "Aucun enregistrement trouvé !!!";
+                    dt.Rows.Add(dr);
+                    DataSet.Tables.Add(dt);
+                    json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                }
+            }
+            catch (SqlException SQLEx)
+            {
+                DataSet = new DataSet();
+                DataRow dr = dt.NewRow();
+                dr["SL_CODEMESSAGE"] = "99";
+                dr["SL_RESULTAT"] = "FALSE";
+                dr["SL_MESSAGE"] = (SQLEx.Number == 2601 || SQLEx.Number == 2627) ? clsMessagesWSBLL.pvgTableLibelle(clsDonnee, "GNE0003").MS_LIBELLEMESSAGE : SQLEx.Message;
+                dt.Rows.Add(dr);
+                DataSet.Tables.Add(dt);
+                json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                //Execution du log
+                Log.Error(SQLEx.Message, null);
+            }
+            catch (Exception SQLEx)
+            {
+                DataSet = new DataSet();
+                DataRow dr = dt.NewRow();
+                dr["SL_CODEMESSAGE"] = "99";
+                dr["SL_RESULTAT"] = "FALSE";
+                dr["SL_MESSAGE"] = SQLEx.Message;
+                dt.Rows.Add(dr);
+                DataSet.Tables.Add(dt);
+                json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                //Execution du log
+                Log.Error(SQLEx.Message, null);
+
+            }
+
+
+            finally
+            {
+                clsDonnee.pvgTerminerTransaction(true);
+            }
+            return json;
+        }
+
+
+
+        public string pvgInsertIntoDataSetCredit_second(clsEditionEtatCredit Objet)
+        {
+            DataSet DataSet = new DataSet();
+            DataTable dt = new DataTable("TABLE");
+            dt.Columns.Add(new DataColumn("SL_CODEMESSAGE", typeof(string)));
+            dt.Columns.Add(new DataColumn("SL_RESULTAT", typeof(string)));
+            dt.Columns.Add(new DataColumn("SL_MESSAGE", typeof(string)));
+            dt.Columns.Add(new DataColumn("URL_ETAT", typeof(string)));
+            string json = "";
+
+            ZenithWebServeur.BOJ.clsObjetEnvoi clsObjetEnvoi = new ZenithWebServeur.BOJ.clsObjetEnvoi();
+            ZenithWebServeur.BOJ.clsEditionEtatCredit clsEditionEtatCredit = new ZenithWebServeur.BOJ.clsEditionEtatCredit();
+            clsObjetEnvoi.OE_D = ConfigurationManager.AppSettings["OE_D"];
+            clsObjetEnvoi.OE_X = ConfigurationManager.AppSettings["OE_X"];
+            clsDonnee.vogCleCryptage = clsObjetEnvoi.OE_D;
+            clsDonnee.vogUtilisateur = clsObjetEnvoi.OE_X;
+
+            //for (int Idx = 0; Idx < Objet.Count; Idx++)
+            //{
+            //--TEST DES CHAMPS OBLIGATOIRES
+            //DataSet = TestChampObligatoireInsertpvgProvisionDebiteursDiversReprise(Objet);
+            ////--VERIFICATION DU RESULTAT DU TEST
+            //if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
+            ////--TEST DES TYPES DE DONNEES
+            //DataSet = TestTypeDonnee(Objet);
+            ////--VERIFICATION DU RESULTAT DU TEST
+            //if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
+            ////--TEST CONTRAINTE
+            //DataSet = TestTestContrainteListe(Objet);
+            ////--VERIFICATION DU RESULTAT DU TEST
+            //if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
+            //}
+
+            ZenithWebServeur.DTO.clsObjetRetour clsObjetRetour = new ZenithWebServeur.DTO.clsObjetRetour();
+            try
+            {
+                clsDonnee.pvgConnectionBase();
+                //clsDonnee.pvgDemarrerTransaction();
+                clsObjetEnvoi.OE_PARAM = new string[] { };
+
+                //foreach (ZenithWebServeur.DTO.clsEditionEtatCredit clsEditionEtatCreditDTO in Objet)
+                //{
+
+                clsEditionEtatCredit.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
+                clsEditionEtatCredit.PV_CODEPOINTVENTE = Objet.PV_CODEPOINTVENTE.ToString();
+                clsEditionEtatCredit.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
+                clsEditionEtatCredit.TM_CODEMEMBRE = Objet.TM_CODEMEMBRE.ToString();
+                clsEditionEtatCredit.SX_CODESEXE = Objet.SX_CODESEXE.ToString();
+                clsEditionEtatCredit.PD_CODETYPEPRODUIT = Objet.PD_CODETYPEPRODUIT.ToString();
+                clsEditionEtatCredit.PT_CODEPRODUIT = Objet.PT_CODEPRODUIT.ToString();
+                clsEditionEtatCredit.PS_CODESOUSPRODUIT = Objet.PS_CODESOUSPRODUIT.ToString();
+                clsEditionEtatCredit.DATEDEBUT = Objet.DATEDEBUT.ToString();
+                clsEditionEtatCredit.DATEFIN = Objet.DATEFIN.ToString();
+                clsEditionEtatCredit.TERMERETARD = Objet.TERMERETARD.ToString();
+                clsEditionEtatCredit.TI_IDTIERS = Objet.TI_IDTIERS.ToString();
+                clsEditionEtatCredit.GR_CODEGROUPE = Objet.GR_CODEGROUPE.ToString();
+                clsEditionEtatCredit.GR_CODEGROUPEAPPARTENANCE = Objet.GR_CODEGROUPEAPPARTENANCE.ToString();
+                clsEditionEtatCredit.OP_CODEOPERATEUREDITION = Objet.OP_CODEOPERATEUREDITION.ToString();
+                clsEditionEtatCredit.TYPEETAT = Objet.TYPEETAT.ToString();
+                clsEditionEtatCredit.TYPERETOUR = Objet.TYPERETOUR.ToString();
+                clsEditionEtatCredit.TA_CODETYPEACTIVITE = Objet.TA_CODETYPEACTIVITE.ToString();
+                clsEditionEtatCredit.AT_CODEACTIVITE = Objet.AT_CODEACTIVITE.ToString();
+                clsEditionEtatCredit.AC_CODEACTIVITE = Objet.AC_CODEACTIVITE.ToString();
+                clsEditionEtatCredit.OF_CODEOBJETFINANCEMENT = Objet.OF_CODEOBJETFINANCEMENT.ToString();
+                clsEditionEtatCredit.MONTANT1 = Objet.MONTANT1.ToString();
+                clsEditionEtatCredit.MONTANT2 = Objet.MONTANT2.ToString();
+                clsEditionEtatCredit.CM_IDCOMMERCIAL = Objet.CM_IDCOMMERCIAL.ToString();
+                clsEditionEtatCredit.OP_AGENTDECOLLECTEETDECREDIT = Objet.OP_AGENTDECOLLECTEETDECREDIT.ToString();
+                clsEditionEtatCredit.OP_GESTIONNAIRECOMPTE = Objet.OP_GESTIONNAIRECOMPTE.ToString();
+                clsEditionEtatCredit.TYPEECRAN = Objet.TYPEECRAN.ToString();
+                clsEditionEtatCredit.SC_CODEGROUPE = Objet.SC_CODEGROUPE.ToString();
+                clsEditionEtatCredit.GM_CODESEGMENT = Objet.GM_CODESEGMENT.ToString();
+                clsEditionEtatCredit.GT_CODETYPECLIENT = Objet.GT_CODETYPECLIENT.ToString();
+                clsEditionEtatCredit.PREFIXE = Objet.PREFIXE.ToString();
+                clsEditionEtatCredit.SUPPRIMERTABLEINTERMEDIAIRE = Objet.SUPPRIMERTABLEINTERMEDIAIRE.ToString();
+                clsEditionEtatCredit.OP_AGENTCREDIT = Objet.OP_AGENTCREDIT.ToString();
+                clsEditionEtatCredit.ST_CODESTATUTCLIENT = Objet.ST_CODESTATUTCLIENT.ToString();
+
+                clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
+                clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
+                //}
                 clsObjetRetour.SetValue(true, clsEditionEtatCreditWSBLL.pvgInsertIntoDataSetCredit(clsDonnee, clsEditionEtatCredit, clsObjetEnvoi));
                 if (clsObjetRetour.OR_BOOLEEN)
                 {
@@ -627,7 +785,7 @@ namespace ZenithWebServeur.WCF
 
             finally
             {
-                clsDonnee.pvgTerminerTransaction(true);
+                clsDonnee.pvgDeConnectionBase();
             }
             return json;
         }

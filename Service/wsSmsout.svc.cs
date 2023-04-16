@@ -315,13 +315,13 @@ namespace ZenithWebServeur.WCF
                 //foreach (ZenithWebServeur.DTO.clsSmsout clsSmsoutDTO in Objet)
                 //{
 
-                clsSmsout.AG_CODEAGENCE.ToString();
-                clsSmsout.SM_TELEPHONE.ToString();
-                clsSmsout.SM_MESSAGE.ToString();
-                clsSmsout.SM_DATEPIECE.ToString();
-                clsSmsout.SM_DATEEMISSIONSMS.ToString();
-                clsSmsout.SM_NUMSEQUENCE.ToString();
-                clsSmsout.SM_RAISONNONENVOISMS.ToString();
+                clsSmsout.AG_CODEAGENCE = Objet.AG_CODEAGENCE;
+                clsSmsout.SM_TELEPHONE = Objet.SM_TELEPHONE;
+                clsSmsout.SM_MESSAGE = Objet.SM_MESSAGE;
+                clsSmsout.SM_DATEPIECE = DateTime.Parse( Objet.SM_DATEPIECE);
+                clsSmsout.SM_DATEEMISSIONSMS = DateTime.Parse(Objet.SM_DATEEMISSIONSMS);
+                clsSmsout.SM_NUMSEQUENCE = Objet.SM_NUMSEQUENCE;
+                clsSmsout.SM_RAISONNONENVOISMS = Objet.SM_RAISONNONENVOISMS;
 
                 clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
                 clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
@@ -1120,8 +1120,8 @@ namespace ZenithWebServeur.WCF
                  if (DataSet.Tables[0].Rows.Count > 0)
                 {
                     DataSet.Tables[0].Columns.Add(new DataColumn("SL_CODEMESSAGE", typeof(string)));
-                    DataSet.Tables[0].Columns.Add(new DataColumn("SL_RESULTAT", typeof(string)));
-                    DataSet.Tables[0].Columns.Add(new DataColumn("SL_MESSAGE", typeof(string)));
+                   // DataSet.Tables[0].Columns.Add(new DataColumn("SL_RESULTAT", typeof(string)));
+                   // DataSet.Tables[0].Columns.Add(new DataColumn("SL_MESSAGE", typeof(string)));
                     for (int i = 0; i < DataSet.Tables[0].Rows.Count; i++)
                     {
                         DataSet.Tables[0].Rows[i]["SL_CODEMESSAGE"] = "00";
@@ -1253,8 +1253,8 @@ namespace ZenithWebServeur.WCF
                  if (DataSet.Tables[0].Rows.Count > 0)
                 {
                     DataSet.Tables[0].Columns.Add(new DataColumn("SL_CODEMESSAGE", typeof(string)));
-                    DataSet.Tables[0].Columns.Add(new DataColumn("SL_RESULTAT", typeof(string)));
-                    DataSet.Tables[0].Columns.Add(new DataColumn("SL_MESSAGE", typeof(string)));
+                   // DataSet.Tables[0].Columns.Add(new DataColumn("SL_RESULTAT", typeof(string)));
+                   // DataSet.Tables[0].Columns.Add(new DataColumn("SL_MESSAGE", typeof(string)));
                     for (int i = 0; i < DataSet.Tables[0].Rows.Count; i++)
                     {
                         DataSet.Tables[0].Rows[i]["SL_CODEMESSAGE"] = "00";

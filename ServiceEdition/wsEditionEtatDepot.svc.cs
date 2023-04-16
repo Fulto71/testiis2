@@ -247,11 +247,15 @@ namespace ZenithWebServeur.WCF
 
                 clsEditionEtatDepot.SUPPRIMERTABLEINTERMEDIAIRE = Objet.SUPPRIMERTABLEINTERMEDIAIRE.ToString();
                 clsEditionEtatDepot.DATEOPERATION = Objet.DATEOPERATION.ToString();
-                clsEditionEtatDepot.PS_CODESOUSPRODUITouPD_CODETYPEPRODUIT = Objet.PS_CODESOUSPRODUITouPD_CODETYPEPRODUIT.ToString();
+                clsEditionEtatDepot.PS_CODESOUSPRODUITouPD_CODETYPEPRODUIT = clsEditionEtatDepot.PS_CODESOUSPRODUIT;
                 clsEditionEtatDepot.TA_CODETYPEACTIVITE = Objet.TA_CODETYPEACTIVITE.ToString();
                 clsEditionEtatDepot.AT_CODEACTIVITE = Objet.AT_CODEACTIVITE.ToString();
                 clsEditionEtatDepot.AC_CODEACTIVITE = Objet.AC_CODEACTIVITE.ToString();
-
+                clsEditionEtatDepot.ST_CODESTATUTCLIENT = Objet.ST_CODESTATUTCLIENT.ToString();
+                clsEditionEtatDepot.GR_CODEGROUPE = Objet.GR_CODEGROUPE.ToString();
+                
+                //  clsEditionEtatDepot.DATEDEBUT = Objet.DATEDEBUT.Replace("/", "-");
+                //  clsEditionEtatDepot.DATEFIN = Objet.DATEFIN.Replace("/", "-");
 
                 clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
                 clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
@@ -331,7 +335,7 @@ namespace ZenithWebServeur.WCF
 
             return json;
         }
-
+        
         ///<summary>Cette fonction permet de d'executer une requete SELECT dans la base de donnees </summary>
         ///<author>Home Technology</author>
         public string pvgInsertIntoDataSetTrancheParDepot1(clsEditionEtatDepot Objet)
@@ -714,7 +718,7 @@ namespace ZenithWebServeur.WCF
             try
             {
                 //clsDonnee.pvgConnectionBase();
-                clsDonnee.pvgDemarrerTransaction();
+                clsDonnee.pvgConnectionBase();
                 clsObjetEnvoi.OE_PARAM = new string[] {
 
                 };
@@ -736,7 +740,7 @@ namespace ZenithWebServeur.WCF
                 clsEditionEtatDepot.OP_CODEOPERATEUREDITION = Objet.OP_CODEOPERATEUREDITION.ToString();
                 clsEditionEtatDepot.TYPEETAT = Objet.TYPEETAT.ToString();
                 clsEditionEtatDepot.TYPERETOUR = "1";
-                clsEditionEtatDepot.TYPEECRAN = "I";
+                clsEditionEtatDepot.TYPEECRAN = "";
                 clsEditionEtatDepot.CM_IDCOMMERCIAL = Objet.CM_IDCOMMERCIAL.ToString();
                 clsEditionEtatDepot.DATEOPERATION = clsEditionEtatDepot.DATEOPERATION;
                 clsEditionEtatDepot.PS_CODESOUSPRODUITouPD_CODETYPEPRODUIT = clsEditionEtatDepot.PS_CODESOUSPRODUIT;
@@ -744,6 +748,11 @@ namespace ZenithWebServeur.WCF
                 clsEditionEtatDepot.AT_CODEACTIVITE = Objet.AT_CODEACTIVITE.ToString();
                 clsEditionEtatDepot.AC_CODEACTIVITE = Objet.AC_CODEACTIVITE.ToString();
                 clsEditionEtatDepot.SUPPRIMERTABLEINTERMEDIAIRE = Objet.SUPPRIMERTABLEINTERMEDIAIRE.ToString();
+                clsEditionEtatDepot.ST_CODESTATUTCLIENT = Objet.ST_CODESTATUTCLIENT.ToString();
+                clsEditionEtatDepot.GR_CODEGROUPE = Objet.GR_CODEGROUPE.ToString();
+                clsEditionEtatDepot.TM_CODEMEMBRE = Objet.TM_CODEMEMBRE.ToString();
+                clsEditionEtatDepot.SX_CODESEXE = Objet.SX_CODESEXE.ToString();
+                
 
                 clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
                 clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
@@ -806,8 +815,8 @@ namespace ZenithWebServeur.WCF
                 {
                     OR_BOOLEEN = false;
                 }
-                clsDonnee.pvgTerminerTransaction(!OR_BOOLEEN);
-                //clsDonnee.pvgDeConnectionBase();
+                //clsDonnee.pvgTerminerTransaction(!OR_BOOLEEN);
+                clsDonnee.pvgDeConnectionBase();
             }
 
             return json;
@@ -1061,7 +1070,7 @@ namespace ZenithWebServeur.WCF
                 //clsEditionEtatDepot.PREFIXE = Objet.PREFIXE.ToString();
 
                 clsEditionEtatDepot.DATEOPERATION = Objet.DATEOPERATION.ToString();
-                clsEditionEtatDepot.PS_CODESOUSPRODUITouPD_CODETYPEPRODUIT = Objet.PS_CODESOUSPRODUITouPD_CODETYPEPRODUIT.ToString();
+                clsEditionEtatDepot.PS_CODESOUSPRODUITouPD_CODETYPEPRODUIT = Objet.PS_CODESOUSPRODUIT.ToString();
                 clsEditionEtatDepot.TA_CODETYPEACTIVITE = Objet.TA_CODETYPEACTIVITE.ToString();
                 clsEditionEtatDepot.AT_CODEACTIVITE = Objet.AT_CODEACTIVITE.ToString();
                 clsEditionEtatDepot.AC_CODEACTIVITE = Objet.AC_CODEACTIVITE.ToString();
@@ -1342,7 +1351,7 @@ namespace ZenithWebServeur.WCF
                 clsEditionEtatDepot.TYPERETOUR = Objet.TYPERETOUR.ToString();
                 clsEditionEtatDepot.TYPEECRAN = Objet.TYPEECRAN.ToString();
                 clsEditionEtatDepot.DATEOPERATION = Objet.DATEOPERATION.ToString();
-                clsEditionEtatDepot.PS_CODESOUSPRODUITouPD_CODETYPEPRODUIT = Objet.PS_CODESOUSPRODUITouPD_CODETYPEPRODUIT.ToString();
+                clsEditionEtatDepot.PS_CODESOUSPRODUITouPD_CODETYPEPRODUIT = Objet.PS_CODESOUSPRODUIT.ToString();
                 clsEditionEtatDepot.AC_CODEACTIVITE = Objet.AC_CODEACTIVITE.ToString();
                 clsEditionEtatDepot.SUPPRIMERTABLEINTERMEDIAIRE = Objet.SUPPRIMERTABLEINTERMEDIAIRE.ToString();
                 clsEditionEtatDepot.TA_CODETYPEACTIVITE = Objet.TA_CODETYPEACTIVITE.ToString();
@@ -1350,7 +1359,8 @@ namespace ZenithWebServeur.WCF
                 clsEditionEtatDepot.CM_IDCOMMERCIAL = Objet.CM_IDCOMMERCIAL.ToString();
                 clsEditionEtatDepot.OP_AGENTDECOLLECTEETDECREDIT = Objet.OP_AGENTDECOLLECTEETDECREDIT.ToString();
                 clsEditionEtatDepot.OP_GESTIONNAIRECOMPTE = Objet.OP_GESTIONNAIRECOMPTE.ToString();
-
+                clsEditionEtatDepot.ST_CODESTATUTCLIENT = Objet.ST_CODESTATUTCLIENT.ToString();
+                
                 //clsEditionEtatDepot.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
                 //clsEditionEtatDepot.PV_CODEPOINTVENTE = Objet.PV_CODEPOINTVENTE.ToString();
                 //clsEditionEtatDepot.DATEOPERATION = Objet.DATEOPERATION.ToString();
@@ -1449,6 +1459,7 @@ namespace ZenithWebServeur.WCF
         ///<author>Home Technology</author>
         public string pvgInsertIntoDataSetTrancheParDepot(clsEditionEtatDepot Objet)
         {
+            DataSet DataSet1 = new DataSet();
             DataSet DataSet = new DataSet();
             DataTable dt = new DataTable("TABLE");
             dt.Columns.Add(new DataColumn("SL_CODEMESSAGE", typeof(string)));
@@ -1459,6 +1470,7 @@ namespace ZenithWebServeur.WCF
 
             ZenithWebServeur.BOJ.clsObjetEnvoi clsObjetEnvoi = new ZenithWebServeur.BOJ.clsObjetEnvoi();
             ZenithWebServeur.BOJ.clsEditionEtatDepot clsEditionEtatDepot = new ZenithWebServeur.BOJ.clsEditionEtatDepot();
+            ZenithWebServeur.BOJ.clsEditionEtatDepot clsEditionEtatDepot1 = new ZenithWebServeur.BOJ.clsEditionEtatDepot();
             clsObjetEnvoi.OE_D = ConfigurationManager.AppSettings["OE_D"];
             clsObjetEnvoi.OE_X = ConfigurationManager.AppSettings["OE_X"];
             clsDonnee.vogCleCryptage = clsObjetEnvoi.OE_D;
@@ -1504,21 +1516,26 @@ namespace ZenithWebServeur.WCF
                 clsEditionEtatDepot.SC_CODEGROUPE = Objet.SC_CODEGROUPE.ToString();
                 clsEditionEtatDepot.GM_CODESEGMENT = Objet.GM_CODESEGMENT.ToString();
                 clsEditionEtatDepot.GT_CODETYPECLIENT = Objet.GT_CODETYPECLIENT.ToString();
+                clsEditionEtatDepot.ST_CODESTATUTCLIENT = Objet.ST_CODESTATUTCLIENT.ToString();
 
+                clsEditionEtatDepot1.OP_CODEOPERATEUREDITION = Objet.OP_CODEOPERATEUREDITION.ToString();
                 clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
                 clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
                 //}
+               
                 DataSet = clsEditionEtatDepotWSBLL.pvgInsertIntoDataSetTrancheParDepot(clsDonnee, clsEditionEtatDepot, clsObjetEnvoi);
-                if (DataSet.Tables[0].Rows.Count > 0)
+                DataSet1 = clsEditionEtatDepotWSBLL.pvgInsertIntoDataSetTrancheDepotSE(clsDonnee, clsEditionEtatDepot1, clsObjetEnvoi);
+                if (DataSet.Tables[0].Rows.Count > 0 && DataSet1.Tables[0].Rows.Count > 0)
                 {
                     // json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
                     string reportPath = "~/Etats/" + Objet.ET_DOSSIER;
                     string reportFileName = Objet.ET_NOMETAT;
                     string exportFilename = "";
                     string URL_ETAT = "";
-
-                    URL_ETAT = Stock.WCF.Utilities.CrystalReport.RenderReport(reportPath, reportFileName, exportFilename, DataSet, Objet.vappNomFormule, Objet.vappValeurFormule, Objet.FORMEETAT);
-
+                    string[] vppFichierSousEtat = new string[] { "TrancheDepotSE.rpt" };
+                    DataSet[] vppDataSetSousEtat = new DataSet[] { DataSet1 };
+                    
+                    URL_ETAT = Stock.WCF.Utilities.CrystalReport.RenderReport(reportPath, reportFileName, exportFilename, DataSet, vppFichierSousEtat, vppDataSetSousEtat, Objet.vappNomFormule, Objet.vappValeurFormule, Objet.FORMEETAT);
 
                     DataSet = new DataSet();
                     DataRow dr = dt.NewRow();

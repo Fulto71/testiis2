@@ -388,6 +388,9 @@ namespace ZenithWebServeur.WCF
             dt.Columns.Add(new DataColumn("SL_CODEMESSAGE", typeof(string)));
             dt.Columns.Add(new DataColumn("SL_RESULTAT", typeof(string)));
             dt.Columns.Add(new DataColumn("SL_MESSAGE", typeof(string)));
+            dt.Columns.Add(new DataColumn("OV_CODEORDREVIREMENT1", typeof(string)));
+            dt.Columns.Add(new DataColumn("VD_CODEORDREVIREMENTDETAIL1", typeof(string)));
+            dt.Columns.Add(new DataColumn("VD_MONTANT1", typeof(string)));
             string json = "";
 
             ZenithWebServeur.BOJ.clsObjetEnvoi clsObjetEnvoi = new ZenithWebServeur.BOJ.clsObjetEnvoi();
@@ -432,8 +435,14 @@ namespace ZenithWebServeur.WCF
                     DataSet.Tables[0].Columns.Add(new DataColumn("SL_CODEMESSAGE", typeof(string)));
                     DataSet.Tables[0].Columns.Add(new DataColumn("SL_RESULTAT", typeof(string)));
                     DataSet.Tables[0].Columns.Add(new DataColumn("SL_MESSAGE", typeof(string)));
+                    DataSet.Tables[0].Columns.Add(new DataColumn("OV_CODEORDREVIREMENT1", typeof(string)));
+                    DataSet.Tables[0].Columns.Add(new DataColumn("VD_CODEORDREVIREMENTDETAIL1", typeof(string)));
+                    DataSet.Tables[0].Columns.Add(new DataColumn("VD_MONTANT1", typeof(string)));
                     for (int i = 0; i < DataSet.Tables[0].Rows.Count; i++)
                     {
+                        DataSet.Tables[0].Rows[i]["OV_CODEORDREVIREMENT1"] = DataSet.Tables[0].Rows[i]["OV_CODEORDREVIREMENT"].ToString();
+                        DataSet.Tables[0].Rows[i]["VD_CODEORDREVIREMENTDETAIL1"] = DataSet.Tables[0].Rows[i]["VD_CODEORDREVIREMENTDETAIL"].ToString();
+                        DataSet.Tables[0].Rows[i]["VD_MONTANT1"] = DataSet.Tables[0].Rows[i]["VD_MONTANT"].ToString(); 
                         DataSet.Tables[0].Rows[i]["SL_CODEMESSAGE"] = "00";
                         DataSet.Tables[0].Rows[i]["SL_RESULTAT"] = "TRUE";
                         DataSet.Tables[0].Rows[i]["SL_MESSAGE"] = "L'opération s'est réalisée avec succès";

@@ -999,7 +999,7 @@ namespace ZenithWebServeur.WCF
                 clsObjetEnvoi.OE_PARAM = new string[] {
                     Objet.AG_CODEAGENCE,
                     Objet.PV_CODEPOINTVENTE,
-                    Objet.DATEJOURNEE
+                    Objet.BL_DATEEXECUTIONPARAMETRE
                 };
 
                 //foreach (ZenithWebServeur.DTO.clsMicbilan clsMicbilanDTO in Objet)
@@ -1107,7 +1107,7 @@ namespace ZenithWebServeur.WCF
                 clsObjetEnvoi.OE_PARAM = new string[] {
                     Objet.AG_CODEAGENCE,
                     Objet.PV_CODEPOINTVENTE,
-                    Objet.DATEJOURNEE
+                    Objet.BL_DATEEXECUTIONPARAMETRE
                 };
 
                 //foreach (ZenithWebServeur.DTO.clsMicbilan clsMicbilanDTO in Objet)

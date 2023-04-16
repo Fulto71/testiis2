@@ -190,7 +190,7 @@ namespace ZenithWebServeur.WCF
                 //foreach (ZenithWebServeur.DTO.clsTypeoperation clsTypeoperationDTO in Objet)
                 //{
 
-                clsTypeoperation.TO_CODETYPEOPERATION = int.Parse(Objet.TO_CODETYPEOPERATION.ToString());
+                clsTypeoperation.TO_CODETYPEOPERATION = Objet.TO_CODETYPEOPERATION.ToString();
                 clsTypeoperation.TO_LIBELLE = Objet.TO_LIBELLE.ToString();
                 clsTypeoperation.TO_ACTIF = Objet.TO_ACTIF.ToString();
 

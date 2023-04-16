@@ -85,7 +85,7 @@ namespace ZenithWebServeur.WCF
 
                 foreach (ZenithWebServeur.DTO.clsProfilMicvisatypeschemacomptableoperationpeutviser clsProfilMicvisatypeschemacomptableoperationpeutviserDTO in Objet)
                 {
-                    clsObjetEnvoi.OE_PARAM = new string[] { clsProfilMicvisatypeschemacomptableoperationpeutviserDTO.AG_CODEAGENCE, clsProfilMicvisatypeschemacomptableoperationpeutviserDTO.OP_CODEOPERATEUR2 };
+                    clsObjetEnvoi.OE_PARAM = new string[] { clsProfilMicvisatypeschemacomptableoperationpeutviserDTO.AG_CODEAGENCE, clsProfilMicvisatypeschemacomptableoperationpeutviserDTO.PO_CODEPROFIL };
                     ZenithWebServeur.BOJ.clsProfilMicvisatypeschemacomptableoperationpeutviser clsProfilMicvisatypeschemacomptableoperationpeutviser = new ZenithWebServeur.BOJ.clsProfilMicvisatypeschemacomptableoperationpeutviser();
 
                     clsProfilMicvisatypeschemacomptableoperationpeutviser.AG_CODEAGENCE = clsProfilMicvisatypeschemacomptableoperationpeutviserDTO.AG_CODEAGENCE.ToString();

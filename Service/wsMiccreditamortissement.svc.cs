@@ -272,7 +272,7 @@ namespace ZenithWebServeur.WCF
         }
 
         //AJOUT
-        public string pvgRemoursementCreditManuel(List<clsMiccreditamortissement> Objet)
+        public string pvgRemoursementCreditManuel(clsMiccreditamortissement Objet)
         {
             DataSet DataSet = new DataSet();
             DataTable dt = new DataTable("TABLE");
@@ -282,28 +282,28 @@ namespace ZenithWebServeur.WCF
             string json = "";
 
             ZenithWebServeur.BOJ.clsObjetEnvoi clsObjetEnvoi = new ZenithWebServeur.BOJ.clsObjetEnvoi();
-            List<ZenithWebServeur.BOJ.clsMiccreditamortissement> clsMiccreditamortissements = new List<ZenithWebServeur.BOJ.clsMiccreditamortissement>();
             ZenithWebServeur.BOJ.clsMiccreditamortissement clsMiccreditamortissement = new ZenithWebServeur.BOJ.clsMiccreditamortissement();
+            List<ZenithWebServeur.BOJ.clsMiccreditamortissement> clsMiccreditamortissements = new List<ZenithWebServeur.BOJ.clsMiccreditamortissement>();
             clsObjetEnvoi.OE_D = ConfigurationManager.AppSettings["OE_D"];
             clsObjetEnvoi.OE_X = ConfigurationManager.AppSettings["OE_X"];
             clsDonnee.vogCleCryptage = clsObjetEnvoi.OE_D;
             clsDonnee.vogUtilisateur = clsObjetEnvoi.OE_X;
 
-            for (int Idx = 0; Idx < Objet.Count; Idx++)
-            {
-                //--TEST DES CHAMPS OBLIGATOIRES
-                DataSet = TestChampObligatoireInsertpvgAjouterListe(Objet[Idx]);
-                //--VERIFICATION DU RESULTAT DU TEST
-                if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
-                //--TEST DES TYPES DE DONNEES
-                DataSet = TestTypeDonnee(Objet[Idx]);
-                //--VERIFICATION DU RESULTAT DU TEST
-                if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
-                //--TEST CONTRAINTE
-                DataSet = TestTestContrainteListe(Objet[Idx]);
-                //--VERIFICATION DU RESULTAT DU TEST
-                if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
-            }
+            //for (int Idx = 0; Idx < Objet.Count; Idx++)
+            //{
+            //    //--TEST DES CHAMPS OBLIGATOIRES
+            //    DataSet = TestChampObligatoireInsertpvgAjouterListe(Objet[Idx]);
+            //    //--VERIFICATION DU RESULTAT DU TEST
+            //    if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
+            //    //--TEST DES TYPES DE DONNEES
+            //    DataSet = TestTypeDonnee(Objet[Idx]);
+            //    //--VERIFICATION DU RESULTAT DU TEST
+            //    if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
+            //    //--TEST CONTRAINTE
+            //    DataSet = TestTestContrainteListe(Objet[Idx]);
+            //    //--VERIFICATION DU RESULTAT DU TEST
+            //    if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
+            //}
 
             ZenithWebServeur.DTO.clsObjetRetour clsObjetRetour = new ZenithWebServeur.DTO.clsObjetRetour();
             try
@@ -311,24 +311,39 @@ namespace ZenithWebServeur.WCF
                 //clsDonnee.pvgConnectionBase();
                 clsDonnee.pvgDemarrerTransaction();
 
-                foreach (ZenithWebServeur.DTO.clsMiccreditamortissement clsMiccreditamortissementDTO in Objet)
+                clsMiccreditamortissement.CR_CODECREDIT = Objet.CR_CODECREDIT.ToString();
+                clsMiccreditamortissement.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
+                clsMiccreditamortissement.PV_CODEPOINTVENTE = Objet.PV_CODEPOINTVENTE.ToString();
+                clsMiccreditamortissement.TS_CODETYPESCHEMACOMPTABLE = Objet.TS_CODETYPESCHEMACOMPTABLE.ToString();
+                clsMiccreditamortissement.AT_DATEECHEANCE = DateTime.Parse(Objet.AT_DATEECHEANCE.ToString());
+                clsMiccreditamortissement.DATEJOURNEECOMPTABILISATION = DateTime.Parse(Objet.DATEJOURNEECOMPTABILISATION.ToString());
+                clsMiccreditamortissement.CR_TYPEREMBOURSEMENT = Objet.CR_TYPEREMBOURSEMENT.ToString();
+                clsMiccreditamortissement.AT_MONTANT = Double.Parse(Objet.AT_MONTANT.ToString());
+                clsMiccreditamortissement.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
+
+                clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
+                clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
+
+                foreach (ZenithWebServeur.DTO.clsMiccreditamortissements clsMiccreditamortissementDTO in Objet.clsMiccreditamortissements)
                 {
                     clsObjetEnvoi.OE_PARAM = new string[] { };
+                    ZenithWebServeur.BOJ.clsMiccreditamortissement clsMiccreditamortissemen = new ZenithWebServeur.BOJ.clsMiccreditamortissement();
 
-                    clsMiccreditamortissement.AG_CODEAGENCE = clsMiccreditamortissementDTO.AG_CODEAGENCE.ToString();
-                    clsMiccreditamortissement.PV_CODEPOINTVENTE = clsMiccreditamortissementDTO.PV_CODEPOINTVENTE.ToString();
-                    clsMiccreditamortissement.CR_CODECREDIT = clsMiccreditamortissementDTO.CR_CODECREDIT.ToString();
-                    clsMiccreditamortissement.PL_CODEPARAMETRELISTE = clsMiccreditamortissementDTO.PL_CODEPARAMETRELISTE.ToString();
-                    clsMiccreditamortissement.PL_NUMEROORDRE = Double.Parse(clsMiccreditamortissementDTO.PL_NUMEROORDRE.ToString());
-                    clsMiccreditamortissement.AT_DATEECHEANCE = DateTime.Parse(clsMiccreditamortissementDTO.AT_DATEECHEANCE.ToString());
-                    clsMiccreditamortissement.AT_MONTANT = Double.Parse(clsMiccreditamortissementDTO.AT_MONTANT.ToString());
-                    clsMiccreditamortissement.OP_CODEOPERATEUR = clsMiccreditamortissementDTO.OP_CODEOPERATEUR.ToString();
+                    clsMiccreditamortissemen.AG_CODEAGENCE = clsMiccreditamortissementDTO.AG_CODEAGENCE.ToString();
+                    clsMiccreditamortissemen.PV_CODEPOINTVENTE = clsMiccreditamortissementDTO.PV_CODEPOINTVENTE.ToString();
+                    clsMiccreditamortissemen.CR_CODECREDIT = clsMiccreditamortissementDTO.CR_CODECREDIT.ToString();
+                    clsMiccreditamortissemen.PL_CODEPARAMETRELISTE = clsMiccreditamortissementDTO.PL_CODEPARAMETRELISTE.ToString();
+                    clsMiccreditamortissemen.PL_NUMEROORDRE = Double.Parse(clsMiccreditamortissementDTO.PL_NUMEROORDRE.ToString());
+                    clsMiccreditamortissemen.AT_DATEECHEANCE = DateTime.Parse(clsMiccreditamortissementDTO.AT_DATEECHEANCE.ToString());
+                    clsMiccreditamortissemen.AT_MONTANT = Double.Parse(clsMiccreditamortissementDTO.AT_MONTANT.ToString());
+                    clsMiccreditamortissemen.OP_CODEOPERATEUR = clsMiccreditamortissementDTO.OP_CODEOPERATEUR.ToString();
 
                     clsObjetEnvoi.OE_A = clsMiccreditamortissementDTO.clsObjetEnvoi.OE_A;
                     clsObjetEnvoi.OE_Y = clsMiccreditamortissementDTO.clsObjetEnvoi.OE_Y;
 
-                    clsMiccreditamortissements.Add(clsMiccreditamortissement);
+                    clsMiccreditamortissements.Add(clsMiccreditamortissemen);
                 }
+
                 clsObjetRetour.SetValue(true, clsMiccreditamortissementWSBLL.pvgRemoursementCreditManuel(clsDonnee, clsMiccreditamortissements, clsMiccreditamortissement, clsObjetEnvoi));
                 if (clsObjetRetour.OR_BOOLEEN)
                 {
@@ -382,6 +397,136 @@ namespace ZenithWebServeur.WCF
 
             return json;
         }
+
+        //AJOUT
+        public string pvgRemoursementCreditManuelAvecouSansGarantie(clsMiccreditamortissement Objet)
+        {
+            DataSet DataSet = new DataSet();
+            DataTable dt = new DataTable("TABLE");
+            dt.Columns.Add(new DataColumn("SL_CODEMESSAGE", typeof(string)));
+            dt.Columns.Add(new DataColumn("SL_RESULTAT", typeof(string)));
+            dt.Columns.Add(new DataColumn("SL_MESSAGE", typeof(string)));
+            string json = "";
+
+            ZenithWebServeur.BOJ.clsObjetEnvoi clsObjetEnvoi = new ZenithWebServeur.BOJ.clsObjetEnvoi();
+            ZenithWebServeur.BOJ.clsMiccreditamortissement clsMiccreditamortissement = new ZenithWebServeur.BOJ.clsMiccreditamortissement();
+            List<ZenithWebServeur.BOJ.clsMiccreditamortissement> clsMiccreditamortissements = new List<ZenithWebServeur.BOJ.clsMiccreditamortissement>();
+            clsObjetEnvoi.OE_D = ConfigurationManager.AppSettings["OE_D"];
+            clsObjetEnvoi.OE_X = ConfigurationManager.AppSettings["OE_X"];
+            clsDonnee.vogCleCryptage = clsObjetEnvoi.OE_D;
+            clsDonnee.vogUtilisateur = clsObjetEnvoi.OE_X;
+
+            //for (int Idx = 0; Idx < Objet.Count; Idx++)
+            //{
+            //    //--TEST DES CHAMPS OBLIGATOIRES
+            //    DataSet = TestChampObligatoireInsertpvgAjouterListe(Objet[Idx]);
+            //    //--VERIFICATION DU RESULTAT DU TEST
+            //    if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
+            //    //--TEST DES TYPES DE DONNEES
+            //    DataSet = TestTypeDonnee(Objet[Idx]);
+            //    //--VERIFICATION DU RESULTAT DU TEST
+            //    if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
+            //    //--TEST CONTRAINTE
+            //    DataSet = TestTestContrainteListe(Objet[Idx]);
+            //    //--VERIFICATION DU RESULTAT DU TEST
+            //    if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE") { json = JsonConvert.SerializeObject(DataSet, Formatting.Indented); return json; }
+            //}
+
+            ZenithWebServeur.DTO.clsObjetRetour clsObjetRetour = new ZenithWebServeur.DTO.clsObjetRetour();
+            try
+            {
+                //clsDonnee.pvgConnectionBase();
+                clsDonnee.pvgDemarrerTransaction();
+
+                clsMiccreditamortissement.CR_CODECREDIT = Objet.CR_CODECREDIT.ToString();
+                clsMiccreditamortissement.AG_CODEAGENCE = Objet.AG_CODEAGENCE.ToString();
+                clsMiccreditamortissement.PV_CODEPOINTVENTE = Objet.PV_CODEPOINTVENTE.ToString();
+                clsMiccreditamortissement.TS_CODETYPESCHEMACOMPTABLE = Objet.TS_CODETYPESCHEMACOMPTABLE.ToString();
+                clsMiccreditamortissement.AT_DATEECHEANCE = DateTime.Parse(Objet.AT_DATEECHEANCE.ToString());
+                clsMiccreditamortissement.DATEJOURNEECOMPTABILISATION = DateTime.Parse(Objet.DATEJOURNEECOMPTABILISATION.ToString());
+                clsMiccreditamortissement.CR_TYPEREMBOURSEMENT = Objet.CR_TYPEREMBOURSEMENT.ToString();
+                clsMiccreditamortissement.AT_MONTANT = Double.Parse(Objet.AT_MONTANT.ToString());
+                clsMiccreditamortissement.OP_CODEOPERATEUR = Objet.OP_CODEOPERATEUR.ToString();
+
+                clsObjetEnvoi.OE_A = Objet.clsObjetEnvoi.OE_A;
+                clsObjetEnvoi.OE_Y = Objet.clsObjetEnvoi.OE_Y;
+
+                foreach (ZenithWebServeur.DTO.clsMiccreditamortissements clsMiccreditamortissementDTO in Objet.clsMiccreditamortissements)
+                {
+                    clsObjetEnvoi.OE_PARAM = new string[] { };
+                    ZenithWebServeur.BOJ.clsMiccreditamortissement clsMiccreditamortissemen = new ZenithWebServeur.BOJ.clsMiccreditamortissement();
+
+                    clsMiccreditamortissemen.AG_CODEAGENCE = clsMiccreditamortissementDTO.AG_CODEAGENCE.ToString();
+                    clsMiccreditamortissemen.PV_CODEPOINTVENTE = clsMiccreditamortissementDTO.PV_CODEPOINTVENTE.ToString();
+                    clsMiccreditamortissemen.CR_CODECREDIT = clsMiccreditamortissementDTO.CR_CODECREDIT.ToString();
+                    clsMiccreditamortissemen.PL_CODEPARAMETRELISTE = clsMiccreditamortissementDTO.PL_CODEPARAMETRELISTE.ToString();
+                    clsMiccreditamortissemen.PL_NUMEROORDRE = Double.Parse(clsMiccreditamortissementDTO.PL_NUMEROORDRE.ToString());
+                    clsMiccreditamortissemen.AT_DATEECHEANCE = DateTime.Parse(clsMiccreditamortissementDTO.AT_DATEECHEANCE.ToString());
+                    clsMiccreditamortissemen.AT_MONTANT = Double.Parse(clsMiccreditamortissementDTO.AT_MONTANT.ToString());
+                    clsMiccreditamortissemen.OP_CODEOPERATEUR = clsMiccreditamortissementDTO.OP_CODEOPERATEUR.ToString();
+                    clsMiccreditamortissement.MONTANTTOTALREMBOURSE = Double.Parse(clsMiccreditamortissementDTO.AT_MONTANT.ToString());
+                    clsObjetEnvoi.OE_A = clsMiccreditamortissementDTO.clsObjetEnvoi.OE_A;
+                    clsObjetEnvoi.OE_Y = clsMiccreditamortissementDTO.clsObjetEnvoi.OE_Y;
+
+                    clsMiccreditamortissements.Add(clsMiccreditamortissemen);
+                }
+
+                clsObjetRetour.SetValue(true, clsMiccreditamortissementWSBLL.pvgRemoursementCreditManuel(clsDonnee, clsMiccreditamortissements, clsMiccreditamortissement, clsObjetEnvoi));
+                if (clsObjetRetour.OR_BOOLEEN)
+                {
+                    DataSet = new DataSet();
+                    DataRow dr = dt.NewRow();
+                    dr["SL_CODEMESSAGE"] = "00";
+                    dr["SL_RESULTAT"] = "TRUE";
+                    dr["SL_MESSAGE"] = "L'opération s'est réalisée avec succès";
+                    dt.Rows.Add(dr);
+                    DataSet.Tables.Add(dt);
+                    json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                }
+            }
+            catch (SqlException SQLEx)
+            {
+                DataSet = new DataSet();
+                DataRow dr = dt.NewRow();
+                dr["SL_CODEMESSAGE"] = "99";
+                dr["SL_RESULTAT"] = "FALSE";
+                dr["SL_MESSAGE"] = (SQLEx.Number == 2601 || SQLEx.Number == 2627) ? clsMessagesWSBLL.pvgTableLibelle(clsDonnee, "GNE0003").MS_LIBELLEMESSAGE : SQLEx.Message;
+                dt.Rows.Add(dr);
+                DataSet.Tables.Add(dt);
+                json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                //Execution du log
+                Log.Error(SQLEx.Message, null);
+            }
+            catch (Exception SQLEx)
+            {
+                DataSet = new DataSet();
+                DataRow dr = dt.NewRow();
+                dr["SL_CODEMESSAGE"] = "99";
+                dr["SL_RESULTAT"] = "FALSE";
+                dr["SL_MESSAGE"] = SQLEx.Message;
+                dt.Rows.Add(dr);
+                DataSet.Tables.Add(dt);
+                json = JsonConvert.SerializeObject(DataSet, Formatting.Indented);
+                //Execution du log
+                Log.Error(SQLEx.Message, null);
+            }
+
+            finally
+            {
+                bool OR_BOOLEEN = true;
+                if (DataSet.Tables[0].Rows[0]["SL_RESULTAT"].ToString() == "FALSE")
+                {
+                    OR_BOOLEEN = false;
+                }
+                clsDonnee.pvgTerminerTransaction(!OR_BOOLEEN);
+                //clsDonnee.pvgDeConnectionBase();
+            }
+
+            return json;
+        }
+
+
+
 
         //AJOUT
         public string pvgChargerDansDataSetTableauAmortissement(clsMiccreditamortissement Objet)
