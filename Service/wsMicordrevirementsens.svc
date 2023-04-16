@@ -1,1 +1,0 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="ZenithWebServeur.WCF.wsMicordrevirementsens" CodeBehind="wsMicordrevirementsens.svc.cs" %>

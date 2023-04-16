@@ -1,1 +1,0 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="ZenithWebServeur.WCF.wsEditionoutilstypedeliste" CodeBehind="wsEditionoutilstypedeliste.svc.cs" %>
