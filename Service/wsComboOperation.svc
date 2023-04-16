@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="ZenithWebServeur.WCF.wsComboOperation" CodeBehind="wsComboOperation.svc.cs" %>
