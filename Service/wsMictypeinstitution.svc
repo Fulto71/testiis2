@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="ZenithWebServeur.WCF.wsMictypeinstitution" CodeBehind="wsMictypeinstitution.svc.cs" %>

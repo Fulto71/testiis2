@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="ZenithWebServeur.WCF.wsProcedureautomatiqueetatdifferetypecritere" CodeBehind="wsProcedureautomatiqueetatdifferetypecritere.svc.cs" %>

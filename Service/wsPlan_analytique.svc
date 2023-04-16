@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="ZenithWebServeur.WCF.wsPlan_analytique" CodeBehind="wsPlan_analytique.svc.cs" %>
